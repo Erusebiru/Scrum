@@ -3,7 +3,8 @@
 <head>
 	<title></title>
 	<link type="text/css" rel="stylesheet" href="css/style.css"/>
-	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/script.js" defer></script>
+	<script type="text/javascript" src="js/clases.js"></script>
 </head>
 <body>
 	<div class="contenedor">
