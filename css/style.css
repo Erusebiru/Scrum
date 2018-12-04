@@ -19,8 +19,7 @@ a:hover{
 	width: 80%;
 	margin: auto;
 	border: 1px solid black;
-	margin-top: 10%;
-	margin-bottom: 4%;
+	margin-top: 5%;
 }
 
 .proyect-title{
@@ -54,44 +53,50 @@ a:hover{
 	text-decoration: underline;
 }
 
+.proyect-table button{
+	padding: 10px;
+	margin: 5px;
+}
+
 /* INICIO ERROR MESSAGE */
 
 .window-message{
 	position: fixed;
-	top: 2%;
-	height: 100px;
+	top: 2%;	
 	width: 100%;
-	display: block;
+	display: none;
 }
 
 .error{
 	margin: auto;
-	height: 90px;
-	width: 500px;
+	min-height: auto;
+	width: 400px;
 	background-color: white;
-	text-align: center;
 	border-radius: 10px;
 	border: 1px solid red;
 	animation: blinking 4s linear infinite;
 }
 
-.image-error:before{
-	content: url("../images/error.png");
-	float: left;
-	animation: blinker 4s linear infinite;
-	z-index: 1;
+.image-error{
+	margin: 15px;
+	width: 100%;
+	text-align: center;
+	height: 50px;
 }
 
-.image-error{
-	margin: 10px;
+.image-error img{
+	animation: blinker 4s linear infinite;
+	float: left;
+	width: 40px;
+	height: 40px;
 }
+
 .image-error span{
 	width: 100%;
-	margin-top: -50px;
-	margin-left: 30px;
+	float: right;
+	margin-top: -30px;
 	font-size: 20px;
 	color: red;
-	float: left;
 	font-weight: bold;
 }
 
