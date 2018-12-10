@@ -11,6 +11,8 @@
   <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css">
   <link rel="shortcut icon" href="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png">
   <script type="text/javascript" src="js/script.js" defer></script>
+  <script type="text/javascript" src="js/clases.js"></script>
+
   
 </head>
 <body>
@@ -25,7 +27,7 @@
       <div id="divcabecera" class = "col s12 m12 l12" >
         <nav>
           <div class = "nav-wrapper">
-            <a href = "#" class = "brand-logo">Login</a>
+            <a href = "#" class = "brand-logo nombrelogo">Login</a>
             <a href="#!" class="brand-logo center"><img src="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png"></a>
           </div>
         </nav>
@@ -36,9 +38,12 @@
 
           if ($_SESSION['error']=="errorPsw") {
             echo '<script>var error = "password";</script>';
+            $_SESSION['error'] = null; 
           }
           else if ($_SESSION['error']=="errorUser") {
-            echo '<script> var error = "usuario" </script>';            
+            echo '<script> var error = "usuario" </script>';   
+            $_SESSION['error'] = null; 
+         
           }
         }
       ?>

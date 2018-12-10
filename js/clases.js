@@ -1,6 +1,10 @@
 
 var personas = [];
 
+var error = "";
+
+var tipoUsuario = "";
+
 class Persona{
 	constructor(id,name,tipo){
 		this.id = id;

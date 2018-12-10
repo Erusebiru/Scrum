@@ -26,14 +26,14 @@
 		userData($conn,$user);
 		findUsers($conn);
 		findGroups($conn);
-		$proyectos = findProyects($conn,$user,$tipo_usuario);
+		$proyectos = findProyects($conn,$user,$tipo_usuario,$grupo);
 	?>
 
 	<div class="contenedor">
 		<div id="divcabecera" class = "col s12 m12 l12" >
 	      <nav>
 	        <div class = "nav-wrapper">
-	          <a href = "#" class = "brand-logo">Proyectos</a>
+	          <a href = "#" class = "brand-logo nombrelogo">Proyectos</a>
 	          <a href="#!" class="brand-logo center"><img src="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png"></a>
 	          <ul id="nav-mobile" class="right hide-on-med-and-down">
 		          <li><a href="#"><span>Pestaña1</span></a></li>
@@ -88,13 +88,13 @@
 		}
 	}
 
-	function findProyects($conn,$user,$tipo_usuario){
+	function findProyects($conn,$user,$tipo_usuario,$grupo){
 		if($tipo_usuario == "scrumMaster"){
 			$proyectos = proyectos_scrumMaster($conn);
 		}else if($tipo_usuario == "productOwner"){
 			$proyectos = proyectos_ProductOwner($conn,$user);
 		}else{
-			$proyectos = proyectos_Developer($conn,$user);
+			$proyectos = proyectos_Developer($conn,$grupo);
 		}
 	
 		return $proyectos;
@@ -110,8 +110,8 @@
     	return (mysqli_query($conn,$consulta_proyectos_productOwner));
     }
 
-    function proyectos_Developer($conn,$user) {
-    	$consulta_proyectos_developer = "SELECT nombre_proyecto FROM proyectos WHERE id_proyecto=(SELECT id_proyecto FROM grupos WHERE id_grupo=(SELECT id_grupo FROM usuarios WHERE nombre_usuario='".$user."'));";
+    function proyectos_Developer($conn,$grupo) {
+    	$consulta_proyectos_developer = "SELECT nombre_proyecto FROM proyectos, gruposproyectos WHERE gruposproyectos.id_proyecto = proyectos.id_proyecto AND id_grupo=".$grupo.";";
     	return (mysqli_query($conn,$consulta_proyectos_developer));
     }
 
