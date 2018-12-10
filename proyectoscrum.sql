@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-11-2018 a las 17:14:28
+-- Tiempo de generación: 10-12-2018 a las 20:29:42
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.4
 
@@ -54,7 +54,27 @@ CREATE TABLE `grupos` (
 --
 
 INSERT INTO `grupos` (`id_grupo`, `nombre_grupo`, `id_proyecto`) VALUES
-(1, 'JRY', 2);
+(1, 'JRY', 2),
+(2, 'DEK', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `gruposproyectos`
+--
+
+CREATE TABLE `gruposproyectos` (
+  `id_proyecto` int(10) NOT NULL,
+  `id_grupo` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `gruposproyectos`
+--
+
+INSERT INTO `gruposproyectos` (`id_proyecto`, `id_grupo`) VALUES
+(2, 1),
+(5, 1);
 
 -- --------------------------------------------------------
 
@@ -76,7 +96,10 @@ CREATE TABLE `proyectos` (
 
 INSERT INTO `proyectos` (`id_proyecto`, `nombre_proyecto`, `descripcion_proyecto`, `ScrumMaster`, `ProductOwner`) VALUES
 (1, 'Quien es quien', 'Es un juego', 7, 8),
-(2, 'Scrum', 'Es un método agile', 7, 8);
+(2, 'Scrum', 'Es un método agile', 7, 8),
+(5, 'Prueba', 'Esto es una prueba', 7, 8),
+(6, 'Prueba2', '', 7, 8),
+(7, 'Prueba3', 'asdf', 7, 8);
 
 -- --------------------------------------------------------
 
@@ -175,6 +198,12 @@ ALTER TABLE `grupos`
   ADD KEY `id_proyecto_grupos` (`id_proyecto`);
 
 --
+-- Indices de la tabla `gruposproyectos`
+--
+ALTER TABLE `gruposproyectos`
+  ADD PRIMARY KEY (`id_proyecto`,`id_grupo`);
+
+--
 -- Indices de la tabla `proyectos`
 --
 ALTER TABLE `proyectos`
@@ -226,13 +255,13 @@ ALTER TABLE `especificaciones`
 -- AUTO_INCREMENT de la tabla `grupos`
 --
 ALTER TABLE `grupos`
-  MODIFY `id_grupo` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_grupo` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos`
 --
 ALTER TABLE `proyectos`
-  MODIFY `id_proyecto` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_proyecto` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `sprints`

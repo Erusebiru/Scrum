@@ -40,7 +40,6 @@ function createErrorWindow(texto){
 	var div = addElement(parent,"div",undefined,["class=image-error"]);
 	var image = addElement(div,"img",undefined,["src=images/error.png"]);
 	var span = addElement(div,"span",texto,["class=error-message"]);
-	var span = document.createElement("span");
 
 	document.querySelector(".window-message").style.display = "block";
 	resetAnimation(parent);
