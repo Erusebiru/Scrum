@@ -38,12 +38,20 @@
 
           if ($_SESSION['error']=="errorPsw") {
             echo '<script>var error = "password";</script>';
+<<<<<<< HEAD
             $_SESSION['error'] = null; 
           }
           else if ($_SESSION['error']=="errorUser") {
             echo '<script> var error = "usuario" </script>';   
             $_SESSION['error'] = null; 
          
+=======
+            $_SESSION['error'] = null;
+          }
+          else if ($_SESSION['error']=="errorUser") {
+            echo '<script> var error = "usuario" </script>';
+            $_SESSION['error'] = null;      
+>>>>>>> aef40eda37f88690c59a4ae09959b3641211c7d4
           }
         }
       ?>
