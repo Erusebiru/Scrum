@@ -1,4 +1,4 @@
-
+var error;
 var personas = [];
 
 class Persona{

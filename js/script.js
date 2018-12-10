@@ -1,31 +1,26 @@
 var countTime;
-newProyect(tipoUsuario);
 
-if(error == "usuario"){
+if(error != undefined){
+	if(error == "usuario"){
 	var texto = "¡ERROR! Usuario no encontrado";
 	createErrorWindow(texto);
-}else if(error == "password"){
-	var texto = "¡ERROR! Contraseña errónea.";
-	createErrorWindow(texto);
+	}else if(error == "password"){
+		var texto = "¡ERROR! Contraseña errónea.";
+		createErrorWindow(texto);
+	}
 }
 
-var expanded = false;
-
-function showCheckboxes() {
-  var checkboxes = document.getElementById("checkboxes");
-  if (!expanded) {
-    checkboxes.style.display = "block";
-    expanded = true;
-  } else {
-    checkboxes.style.display = "none";
-    expanded = false;
-  }
+if(tipoUsuario != undefined){
+	newProyect(tipoUsuario);
 }
 
+
+//Esta función sirve para inicializar los elementos SELECT dado que Materialize por defecto los tiene bloqueados
+//Sólo se usa para esto, aunque es JQuery
 function initSelect(){
 	$(document).ready(function(){
-    $('select').formSelect();
-  });
+		$('select').formSelect();
+	});
 }
 
 //Función que añade el evento click a los links de proyectos
