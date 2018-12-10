@@ -1,11 +1,8 @@
 var countTime;
-<<<<<<< HEAD
 
 if (tipoUsuario != undefined) {
 	newProyect(tipoUsuario);
 }
-=======
->>>>>>> aef40eda37f88690c59a4ae09959b3641211c7d4
 
 if(error != undefined){
 	if(error == "usuario"){
@@ -16,11 +13,6 @@ if(error != undefined){
 		createErrorWindow(texto);
 	}
 }
-
-if(tipoUsuario != undefined){
-	newProyect(tipoUsuario);
-}
-
 
 //Esta función sirve para inicializar los elementos SELECT dado que Materialize por defecto los tiene bloqueados
 //Sólo se usa para esto, aunque es JQuery
