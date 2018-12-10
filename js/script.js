@@ -1,11 +1,4 @@
 var countTime;
-<<<<<<< HEAD
-
-if (tipoUsuario != undefined) {
-	newProyect(tipoUsuario);
-}
-=======
->>>>>>> aef40eda37f88690c59a4ae09959b3641211c7d4
 
 if(error != undefined){
 	if(error == "usuario"){
@@ -29,6 +22,16 @@ function initSelect(){
 		$('select').formSelect();
 	});
 }
+
+//Función que añade el evento click a los links de proyectos
+function proyectLink(){
+	var links = document.getElementsByName("proyecto");
+	links.forEach(function(element){
+		element.addEventListener("click",createErrorWindow);
+	});
+}
+
+proyectLink();
 
 //Función que crea la ventana de error y los diferentes errores
 function createErrorWindow(texto){
@@ -135,6 +138,61 @@ function insertGroup(select){
 	});
 }
 
+/*
+//Función que muestra el formulario para crear un nuevo proyecto. Este formulario sólo se creará cuando se clicke el botón de AddProyect, que se deshabilitará al hacerlo
+function showForm(){
+	document.querySelector("[name='addProyect']").disabled = true;
+	var parent = document.querySelector(".contenedor");
+	var div = addElement(parent,"div",undefined,["class=proyect-form"]);
+	
+	var form = addElement(div,"form",undefined,["action=insert.php","method=post","id=createProyect"]);
+
+	addElement(form,"h4","Añadir nuevo proyecto",["class=form-element"]);
+
+	createText(form,"Nombre del proyecto: ","ProyectName");
+	createText(form,"Descripción del proyecto: ","descripcion");
+
+	createSelect(form,"Scrum Master del proyecto: ","scrumMaster");
+	createSelect(form,"Product Owner del proyecto: ","productOwner");
+
+	var inputdiv = addElement(form,"div",undefined,["class=form-element"]);
+	addElement(inputdiv,"label","Grupos: ",["for=grupo"]);
+	addElement(inputdiv,"br");
+	var select = addElement(inputdiv,"select",undefined,["name=grupo"]);
+	addElement(select,"option",undefined,["disabled=true","selected=selected","value="]).text = "Elige una opción";
+	insertGroup(select);
+	
+	addElement(form,"br");
+
+	addElement(form,"div","Crear",["class=button","onclick=checkNulls()"]);
+}
+
+function createText(form,labelText,name){
+	var inputdiv = addElement(form,"div",undefined,["class=form-element"]);
+	addElement(inputdiv,"label",labelText,["for="+name]);
+	addElement(inputdiv,"br");
+	addElement(inputdiv,"input",undefined,["type=text","name="+name, "class=input-field"]);
+}
+
+function createSelect(form,labelText,name){
+	var inputdiv = addElement(form,"div",undefined,["class=form-element"]);
+	addElement(inputdiv,"label",labelText,["for="+name]);
+	addElement(inputdiv,"br");
+	var select = addElement(inputdiv,"select",undefined,["name="+name]);
+	addElement(select,"option",undefined,["disabled=true","selected=selected","value="]).text = "Elige una opción";
+	createDropDown(select,name);
+}
+
+function createDropDown(select,tipoUsuario){
+	personas.forEach(function(element){
+		if(element.tipo == tipoUsuario){
+			var option = addElement(select,"option");
+			option.text = element.name;
+			option.value = element.id;
+			select.add(option);
+		}
+	});
+}*/
 
 //Función para crear nuevos elementos. Podrán tener un texto y diferentes atributos que se enviarán en forma de array
 //Devuelve el elemento creado para poder concatenar creación de elementos

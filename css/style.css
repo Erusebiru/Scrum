@@ -184,20 +184,3 @@ a:link, a:visited {
 .new-proyect-box{
 	display: none;
 }
-
-.nombrelogo {
-	margin-left: 2%;
-}
-
-
-button[name="addProyect"] {
-	background-color: #c84344;
-	color: white;
-	border-radius: 3%;
-	margin-left: 28%;
-}
-
-button[name="addProyect"]:hover {
-	background-color: white;
-	color: #ff3333;
-}
