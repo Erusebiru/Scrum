@@ -1,14 +1,14 @@
-var countTime;
+var global_countTime;
 
-if (tipoUsuario != undefined) {
-	newProyect(tipoUsuario);
+if (global_tipoUsuario != undefined) {
+	newProyect(global_tipoUsuario);
 }
 
-if(error != undefined){
-	if(error == "usuario"){
+if(global_error != undefined){
+	if(global_error == "usuario"){
 	var texto = "¡ERROR! Usuario no encontrado";
 	createErrorWindow(texto);
-	}else if(error == "password"){
+	}else if(global_error == "password"){
 		var texto = "¡ERROR! Contraseña errónea.";
 		createErrorWindow(texto);
 	}
@@ -44,8 +44,8 @@ function resetAnimation(error){
 //Función que crea un timer que, tras 10 segundos, oculta de nuevo la ventana de error y elimina los errores creados.
 //Se eliminan para que la próxima vez que se genere un error sin recargar la página no aparezcan.
 function setTimer(){
-	clearTimeout(countTime);
-	countTime =	setTimeout(function (){
+	clearTimeout(global_countTime);
+	global_countTime =	setTimeout(function (){
 		document.querySelector(".window-message").style.display = "none";
 		var parent = document.querySelector(".error");
 		var childs = document.querySelectorAll(".image-error");
@@ -98,9 +98,9 @@ function createSelect(parent,labelText,name){
 	initSelect();
 }
 
-function createDropDown(select,tipoUsuario){
-	personas.forEach(function(element){
-		if(element.tipo == tipoUsuario){
+function createDropDown(select,global_tipoUsuario){
+	global_personas.forEach(function(element){
+		if(element.tipo == global_tipoUsuario){
 			var option = addElement(select,"option");
 			option.text = element.name;
 			option.value = element.id;
@@ -119,7 +119,7 @@ function createGroup(parent,labelText,name){
 	initSelect();
 }
 function insertGroup(select){
-	grupos.forEach(function(element){
+	global_grupos.forEach(function(element){
 		var option = addElement(select,"option");
 		option.text = element.name;
 		option.value = element.id;

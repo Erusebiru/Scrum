@@ -36,9 +36,9 @@
 	          <a href = "#" class = "brand-logo nombrelogo">Proyectos</a>
 	          <a href="#!" class="brand-logo center"><img src="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png"></a>
 	          <ul id="nav-mobile" class="right hide-on-med-and-down">
-		          <li><a href="#"><span>Pestaña1</span></a></li>
+		          <!--<li><a href="#"><span>Pestaña1</span></a></li>
 		          <li><a href="#"><span>Pestaña2</span></a></li>
-		          <li><a href="#"><span>Pestaña3</span></a></li>
+		          <li><a href="#"><span>Pestaña3</span></a></li>-->
 		          <li>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>
 		          <li class="grey-text lighten-5">Usuario: <?php echo $user ?></li>
 		          <li><a href="logout.php"><i class="material-icons grey-text">exit_to_app</i></a></li>
@@ -84,7 +84,7 @@
 			$id = $registre['id_usuario'];
 			$tipo_usuario = $registre['nombre_tipo'];
 			$grupo = $registre['id_grupo'];
-			?><script>var tipoUsuario = "<?=$tipo_usuario?>"</script><?
+			?><script>var global_tipoUsuario = "<?=$tipo_usuario?>"</script><?
 		}
 	}
 
@@ -123,7 +123,7 @@
         while($persona = mysqli_fetch_array($results)) {
         	
        		 echo "var persona = new Persona(" . $persona['id_usuario'] . ",'" . $persona['nombre_usuario'] . "','" . $persona['nombre_tipo'] . "');";
-       		 echo "personas.push(persona);";
+       		 echo "global_personas.push(persona);";
        	}
        	echo "</script>";
 	}
@@ -139,7 +139,7 @@
         echo "<script>";
         while($grup = mysqli_fetch_array($results)) {
        		 echo "var grup = new Grupo(" . $grup['id_grupo'] . ",'" . $grup['nombre_grupo'] . "');";
-       		 echo "grupos.push(grup);";
+       		 echo "global_grupos.push(grup);";
        	}
        	echo "</script>";
 	}

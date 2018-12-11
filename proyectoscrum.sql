@@ -45,17 +45,16 @@ CREATE TABLE `especificaciones` (
 
 CREATE TABLE `grupos` (
   `id_grupo` int(10) NOT NULL,
-  `nombre_grupo` varchar(40) DEFAULT NULL,
-  `id_proyecto` int(10) DEFAULT NULL
+  `nombre_grupo` varchar(40) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `grupos`
 --
 
-INSERT INTO `grupos` (`id_grupo`, `nombre_grupo`, `id_proyecto`) VALUES
-(1, 'JRY', 2),
-(2, 'DEK', 1);
+INSERT INTO `grupos` (`id_grupo`, `nombre_grupo`) VALUES
+(1, 'JRY'),
+(2, 'DEK');
 
 -- --------------------------------------------------------
 
@@ -194,8 +193,7 @@ ALTER TABLE `especificaciones`
 -- Indices de la tabla `grupos`
 --
 ALTER TABLE `grupos`
-  ADD PRIMARY KEY (`id_grupo`),
-  ADD KEY `id_proyecto_grupos` (`id_proyecto`);
+  ADD PRIMARY KEY (`id_grupo`);
 
 --
 -- Indices de la tabla `gruposproyectos`
@@ -297,12 +295,6 @@ ALTER TABLE `usuarios`
 ALTER TABLE `especificaciones`
   ADD CONSTRAINT `fk_id_proyecto_especificaciones` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id_proyecto`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_id_sprint_especificaciones` FOREIGN KEY (`id_sprint`) REFERENCES `sprints` (`id_sprint`) ON DELETE CASCADE;
-
---
--- Filtros para la tabla `grupos`
---
-ALTER TABLE `grupos`
-  ADD CONSTRAINT `id_proyecto_grupos` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id_proyecto`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `proyectos`

@@ -37,15 +37,15 @@
         if (isset($_SESSION['error']) && $_SESSION['error']!='undefined' && $_SESSION['error']!=null && $_SESSION['error']!=""){
 
           if ($_SESSION['error']=="errorPsw") {
-            echo '<script>var error = "password";</script>';
+            echo '<script>var global_error = "password";</script>';
             $_SESSION['error'] = null; 
           }
           else if ($_SESSION['error']=="errorUser") {
-            echo '<script> var error = "usuario" </script>';   
+            echo '<script> var global_error = "usuario" </script>';   
             $_SESSION['error'] = null; 
           }
           else if ($_SESSION['error']=="errorUser") {
-            echo '<script> var error = "usuario" </script>';
+            echo '<script> var global_error = "usuario" </script>';
             $_SESSION['error'] = null;      
           }
         }
