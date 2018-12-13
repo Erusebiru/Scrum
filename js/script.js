@@ -1,6 +1,7 @@
 var global_countTime;
 
-if (global_tipoUsuario != undefined) {
+//funcion para comprobar el tipo de usuario y si esta en la pagina de la lista de proyectos para crear el boton de add proyect
+if (global_tipoUsuario != undefined && window.location.href.indexOf('proyectos.php') != -1 ) {
 	newProyect(global_tipoUsuario);
 }
 
@@ -164,4 +165,19 @@ function checkNulls(){
 	if(control){
 		form.submit();
 	}
+}
+
+function vistaProyecto(proyecto) {
+	var proyecto_seleccionado = proyecto.name;
+	Enviar_Nombre_Proyecto();
+	document.querySelector("input[name=selectedProyect]").value=proyecto_seleccionado;
+	document.getElementById("sendProyect").submit();
+	}
+
+
+function Enviar_Nombre_Proyecto() {
+	var parent = document.querySelector(".new-proyect-view-box");
+	var form = addElement(parent,"form",undefined,["action=vistaproyecto.php","method=post","id=sendProyect"]);
+	addElement(form,"input",undefined,["type=hidden","name=selectedProyect"]);
+	
 }
