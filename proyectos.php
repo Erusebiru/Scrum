@@ -40,6 +40,8 @@
 		          <li><a href="#"><span>Pestaña2</span></a></li>
 		          <li><a href="#"><span>Pestaña3</span></a></li>
 		          <li>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>-->
+
+
 		          <li class="grey-text lighten-5">Usuario: <?php echo $user ?></li>
 		          <li><a href="logout.php"><i class="material-icons grey-text">exit_to_app</i></a></li>
 		      </ul>
