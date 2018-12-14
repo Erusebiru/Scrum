@@ -58,7 +58,7 @@
 				while($registre = mysqli_fetch_assoc($proyectos)){
 						$nombre_proyecto=$registre['nombre_proyecto'];
 						echo "<li>";
-						echo '<a href="vistaproyecto.php" name="'.$nombre_proyecto.'">'.$registre['nombre_proyecto']?></a>
+						echo '<a href="#"  onclick="vistaProyecto(this)" name="'.$nombre_proyecto.'">'.$registre['nombre_proyecto']?></a>
 						</li> <?
 					}
 				?>
@@ -70,6 +70,9 @@
 		</div>
 		<div class="row">
 			<div class="col card hoverable push-s1 s10 push-m2 m8 push-l4 l4 new-proyect-box"></div>
+		</div>
+		<div class="row">
+			<div hidden="True" class="col card hoverable push-s1 s10 push-m2 m8 push-l4 l4 new-proyect-view-box"></div>
 		</div>
 	</div>
 
@@ -94,7 +97,7 @@
 
 	function findProyects($conn,$user,$tipo_usuario,$grupo){
 		if($tipo_usuario == "scrumMaster"){
-			$proyectos = proyectos_scrumMaster($conn);
+			$proyectos = proyectos_scrumMaster($conn,$user);
 		}else if($tipo_usuario == "productOwner"){
 			$proyectos = proyectos_ProductOwner($conn,$user);
 		}else{
@@ -104,13 +107,8 @@
 		return $proyectos;
 	}
 
-	/*function datos_proyecto($conn, $proyectoseleccionado) {
-		$consulta_datos_proyecto = 'SELECT nombre_proyecto, descripcion_proyecto, ScrumMaster, ProductOwner, nombre_grupo FROM proyectos, grupos WHERE nombre_proyecto=(SELECT nombre_proyecto FROM proyectos where id_proyecto=(SELECT id_proyecto FROM gruposproyectos) AND nombre_grupo=(SELECT nombre_grupo FROM grupos WHERE id_grupo=(SELECT id_grupo FROM gruposproyectos)) AND nombre_proyecto="'.$nombre_proyecto.'";';
-
-	}*/
-
-	function proyectos_scrumMaster($conn) {
-    	$consulta_proyectos_scrumMaster = "SELECT nombre_proyecto FROM proyectos;";
+	function proyectos_scrumMaster($conn,$user) {
+    	$consulta_proyectos_scrumMaster = "SELECT nombre_proyecto FROM proyectos WHERE ScrumMaster=(SELECT id_usuario FROM usuarios where nombre_usuario ='".$user."');";
     	return (mysqli_query($conn,$consulta_proyectos_scrumMaster));
     }
 

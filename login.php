@@ -52,7 +52,7 @@
       ?>
 
       <div class="parallax"><img src="https://cdn.pixabay.com/photo/2016/06/02/02/38/mesh-1430108_960_720.png"></div>
-      <div class="s12 m12 l12"><br> <br></div>    
+      <div class="col s12 m12 l12"><br> <br></div>    
       <div id="formulario" class="col m8 s8 l8 offset-m2 offset-s2 offset-l2 center z-depth-3">
         <form class = "col l12" method="post" action="validarLogin.php">
           <div align="center" class = "center input-field col l12">
