@@ -24,11 +24,11 @@
 
 
 		include 'connection.php';
-		$proyecto = "Scrum";
-		$sprints = getSprints($conn,$proyecto);
+		//$proyecto = "Scrum";
+		$nombre_proyecto = $_POST["selectedProyect"];
+		$sprints = getSprints($conn,$nombre_proyecto);
 
-		/*$nombre_proyecto = $_POST["selectedProyect"];
-		echo $nombre_proyecto;
+		/*
 		$proyecto = findProyects($conn,$nombre_proyecto);*/
 	?>
 
@@ -94,28 +94,6 @@
 			?>
 		</div>
 
-		<?
-			function getSprints($conn,$proyecto){
-				$query = "SELECT sprints.* FROM sprints,proyectos WHERE sprints.id_proyecto = proyectos.id_proyecto AND proyectos.nombre_proyecto = '$proyecto'";
-				$sprints = [];
-				$result = mysqli_query($conn, $query);
-				while($registre = mysqli_fetch_assoc($result)){
-					$sprints[] = $registre;
-				}
-				return $sprints;
-			}
-
-			function getSpecs($conn,$idsprint){
-				$query = "SELECT * FROM especificaciones WHERE id_sprint = '$idsprint'";
-				$specs = [];
-				$result = mysqli_query($conn, $query);
-				while($registre = mysqli_fetch_assoc($result)){
-					$specs[] = $registre;
-				}
-				return $specs;
-			}
-
-		?>
 		<div class="proyect-list">
 			<div class="proyect-title">Proyectos</div>
 			<div class="proyect-table">
@@ -177,6 +155,25 @@
 			return ($proyectos);
 	}
 
+	function getSprints($conn,$proyecto){
+		$query = "SELECT sprints.* FROM sprints,proyectos WHERE sprints.id_proyecto = proyectos.id_proyecto AND proyectos.nombre_proyecto = '$proyecto'";
+		$sprints = [];
+		$result = mysqli_query($conn, $query);
+		while($registre = mysqli_fetch_assoc($result)){
+			$sprints[] = $registre;
+		}
+		return $sprints;
+	}
+
+	function getSpecs($conn,$idsprint){
+		$query = "SELECT * FROM especificaciones WHERE id_sprint = '$idsprint'";
+		$specs = [];
+		$result = mysqli_query($conn, $query);
+		while($registre = mysqli_fetch_assoc($result)){
+			$specs[] = $registre;
+		}
+		return $specs;
+	}
 	?>
 </body>
 </html>
