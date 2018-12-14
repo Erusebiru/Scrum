@@ -201,3 +201,66 @@ button[name="addProyect"]:hover {
 	background-color: white;
 	color: #ff3333;
 }
+
+.plegado{
+    max-height: 0;
+    transition: max-height 0.8s ease-out;
+    overflow: hidden;
+    background: #d5d5d5;
+}
+
+.desplegado {
+    max-height: 500px !important;
+    transition: max-height 1.6s ease-in;
+}
+
+#TablaSprints{
+	margin: auto;
+	margin-top: 20px;
+	width: 80%;
+	border: 1px solid black;
+}
+
+#TablaSprints h4{
+	text-align: center;
+}
+
+.sprint{
+	cursor: pointer;
+	margin: 20px auto;
+	width: 500px;
+	border: 1px solid black;
+	padding: 5px;
+}
+
+.sprint h6{
+	text-align: center;
+	font-weight: bold;
+}
+.sprint h6:hover{
+	text-decoration: underline;
+}
+.sprint ul li{
+	color: red;
+	padding: 0 15px 15px 15px;
+}
+
+.sprint li ul li{
+	color: purple;
+}
+
+table tr td, table tr th{
+	text-align: center;
+}
+
+.title{
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: underline
+}
+
+li label{
+	font-size: 15px !important;
+	color: black !important;
+}

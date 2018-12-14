@@ -63,6 +63,7 @@ function newProyect(user){
 	}
 }
 
+//Función que crea de cero un formulario para añadir un nuevo proyecto.
 function showForm(){
 	document.querySelector("[name='addProyect']").disabled = true;
 	document.querySelector(".new-proyect-box").style.display = "block";
@@ -82,12 +83,14 @@ function showForm(){
 	addElement(form,"div","Crear",["class=button","onclick=checkNulls()"]);
 }
 
+//Función para crear un elemento de tipo texto para el formulario
 function createText(parent,labelText,name){
 	var divcol = addElement(parent, "div", undefined, ["class=input-field col s12"]);
 	addElement(divcol,"label",labelText,["for="+name]);
 	addElement(divcol,"input",undefined,["type=text","name="+name]);
 }
 
+//Función para crear un elemento de tipo select para el formulario
 function createSelect(parent,labelText,name){
 	var divcol = addElement(parent, "div", undefined, ["class=col s12"]);
 	addElement(divcol,"label",labelText,undefined);
@@ -98,6 +101,7 @@ function createSelect(parent,labelText,name){
 	initSelect();
 }
 
+//Función que añade los options al formulario según el tipo de usuario
 function createDropDown(select,global_tipoUsuario){
 	global_personas.forEach(function(element){
 		if(element.tipo == global_tipoUsuario){
@@ -109,6 +113,7 @@ function createDropDown(select,global_tipoUsuario){
 	});
 }
 
+//Función para crear un select de grupos, que será un select multiple
 function createGroup(parent,labelText,name){
 	var divcol = addElement(parent, "div", undefined, ["class=col s12"]);
 	addElement(divcol,"label",labelText,undefined);
@@ -118,6 +123,8 @@ function createGroup(parent,labelText,name){
 	insertGroup(select,name);
 	initSelect();
 }
+
+//Función para insertar los option con los nombres de los grupos en el select
 function insertGroup(select){
 	global_grupos.forEach(function(element){
 		var option = addElement(select,"option");
@@ -148,6 +155,8 @@ function addElement(parent, child, text,attributes){
 	return childElement;
 }
 
+
+//Función para comprobar los elementos vacíos del formulario que añade un nuevo proyecto
 function checkNulls(){
 	
 	form = document.getElementById("createProyect");
@@ -164,4 +173,24 @@ function checkNulls(){
 	if(control){
 		form.submit();
 	}
+}
+
+
+//Función que despliega las características del Sprint
+function showSprint(element){
+	var elementoDesplegado = element.parentNode.querySelector("ul");
+	if(!elementoDesplegado.classList.contains("desplegado")){
+		removeClass();
+		elementoDesplegado.classList.toggle("desplegado");
+	}else{
+		removeClass();
+	}
+}
+
+//Función que pliega el Sprint
+function removeClass(){
+	var elements = document.querySelectorAll("ul");
+	elements.forEach(function(element){
+		element.classList.remove("desplegado");
+	});
 }

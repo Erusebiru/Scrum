@@ -22,8 +22,9 @@
 			header('Location: '."login.php");
 		}
 
-		$conn = mysqli_connect('localhost','Admin','Admin','proyectoscrum');
-		//userData($conn,$user);
+		include 'connection.php';
+		$proyecto = "Scrum";
+		$sprints = getSprints($conn,$proyecto);
 	?>
 <div class="contenedor">
 		<div id="divcabecera" class = "col s12 m12 l12" >
@@ -32,36 +33,78 @@
 	          <a href = "#" class = "brand-logo nombrelogo">Administración de proyectos</a>
 	          <a href="#!" class="brand-logo center"><img src="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png"></a>
 	          <ul id="nav-mobile" class="right hide-on-med-and-down">
-		          <!--li><a href="#"><span>Pestaña1</span></a></li>
-		          <li><a href="#"><span>Pestaña2</span></a></li>
-		          <li><a href="#"><span>Pestaña3</span></a></li>
-		          <li>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>-->
 		          <li class="grey-text lighten-5">Usuario: <?php echo $user ?></li>
 		          <li><a href="logout.php"><i class="material-icons grey-text">exit_to_app</i></a></li>
 		      </ul>
-
 	        </div>
 	      </nav>
 	    </div>
-		<div class="proyect-list">
-			<div class="proyect-title">Proyectos</div>
-			<div class="proyect-table">
-				<ul>
-				<?
-
-				while($registre = mysqli_fetch_assoc($proyectos)){
-						$nombre_proyecto=$registre['nombre_proyecto'];
-						echo "<li>";
-						echo '<a href="#" onclick="vistaProyecto()" name="'.$nombre_proyecto.'">'.$registre['nombre_proyecto']?></a>
-						</li> <?
-					}
-				?>
-				</ul>
-
-			</div>
-			
-			
+		
+		<div id="TablaSprints">
+			<?
+				echo "<h4>Listado de Sprints</h4>";
+				$numSprint = 1;
+				foreach($sprints as $sprint){
+					?>
+						<div class="sprint">
+							<?echo "<h6 onclick='showSprint(this)'>Sprint ".$numSprint."</h6>";
+							?><ul id="list" class="plegado" name="primero"><?
+									echo "<li>Horas Totales: ".$sprint['horasTotales']."</li>";
+									echo "<li>Fecha de inicio: ".$sprint['Fecha_Inicio']."</li>";
+									echo "<li>Fecha de fin: ".$sprint['Fecha_Fin']."</li>";
+									?><li><p class="title">Especificaciones</p> <br>
+										<ul>
+											<li>
+												<table>
+													<tr>
+														<th>Nº de especificación</th>
+														<th>Horas Asignadas</th>
+														<th>Estado</th>
+													</tr>
+													<?$specs = getSpecs($conn,$sprint['id_sprint']);
+													foreach($specs as $spec){
+														?>
+														<tr>
+															<td><?=$spec['numero']?></td>
+															<td><?=$spec['horas']?></td>
+															<td><?=$spec['estado']?></td>
+														</tr>									
+														<?
+													}?>
+												</table>
+											</li>
+											<li><label>Añadir especificación: </label><input type="text" class="input-field" name="addSpec"></li>
+										</ul>
+									</li>
+								<?$numSprint++;?>
+							</ul>
+						</div>
+					<?
+				}
+			?>
 		</div>
 
+		<?
+			function getSprints($conn,$proyecto){
+				$query = "SELECT sprints.* FROM sprints,proyectos WHERE sprints.id_proyecto = proyectos.id_proyecto AND proyectos.nombre_proyecto = '$proyecto'";
+				$sprints = [];
+				$result = mysqli_query($conn, $query);
+				while($registre = mysqli_fetch_assoc($result)){
+					$sprints[] = $registre;
+				}
+				return $sprints;
+			}
+
+			function getSpecs($conn,$idsprint){
+				$query = "SELECT * FROM especificaciones WHERE id_sprint = '$idsprint'";
+				$specs = [];
+				$result = mysqli_query($conn, $query);
+				while($registre = mysqli_fetch_assoc($result)){
+					$specs[] = $registre;
+				}
+				return $specs;
+			}
+
+		?>
 </body>
 </html>

@@ -22,7 +22,7 @@
 			header('Location: '."login.php");
 		}
 
-		$conn = mysqli_connect('localhost','Admin','Admin','proyectoscrum');
+		include 'connection.php';
 		userData($conn,$user);
 		findUsers($conn);
 		findGroups($conn);
