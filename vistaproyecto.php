@@ -22,14 +22,14 @@
 			header('Location: '."login.php");
 		}
 
-
 		include 'connection.php';
-		//$proyecto = "Scrum";
 		$nombre_proyecto = $_POST["selectedProyect"];
 		$sprints = getSprints($conn,$nombre_proyecto);
 
-		/*
-		$proyecto = findProyects($conn,$nombre_proyecto);*/
+		$proyecto = findProyects($conn,$nombre_proyecto);
+		$hoy = date('Y-h-i');
+		//if((time()-(60*60*24)) < strtotime($var))
+		//echo time();
 	?>
 
 	<div class="contenedor">
@@ -75,7 +75,7 @@
 													foreach($specs as $spec){
 														?>
 														<tr>
-															<td><?=$spec['numero']?></td>
+															<td><?=$spec['nombre_spec']?></td>
 															<td><?=$spec['horas']?></td>
 															<td><?=$spec['estado']?></td>
 														</tr>									
@@ -83,7 +83,6 @@
 													}?>
 												</table>
 											</li>
-											<li><label>Añadir especificación: </label><input type="text" class="input-field" name="addSpec"></li>
 										</ul>
 									</li>
 								<?$numSprint++;?>
@@ -137,7 +136,7 @@
 	<?
 
 	function findProyects($conn,$proyectName){
-		$consulta_proyecto = "SELECT descripcion_proyecto, ScrumMaster, ProductOwner, nombre_grupo FROM proyectos, grupos WHERE proyectos.id_proyecto=(SELECT gruposproyectos.id_proyecto FROM gruposproyectos WHERE id_grupo=(SELECT id_grupo FROM gruposproyectos)) AND nombre_proyecto='".$proyectName."';";
+		$consulta_proyecto = "SELECT proyectos.descripcion_proyecto,grupos.nombre_grupo,u1.nombre_usuario, u2.nombre_usuario FROM proyectos, gruposproyectos, grupos,usuarios u1, usuarios u2 WHERE proyectos.id_proyecto = gruposproyectos.id_proyecto AND grupos.id_grupo = gruposproyectos.id_grupo AND proyectos.nombre_proyecto='".$proyectName."' AND proyectos.ScrumMaster = u1.id_usuario AND proyectos.ProductOwner = u2.id_usuario;";
 
 //consulta que saque con el ruben + and name=nombre, empty set:
 

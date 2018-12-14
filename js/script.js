@@ -209,3 +209,63 @@ function Enviar_Nombre_Proyecto() {
 	addElement(form,"input",undefined,["type=hidden","name=selectedProyect"]);
 	
 }
+
+//Funciones para especificaciones
+
+function clickUP(){
+	var button = document.querySelectorAll(".upside");
+	button.forEach(function(element){
+		element.addEventListener("click",subir);
+	});
+}
+
+function clickDOWN(){
+	var button = document.querySelectorAll(".downside");
+	button.forEach(function(element){
+		element.addEventListener("click",bajar);
+	});
+}
+
+function clickDROP(){
+	var button = document.querySelectorAll(".del");
+	button.forEach(function(element){
+		element.addEventListener("click",eliminar);
+	});
+}
+
+clickUP();
+clickDOWN();
+clickDROP();
+
+function subir(){
+	var parent = this.parentNode.parentNode;
+	var elemento = this.parentNode;
+	
+	if(elemento !== parent.firstElementChild){
+		var previo = elemento.previousElementSibling;
+		var cloned = elemento.cloneNode(true);
+		parent.insertBefore(cloned,previo);
+		parent.removeChild(elemento);
+		clickUP();
+		clickDOWN();
+		clickDROP();
+	}	
+}
+
+function bajar(){
+	var parent = this.parentNode.parentNode;
+	var elemento = this.parentNode;
+	var siguiente = elemento.nextElementSibling.nextElementSibling;
+	var cloned = elemento.cloneNode(true);
+	parent.insertBefore(cloned,siguiente);
+	parent.removeChild(elemento);
+	clickUP();
+	clickDOWN();
+	clickDROP();
+}
+
+function eliminar(){
+	var parent = this.parentNode.parentNode;
+	var elemento = this.parentNode;
+	parent.removeChild(elemento);
+}

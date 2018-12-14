@@ -252,7 +252,16 @@ button[name="addProyect"]:hover {
 table tr td, table tr th{
 	text-align: center;
 }
-
+/*
+table tr td img{
+	width: 15px;
+	height: 15px;
+	cursor: pointer;
+}
+table tr td img:hover{
+	filter: invert(50%);
+}
+*/
 .title{
 	font-size: 18px;
 	font-weight: bold;
