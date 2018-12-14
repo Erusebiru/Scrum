@@ -49,6 +49,28 @@
 	        </div>
 	      </nav>
 	    </div>
+
+	    <div id="TablaProyectos">
+	    	<h4><?= $nombre_proyecto ?></h4>
+			<ul id="list">
+				<?
+				echo "<li>Descripcion: ".$proyecto[0]['descripcion_proyecto']."</li>";
+				echo "<li>ScrumMaster: ".$proyecto[0]['ScrumMaster']."</li>";
+				echo "<li>ProductOwner: ".$proyecto[0]['ProductOwner']."</li>";
+				echo "<li>Grupos: </li>";
+				foreach($proyecto as $grupo){
+					echo "<li>".$grupo['nombre_grupo']."</li>";
+				}
+
+				?>
+			</ul>
+
+
+
+<!--descripcion_proyecto,grupos.nombre_grupo,u1.nombre_usuario, u2.nombre_usuario -->
+			<?
+			?>
+	    </div>
 		
 		<div id="TablaSprints">
 			<?
@@ -93,7 +115,7 @@
 			?>
 		</div>
 
-		<div class="proyect-list">
+		<!--<div class="proyect-list">
 			<div class="proyect-title">Proyectos</div>
 			<div class="proyect-table">
 				<div class="col s10 m10 l10 offset-s2 offset-m2 offset-l2">
@@ -132,25 +154,18 @@
 
 	<div class="window-message">
 		<div class="error"></div>
-	</div>
+	</div>-->
 	<?
 
 	function findProyects($conn,$proyectName){
-		$consulta_proyecto = "SELECT proyectos.descripcion_proyecto,grupos.nombre_grupo,u1.nombre_usuario, u2.nombre_usuario FROM proyectos, gruposproyectos, grupos,usuarios u1, usuarios u2 WHERE proyectos.id_proyecto = gruposproyectos.id_proyecto AND grupos.id_grupo = gruposproyectos.id_grupo AND proyectos.nombre_proyecto='".$proyectName."' AND proyectos.ScrumMaster = u1.id_usuario AND proyectos.ProductOwner = u2.id_usuario;";
-
-//consulta que saque con el ruben + and name=nombre, empty set:
-
-		// revisar tablas, porque quitandole lo del nombre solo me saca una y no es posible, creo que eso quiere decir que solo hay un proyecto bien puesto con la id del grupo en la tabla gruposproyectos
-		
-		/*SELECT descripcion_proyecto, ScrumMaster, ProductOwner, nombre_grupo FROM proyectos, grupos, gruposproyectos WHERE proyectos.id_proyecto = gruposproyectos.id_proyecto AND grupos.id_grupo = gruposproyectos.id_grupo AND proyectos.nombre_proyecto ='Quien es quien';
-		*/
-		//$consulta_proyecto = "SELECT * FROM grupos;";
+		$consulta_proyecto = "SELECT proyectos.descripcion_proyecto,grupos.nombre_grupo ,u1.nombre_usuario AS 'ScrumMaster', u2.nombre_usuario AS 'ProductOwner' FROM proyectos, gruposproyectos, grupos,usuarios u1, usuarios u2 WHERE proyectos.id_proyecto = gruposproyectos.id_proyecto AND grupos.id_grupo = gruposproyectos.id_grupo AND proyectos.nombre_proyecto='".$proyectName."' AND proyectos.ScrumMaster = u1.id_usuario AND proyectos.ProductOwner = u2.id_usuario;";
 
 		$query=mysqli_query($conn,$consulta_proyecto);
 			$proyectos = [];
 			while($registre = mysqli_fetch_assoc($query)){
 				$proyectos[] = $registre;
 			}
+			print_r($proyectos);
 			return ($proyectos);
 	}
 
