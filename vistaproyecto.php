@@ -171,7 +171,6 @@
 			while($registre = mysqli_fetch_assoc($query)){
 				$proyectos[] = $registre;
 			}
-			print_r($proyectos);
 			return ($proyectos);
 	}
 
