@@ -12,6 +12,7 @@
 	<link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css">
 	<link rel="shortcut icon" href="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png"> 
 	<script type="text/javascript" src="js/script.js" defer></script>
+	<meta charset="UTF-8">
 </head>
 <body>
 	<?
@@ -27,9 +28,7 @@
 		$sprints = getSprints($conn,$nombre_proyecto);
 
 		$proyecto = findProyects($conn,$nombre_proyecto);
-		$hoy = date('Y-h-i');
-		//if((time()-(60*60*24)) < strtotime($var))
-		//echo time();
+		$hoy = date('Y-m-d');
 	?>
 
 	<div class="contenedor">
@@ -55,12 +54,19 @@
 				echo "<h4>Listado de Sprints</h4>";
 				$numSprint = 1;
 				foreach($sprints as $sprint){
+					if($hoy < $sprint['Fecha_Fin']){
+						?><div class="sprint sprint-actual"><?
+					}else{
+						?><div class="sprint sprint-anterior"><?
+					}
 					?>
-						<div class="sprint">
+
+						
 							<?echo "<h6 onclick='showSprint(this)'>Sprint ".$numSprint."</h6>";
 							?><ul id="list" class="plegado" name="primero"><?
 									echo "<li>Horas Totales: ".$sprint['horasTotales']."</li>";
 									echo "<li>Fecha de inicio: ".$sprint['Fecha_Inicio']."</li>";
+									
 									echo "<li>Fecha de fin: ".$sprint['Fecha_Fin']."</li>";
 									?><li><p class="title">Especificaciones</p> <br>
 										<ul>

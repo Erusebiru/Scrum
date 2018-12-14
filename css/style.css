@@ -273,3 +273,14 @@ li label{
 	font-size: 15px !important;
 	color: black !important;
 }
+
+.sprint-anterior{
+	background-color: rgba(79,79,79,0.5);
+}
+.sprint-anterior h6{
+	color: rgba(190,190,190);
+}
+
+.sprint-actual{
+	background-color: green;
+}
