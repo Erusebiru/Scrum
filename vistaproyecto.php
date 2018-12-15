@@ -48,7 +48,7 @@
 
 	    <div id="TablaProyectos" class="tabla-vistaproyectos">
 	    	<h4><?= $nombre_proyecto ?></h4>
-			<ul id="list">
+			<ul>
 				<?
 				echo "<li>Descripcion: ".$proyecto[0]['descripcion_proyecto']."</li>";
 				echo "<li>ScrumMaster: ".$proyecto[0]['ScrumMaster']."</li>";
@@ -75,14 +75,29 @@
 						?><div class="sprint sprint-anterior"><?
 					}?>
 							<?echo "<h6 onclick='showSprint(this)'>Sprint ".$numSprint."</h6>";
-							?><ul id="list" class="plegado" name="primero"><?
-
-									echo "<li>Horas Totales: ".$sprint['horasTotales']."</li>";
-									$newDate = date("d-m-Y", strtotime($sprint['Fecha_Inicio']));
-									echo "<li>Fecha de inicio: ".$newDate."</li>";
-									$newDate = date("d-m-Y", strtotime($sprint['Fecha_Fin']));
-									echo "<li>Fecha de fin: ".$newDate."</li>";
-									?><li><p class="title">Especificaciones</p> <br>
+							?><ul class="plegado" name="primero"><?
+									$fechaInicio = date("d-m-Y", strtotime($sprint['Fecha_Inicio']));
+									$fechaFin = date("d-m-Y", strtotime($sprint['Fecha_Fin']));
+									?>
+									<li><p class="title">Información</p>
+										<ul>
+											<li>
+												<table>
+													<tr>
+														<th>Horas totales</th>
+														<th>Fecha de inicio</th>
+														<th>Fecha de fin</th>
+													</tr>
+													<tr>
+														<td><?=$sprint['horasTotales']?></td>
+														<td><?=$fechaInicio?></td>
+														<td><?=$fechaFin?></td>
+													</tr>
+												</table>
+											</li>
+										</ul>
+									</li>
+									<li><p class="title">Especificaciones</p>
 										<ul>
 											<li>
 												<table>
@@ -134,7 +149,6 @@
 							<?if($tipo_usuario == "scrumMaster"){
 								?><td><img class="upside" src="images/up.png"><img class="downside" src="images/down.png"><img class="del" src="images/del.png"></td><?
 							}?>
-							
 						</tr>
 
 					<?
@@ -143,7 +157,7 @@
 				?>
 				</table>
 				<br>
-				<?if($tipo_usuario == "scrumMaster"){?>
+				<?if($tipo_usuario === "scrumMaster"){?>
 					<div class="row">
 	            		<div class="col s12">
 	                		<div class="row">

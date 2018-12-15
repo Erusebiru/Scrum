@@ -182,6 +182,7 @@ function showSprint(element){
 	if(!elementoDesplegado.classList.contains("desplegado")){
 		removeClass();
 		elementoDesplegado.classList.toggle("desplegado");
+		element.parentNode.classList.toggle("sprint-desplegado");
 	}else{
 		removeClass();
 	}
@@ -192,6 +193,7 @@ function removeClass(){
 	var elements = document.querySelectorAll("ul");
 	elements.forEach(function(element){
 		element.classList.remove("desplegado");
+		element.parentNode.classList.remove("sprint-desplegado");
 	});
 }
 
@@ -244,6 +246,7 @@ function reNumber(){
 }
 
 //Función que lanza el conjunto de funciones para añadir eventos
+//Con esta función centralizamos todos los eventos y si quisiéramos hacer nuevas cosas, sólo habría que añadir la llamada en ésta
 function addEvents(){
 	clickUP();
 	clickDOWN();
@@ -272,11 +275,14 @@ function subir(){
 function bajar(){
 	var parent = this.parentNode.parentNode.parentNode;
 	var elemento = this.parentNode.parentNode;
-	var siguiente = elemento.nextElementSibling.nextElementSibling;
-	var cloned = elemento.cloneNode(true);
-	parent.insertBefore(cloned,siguiente);
-	parent.removeChild(elemento);
-	addEvents();
+	if(elemento !== parent.lastElementChild){
+		var siguiente = elemento.nextElementSibling.nextElementSibling;
+		var cloned = elemento.cloneNode(true);
+		parent.insertBefore(cloned,siguiente);
+		parent.removeChild(elemento);
+		addEvents();
+	}
+	
 }
 
 //Función que elimina una especificación
