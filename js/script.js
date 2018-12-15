@@ -202,7 +202,6 @@ function vistaProyecto(proyecto) {
 	document.getElementById("sendProyect").submit();
 	}
 
-
 function Enviar_Nombre_Proyecto() {
 	var parent = document.querySelector(".new-proyect-view-box");
 	var form = addElement(parent,"form",undefined,["action=vistaproyecto.php","method=post","id=sendProyect"]);
@@ -210,7 +209,8 @@ function Enviar_Nombre_Proyecto() {
 	
 }
 
-//Funciones para especificaciones
+
+//Funciones para añadir eventos al clickar en los botones de subir, bajar y eliminar
 
 function clickUP(){
 	var button = document.querySelectorAll(".upside");
@@ -233,39 +233,79 @@ function clickDROP(){
 	});
 }
 
-clickUP();
-clickDOWN();
-clickDROP();
+//Con esta función se ponen los números de especificación en orden cada vez que se haga una acción (subir, bajar, eliminar o añadir)
+function reNumber(){
+	var numeros = document.getElementsByName("numSpec");
+	var num = 1;
+	for(var i=0;i<numeros.length;i++){
+		numeros[i].textContent = num;
+		num++;
+	}
+}
 
+//Función que lanza el conjunto de funciones para añadir eventos
+function addEvents(){
+	clickUP();
+	clickDOWN();
+	clickDROP();
+	reNumber();
+}
+
+addEvents();
+
+
+//Función para subir una especificación en el listado
 function subir(){
-	var parent = this.parentNode.parentNode;
-	var elemento = this.parentNode;
+	var parent = this.parentNode.parentNode.parentNode;
+	var elemento = this.parentNode.parentNode;
 	
-	if(elemento !== parent.firstElementChild){
+	if(elemento !== parent.firstElementChild.nextElementSibling){
 		var previo = elemento.previousElementSibling;
 		var cloned = elemento.cloneNode(true);
 		parent.insertBefore(cloned,previo);
 		parent.removeChild(elemento);
-		clickUP();
-		clickDOWN();
-		clickDROP();
+		addEvents();
 	}	
 }
 
+//Función para bajar una especificación en el listado
 function bajar(){
-	var parent = this.parentNode.parentNode;
-	var elemento = this.parentNode;
+	var parent = this.parentNode.parentNode.parentNode;
+	var elemento = this.parentNode.parentNode;
 	var siguiente = elemento.nextElementSibling.nextElementSibling;
 	var cloned = elemento.cloneNode(true);
 	parent.insertBefore(cloned,siguiente);
 	parent.removeChild(elemento);
-	clickUP();
-	clickDOWN();
-	clickDROP();
+	addEvents();
 }
 
+//Función que elimina una especificación
 function eliminar(){
-	var parent = this.parentNode.parentNode;
-	var elemento = this.parentNode;
+	var parent = this.parentNode.parentNode.parentNode;
+	var elemento = this.parentNode.parentNode;
 	parent.removeChild(elemento);
+	reNumber();
+}
+
+//Función que añade una nueva especificación
+//Si el valor del input estuviera vacío devolvería un error
+function addNewSpec(){
+	var newSpec = document.getElementById("newSpec");
+	if(newSpec.value == ""){
+		var texto = "La especificación no puede estar vacía";
+		createErrorWindow(texto);
+	}else{
+		var parent = document.querySelector(".especificacion > table").firstElementChild;
+
+		var tr = addElement(parent,"tr",undefined,["class=spec"]);
+		addElement(tr,"td","0",["name=numSpec"]);
+		addElement(tr,"td",newSpec.value);
+		addElement(tr,"td","Backlog")
+		var td = addElement(tr,"td");
+		addElement(td,"img",undefined,["src=images/up.png","class=upside"]);
+		addElement(td,"img",undefined,["src=images/down.png","class=downside"]);
+		addElement(td,"img",undefined,["src=images/del.png","class=del"]);
+		addEvents();
+	}
+	newSpec.value = "";
 }

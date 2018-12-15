@@ -214,18 +214,19 @@ button[name="addProyect"]:hover {
     transition: max-height 1.6s ease-in;
 }
 
-#TablaSprints,#TablaProyectos{
+
+#TablaSprints h4, #TablaProyectos h4, #TablaEspecificaciones h4{
+	text-align: center;
+}
+.tabla-vistaproyectos{
 	margin: auto;
-	margin-top: 20px;
+	margin-top: 15px;
+	margin-bottom: 15px;
 	width: 80%;
 	border: 1px solid black;
 }
 
-#TablaSprints h4, #TablaProyectos h4{
-	text-align: center;
-}
-
-.sprint,.proyecto{
+.sprint,.proyecto,.especificacion{
 	cursor: pointer;
 	margin: 20px auto;
 	width: 500px;
@@ -252,16 +253,16 @@ button[name="addProyect"]:hover {
 table tr td, table tr th{
 	text-align: center;
 }
-/*
-table tr td img{
+
+.spec img{
 	width: 15px;
 	height: 15px;
 	cursor: pointer;
 }
-table tr td img:hover{
+.spec img:hover{
 	filter: invert(50%);
 }
-*/
+
 .title{
 	font-size: 18px;
 	font-weight: bold;
@@ -275,12 +276,23 @@ li label{
 }
 
 .sprint-anterior{
-	background-color: rgba(79,79,79,0.5);
+	background-color:  rgba(190,190,190);
 }
 .sprint-anterior h6{
-	color: rgba(190,190,190);
+	color: rgba(79,79,79,0.5);
 }
 
 .sprint-actual{
-	background-color: green;
+	background-color: #89bc89;
+}
+.sprint-actual h6{
+	color: #215521;
+}
+
+.sprint-proximo{
+	background-color: #5d5d5d;
+}
+
+.sprint-proximo h6{
+	color: black;
 }

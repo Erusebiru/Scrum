@@ -12,7 +12,7 @@
 	<link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css">
 	<link rel="shortcut icon" href="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png"> 
 	<script type="text/javascript" src="js/script.js" defer></script>
-	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 	<?
@@ -25,8 +25,9 @@
 
 		include 'connection.php';
 		$nombre_proyecto = $_POST["selectedProyect"];
+		$tipo_usuario = "scrumMaster";
 		$sprints = getSprints($conn,$nombre_proyecto);
-
+		$specs = getSpecs($conn);
 		$proyecto = findProyects($conn,$nombre_proyecto);
 		$hoy = date('Y-m-d');
 	?>
@@ -36,12 +37,8 @@
 	      <nav>
 	        <div class = "nav-wrapper">
 	          <a href = "#" class = "brand-logo nombrelogo">Administración de proyectos</a>
-	          <a href="#!" class="brand-logo center"><img src="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png"></a>
+	          <a href="proyectos.php" class="brand-logo center"><img src="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png"></a>
 	          <ul id="nav-mobile" class="right hide-on-med-and-down">
-		          <!--li><a href="#"><span>Pestaña1</span></a></li>
-		          <li><a href="#"><span>Pestaña2</span></a></li>
-		          <li><a href="#"><span>Pestaña3</span></a></li>
-		          <li>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>-->
 		          <li class="grey-text lighten-5">Usuario: <?php echo $user ?></li>
 		          <li><a href="logout.php"><i class="material-icons grey-text">exit_to_app</i></a></li>
 		      </ul>
@@ -49,7 +46,7 @@
 	      </nav>
 	    </div>
 
-	    <div id="TablaProyectos">
+	    <div id="TablaProyectos" class="tabla-vistaproyectos">
 	    	<h4><?= $nombre_proyecto ?></h4>
 			<ul id="list">
 				<?
@@ -63,33 +60,28 @@
 
 				?>
 			</ul>
-
-
-
-<!--descripcion_proyecto,grupos.nombre_grupo,u1.nombre_usuario, u2.nombre_usuario -->
-			<?
-			?>
 	    </div>
 		
-		<div id="TablaSprints">
+		<div id="TablaSprints" class="tabla-vistaproyectos">
 			<?
 				echo "<h4>Listado de Sprints</h4>";
 				$numSprint = 1;
 				foreach($sprints as $sprint){
-					if($hoy < $sprint['Fecha_Fin']){
+					if($hoy > $sprint['Fecha_Inicio'] && $hoy < $sprint['Fecha_Fin']){
 						?><div class="sprint sprint-actual"><?
+					}else if($hoy < $sprint['Fecha_Inicio']){
+						?><div class="sprint sprint-proximo"><?
 					}else{
 						?><div class="sprint sprint-anterior"><?
-					}
-					?>
-
-						
+					}?>
 							<?echo "<h6 onclick='showSprint(this)'>Sprint ".$numSprint."</h6>";
 							?><ul id="list" class="plegado" name="primero"><?
+
 									echo "<li>Horas Totales: ".$sprint['horasTotales']."</li>";
-									echo "<li>Fecha de inicio: ".$sprint['Fecha_Inicio']."</li>";
-									
-									echo "<li>Fecha de fin: ".$sprint['Fecha_Fin']."</li>";
+									$newDate = date("d-m-Y", strtotime($sprint['Fecha_Inicio']));
+									echo "<li>Fecha de inicio: ".$newDate."</li>";
+									$newDate = date("d-m-Y", strtotime($sprint['Fecha_Fin']));
+									echo "<li>Fecha de fin: ".$newDate."</li>";
 									?><li><p class="title">Especificaciones</p> <br>
 										<ul>
 											<li>
@@ -99,8 +91,8 @@
 														<th>Horas Asignadas</th>
 														<th>Estado</th>
 													</tr>
-													<?$specs = getSpecs($conn,$sprint['id_sprint']);
-													foreach($specs as $spec){
+													<?$specsSprint = getSpecsSprint($conn,$sprint['id_sprint']);
+													foreach($specsSprint as $spec){
 														?>
 														<tr>
 															<td><?=$spec['nombre_spec']?></td>
@@ -120,47 +112,59 @@
 				}
 			?>
 		</div>
-
-		<!--<div class="proyect-list">
-			<div class="proyect-title">Proyectos</div>
-			<div class="proyect-table">
-				<div class="col s10 m10 l10 offset-s2 offset-m2 offset-l2">
+		<div id="TablaEspecificaciones" class="tabla-vistaproyectos">
+			<?echo "<h4>Listado de Especificaciones</h4>";
+			$numSpec = 1;
+			?>
+			<div class="especificacion">
+				<table>
+						<tr>
+							<th>Número de especificación</th>
+							<th>Tarea</th>
+							<th>Estado</th>
+							<th></th>
+						</tr>
 				<?
+				foreach($specs as $spec){
+					?>
+						<tr class="spec">
+							<td name="numSpec"><?=$numSpec?></td>
+							<td><?=$spec['nombre_spec']?></td>
+							<td><?=$spec['estado']?></td>
+							<?if($tipo_usuario == "scrumMaster"){
+								?><td><img class="upside" src="images/up.png"><img class="downside" src="images/down.png"><img class="del" src="images/del.png"></td><?
+							}?>
+							
+						</tr>
 
-				/*while($registre = mysqli_fetch_assoc($proyecto)){
-						
-						$descripcion_proyecto = $registre['descripcion_proyecto'];
-						$scrumMaster_proyecto = $registre['ScrumMaster'];
-						$productOwner_proyecto = $registre['ProductOwner'];
-						$gruposProyecto = $registre['nombre_grupo'];
-						?>
-						<div class ="col s12 m12 l12">
-							<? $nombre_proyecto ?>
-						</div>
-						<div class ="col s12 m12 l12">
-							<span>hola</span>
-						</div>
-						<?
-
-						echo "<li>";
-						echo '<a href="vistaproyecto.php" name="'.$nombre_proyecto.'">'.$registre['nombre_proyecto']?></a>
-						</div> <?
-					}*/
+					<?
+					$numSpec++;
+				}
 				?>
-				</ul>
-
+				</table>
+				<br>
+				<?if($tipo_usuario == "scrumMaster"){?>
+					<div class="row">
+	            		<div class="col s12">
+	                		<div class="row">
+	                    		<div class="input-field col s6">
+	                        		<input id="newSpec" type="text" class="validate">
+	                        		<label for="newSpec">Añadir especificación</label>
+	                    		</div>
+			                    <div class="input-field col s6">
+			                        <button class="btn waves-effect waves-light" type="submit" onclick="addNewSpec()">Añadir</button>
+			                    </div>
+	                		</div>
+	           			</div>
+	        		</div>
+        		<?}?>
 			</div>
-			
-			
-		</div>
-		<div class="row">
-			<div class="col card hoverable push-s1 s10 push-m2 m8 push-l4 l4 new-proyect-view-box"></div>
 		</div>
 	</div>
 
 	<div class="window-message">
 		<div class="error"></div>
-	</div>-->
+	</div>
 	<?
 
 	function findProyects($conn,$proyectName){
@@ -184,7 +188,7 @@
 		return $sprints;
 	}
 
-	function getSpecs($conn,$idsprint){
+	function getSpecsSprint($conn,$idsprint){
 		$query = "SELECT * FROM especificaciones WHERE id_sprint = '$idsprint'";
 		$specs = [];
 		$result = mysqli_query($conn, $query);
@@ -193,6 +197,18 @@
 		}
 		return $specs;
 	}
+
+	
+	function getSpecs($conn){
+		$query = "SELECT * FROM especificaciones ORDER BY id_sprint";
+		$specs = [];
+		$result = mysqli_query($conn, $query);
+		while($registre = mysqli_fetch_assoc($result)){
+			$specs[] = $registre;
+		}
+		return $specs;
+	}
+
 	?>
 </body>
 </html>
