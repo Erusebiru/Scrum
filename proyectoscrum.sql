@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-12-2018 a las 21:18:16
+-- Tiempo de generación: 15-12-2018 a las 21:23:51
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.4
 
@@ -30,12 +30,22 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `especificaciones` (
   `id_spec` int(10) NOT NULL,
-  `numero` int(5) NOT NULL,
-  `horas` int(5) NOT NULL,
+  `nombre_spec` varchar(50) NOT NULL,
+  `horas` int(5) DEFAULT NULL,
   `estado` varchar(20) NOT NULL,
-  `id_sprint` int(10) NOT NULL,
+  `id_sprint` int(10) DEFAULT NULL,
   `id_proyecto` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `especificaciones`
+--
+
+INSERT INTO `especificaciones` (`id_spec`, `nombre_spec`, `horas`, `estado`, `id_sprint`, `id_proyecto`) VALUES
+(1, 'Crear tablas', 2, 'backlog', 4, 2),
+(2, 'Añadir colores', 5, 'backlog', 4, 2),
+(3, 'Enviar e-mail', 2, 'backlog', 5, 2),
+(4, 'Probar querys', 5, 'backlog', 5, 2);
 
 -- --------------------------------------------------------
 
@@ -73,6 +83,7 @@ CREATE TABLE `gruposproyectos` (
 
 INSERT INTO `gruposproyectos` (`id_proyecto`, `id_grupo`) VALUES
 (2, 1),
+(2, 2),
 (5, 1);
 
 -- --------------------------------------------------------
@@ -113,6 +124,16 @@ CREATE TABLE `sprints` (
   `Fecha_Fin` date NOT NULL,
   `id_proyecto` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `sprints`
+--
+
+INSERT INTO `sprints` (`id_sprint`, `horasTotales`, `Fecha_Inicio`, `Fecha_Fin`, `id_proyecto`) VALUES
+(4, 24, '2018-12-13', '2018-12-13', 2),
+(5, 27, '2018-12-13', '2018-12-14', 2),
+(6, 20, '2018-12-14', '2018-12-21', 2),
+(7, 6, '2018-12-21', '2018-12-28', 2);
 
 -- --------------------------------------------------------
 
@@ -199,7 +220,8 @@ ALTER TABLE `grupos`
 -- Indices de la tabla `gruposproyectos`
 --
 ALTER TABLE `gruposproyectos`
-  ADD PRIMARY KEY (`id_proyecto`,`id_grupo`);
+  ADD PRIMARY KEY (`id_proyecto`,`id_grupo`),
+  ADD KEY `id_grupo` (`id_grupo`);
 
 --
 -- Indices de la tabla `proyectos`
@@ -247,7 +269,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `especificaciones`
 --
 ALTER TABLE `especificaciones`
-  MODIFY `id_spec` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_spec` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `grupos`
@@ -265,7 +287,7 @@ ALTER TABLE `proyectos`
 -- AUTO_INCREMENT de la tabla `sprints`
 --
 ALTER TABLE `sprints`
-  MODIFY `id_sprint` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_sprint` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `tareas`
@@ -295,6 +317,13 @@ ALTER TABLE `usuarios`
 ALTER TABLE `especificaciones`
   ADD CONSTRAINT `fk_id_proyecto_especificaciones` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id_proyecto`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_id_sprint_especificaciones` FOREIGN KEY (`id_sprint`) REFERENCES `sprints` (`id_sprint`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `gruposproyectos`
+--
+ALTER TABLE `gruposproyectos`
+  ADD CONSTRAINT `gruposproyectos_ibfk_1` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id_proyecto`),
+  ADD CONSTRAINT `gruposproyectos_ibfk_2` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id_grupo`);
 
 --
 -- Filtros para la tabla `proyectos`
