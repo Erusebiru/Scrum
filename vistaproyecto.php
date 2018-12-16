@@ -48,18 +48,28 @@
 
 	    <div id="TablaProyectos" class="tabla-vistaproyectos">
 	    	<h4><?= $nombre_proyecto ?></h4>
-			<ul>
-				<?
-				echo "<li>Descripcion: ".$proyecto[0]['descripcion_proyecto']."</li>";
-				echo "<li>ScrumMaster: ".$proyecto[0]['ScrumMaster']."</li>";
-				echo "<li>ProductOwner: ".$proyecto[0]['ProductOwner']."</li>";
-				echo "<li>Grupos: </li>";
-				foreach($proyecto as $grupo){
-					echo "<li>".$grupo['nombre_grupo']."</li>";
-				}
-
-				?>
-			</ul>
+	    	<div class='proyecto'>
+				<table>
+					<tr> 
+						<?
+						if (isset($proyecto[0])) {
+							
+							echo "<td><b>Descripción:</b></td><td>".$proyecto[0]['descripcion_proyecto']."</td></tr>";
+							echo "<td><b>ScrumMaster:</b></td><td>".$proyecto[0]['ScrumMaster']."</td></tr>";
+							echo "<td><b>ProductOwner:</b></td><td>".$proyecto[0]['ProductOwner']."</td></tr>";
+							echo "<td><b>Grupos:</td></b><td>";
+							foreach($proyecto as $grupo){
+								echo $grupo['nombre_grupo']." <br>";
+							}
+							echo "</td>";
+							}
+						else {
+							echo "<td>Todavía no se han añadido datos de este proyecto</td>";
+						}
+						?>
+					</tr>
+				</table>
+			</div>
 	    </div>
 		
 		<div id="TablaSprints" class="tabla-vistaproyectos">
