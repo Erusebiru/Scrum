@@ -36,35 +36,42 @@
       <?php
         if (isset($_SESSION['error']) && $_SESSION['error']!='undefined' && $_SESSION['error']!=null && $_SESSION['error']!=""){
 
-          if ($_SESSION['error']=="errorUser") {
+          if ($_SESSION['error']=="errorPsw") {
+            echo '<script>var global_error = "password";</script>';
+            $_SESSION['error'] = null; 
+          }
+          else if ($_SESSION['error']=="errorUser") {
             echo '<script> var global_error = "usuario" </script>';   
             $_SESSION['error'] = null; 
           }
-          
-
-      }
           // else if ($_SESSION['error']=="errorUser") {
           //   echo '<script> var global_error = "usuario" </script>';
           //   $_SESSION['error'] = null;      
           // }
-        
+        }
       ?>
 
-      
-
       <div class="parallax"><img src="https://cdn.pixabay.com/photo/2016/06/02/02/38/mesh-1430108_960_720.png"></div>
-      <div class="s12 m12 l12"><br> <br></div>    
+      <div class="col s12 m12 l12"><br> <br></div>    
       <div id="formulario" class="col m8 s8 l8 offset-m2 offset-s2 offset-l2 center z-depth-3">
-        <form class = "col l12" method="post" name="formemail" action="recuperarPasswordValidar.php">
+        <form class = "col l12" method="post" action="validarLogin.php">
           <div align="center" class = "center input-field col l12">
             <i class = "material-icons prefix">account_circle</i>
             <input placeholder = "Username" name = "username" type = "text" class = "active validate" required />
             <label for = "username">Username</label>
           </div>
 
+          <div align="center" class = " center input-field col l12"> 
+            <i class = "material-icons prefix"></i>
+            <label for = "password">Password</label>
+            <input id = "password" type = "password" placeholder = "Password" name="password" class = "validate" required />  
+          </div>
+
           <div class = "col l12">
             <button class="btn waves-effect waves-light grey darken-2" type="submit" name="action">Submit
             <i class="material-icons right">send</i>
+            </button><p>&nbsp&nbsp&nbsp&nbsp&nbsp</p>
+            <a href="recuperarPassword.php">Recuperar Contraseña</a>
           </div>
         </form>
       </div>
