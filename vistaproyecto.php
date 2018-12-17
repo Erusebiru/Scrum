@@ -112,7 +112,7 @@
 											<li>
 												<table>
 													<tr>
-														<th>Nº de especificación</th>
+														<th>Tarea</th>
 														<th>Horas Asignadas</th>
 														<th>Estado</th>
 													</tr>

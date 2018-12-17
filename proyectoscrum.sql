@@ -35,7 +35,7 @@ CREATE TABLE `especificaciones` (
   `estado` varchar(20) NOT NULL,
   `id_sprint` int(10) DEFAULT NULL,
   `id_proyecto` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB
 
 --
 -- Volcado de datos para la tabla `especificaciones`
@@ -56,7 +56,7 @@ INSERT INTO `especificaciones` (`id_spec`, `nombre_spec`, `horas`, `estado`, `id
 CREATE TABLE `grupos` (
   `id_grupo` int(10) NOT NULL,
   `nombre_grupo` varchar(40) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB
 
 --
 -- Volcado de datos para la tabla `grupos`
@@ -75,7 +75,7 @@ INSERT INTO `grupos` (`id_grupo`, `nombre_grupo`) VALUES
 CREATE TABLE `gruposproyectos` (
   `id_proyecto` int(10) NOT NULL,
   `id_grupo` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB
 
 --
 -- Volcado de datos para la tabla `gruposproyectos`
@@ -98,7 +98,7 @@ CREATE TABLE `proyectos` (
   `descripcion_proyecto` varchar(150) NOT NULL,
   `ScrumMaster` int(10) NOT NULL,
   `ProductOwner` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB
 
 --
 -- Volcado de datos para la tabla `proyectos`
@@ -123,7 +123,7 @@ CREATE TABLE `sprints` (
   `Fecha_Inicio` date NOT NULL,
   `Fecha_Fin` date NOT NULL,
   `id_proyecto` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB
 
 --
 -- Volcado de datos para la tabla `sprints`
@@ -149,7 +149,7 @@ CREATE TABLE `tareas` (
   `dificultad` varchar(20) NOT NULL,
   `id_spec` int(10) NOT NULL,
   `id_usuario` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB
 
 -- --------------------------------------------------------
 
@@ -160,7 +160,7 @@ CREATE TABLE `tareas` (
 CREATE TABLE `tipos_usuario` (
   `id_tipo_usuario` int(10) NOT NULL,
   `nombre_tipo` varchar(40) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB
 
 --
 -- Volcado de datos para la tabla `tipos_usuario`
@@ -185,7 +185,7 @@ CREATE TABLE `usuarios` (
   `id_tipo_usuario` int(10) NOT NULL,
   `id_grupo` int(10) DEFAULT NULL,
   `id_spec` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB
 
 --
 -- Volcado de datos para la tabla `usuarios`
