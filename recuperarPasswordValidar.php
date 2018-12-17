@@ -30,6 +30,8 @@
 		}
 		$token = md5(uniqid(mt_rand()));
 
+		insertToken($token,$conn,$user);
+
 		mail($email,"Recuperar Contraseña","Ve a la pagina siguiente para cambiar la contraseña de tu usuario: http://www.khalidomain.ml/Scrum/cambiarPassword.php?token=".$token,"from: ubuntu@blablaslba.com");
    		echo "Se ha enviado un email a tu cuenta de correo electronico para el cambio de contraseña.";
 		
