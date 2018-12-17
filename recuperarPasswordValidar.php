@@ -47,11 +47,12 @@
    
 
    	$consulta_correo = $dbh->prepare("SELECT email from usuarios where nombre_usuario'".$user."';");
-	$consulta_correo->bindValue(':user', $user);
-	$consulta_correo->execute();
-	$email = $consulta_correo ->fetch(PDO::FETCH_ASSOC);
+	
 		
-	$_SESSION["email"] = $email;
+	while($correo = mysqli_fetch_array($consulta_correo)) {
+		$email=$correo['email'];
+       		 
+       	}
 
 
    mail($email,"Recuperar Contraseña","Ve a la pagina siguiente para cambiar la contraseña de tu usuario: http://www.khalidomain.ml/Scrum/cambiarPassword.php","from: ubuntu@blablaslba.com");
