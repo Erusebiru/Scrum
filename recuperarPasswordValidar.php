@@ -28,7 +28,7 @@
 			header('Location: recuperarPassword.php');
 			}
 		}
-
+		echo $email;
 		mail($email,"Recuperar Contraseña","Ve a la pagina siguiente para cambiar la contraseña de tu usuario: http://www.khalidomain.ml/Scrum/cambiarPassword.php","from: ubuntu@blablaslba.com");
    		echo "Se ha enviado un email a tu cuenta de correo electronico para el cambio de contraseña.";
 		
