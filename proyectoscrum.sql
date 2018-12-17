@@ -1,359 +1,262 @@
--- phpMyAdmin SQL Dump
--- version 4.8.0
--- https://www.phpmyadmin.net/
+-- MySQL dump 10.13  Distrib 5.7.24, for Linux (x86_64)
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 15-12-2018 a las 21:23:51
--- Versión del servidor: 10.1.31-MariaDB
--- Versión de PHP: 7.2.4
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
+-- Host: localhost    Database: proyectoscrum
+-- ------------------------------------------------------
+-- Server version	5.7.24-0ubuntu0.18.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Base de datos: `proyectoscrum`
+-- Table structure for table `especificaciones`
 --
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `especificaciones`
---
-
+DROP TABLE IF EXISTS `especificaciones`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `especificaciones` (
-  `id_spec` int(10) NOT NULL,
+  `id_spec` int(10) NOT NULL AUTO_INCREMENT,
   `nombre_spec` varchar(50) NOT NULL,
   `horas` int(5) DEFAULT NULL,
   `estado` varchar(20) NOT NULL,
   `id_sprint` int(10) DEFAULT NULL,
-  `id_proyecto` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_proyecto` int(10) NOT NULL,
+  PRIMARY KEY (`id_spec`),
+  KEY `fk_id_sprint_especificaciones` (`id_sprint`),
+  KEY `fk_id_proyecto_especificaciones` (`id_proyecto`),
+  CONSTRAINT `fk_id_proyecto_especificaciones` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id_proyecto`) ON DELETE CASCADE,
+  CONSTRAINT `fk_id_sprint_especificaciones` FOREIGN KEY (`id_sprint`) REFERENCES `sprints` (`id_sprint`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Volcado de datos para la tabla `especificaciones`
+-- Dumping data for table `especificaciones`
 --
 
-INSERT INTO `especificaciones` (`id_spec`, `nombre_spec`, `horas`, `estado`, `id_sprint`, `id_proyecto`) VALUES
-(1, 'Crear tablas', 2, 'backlog', 4, 2),
-(2, 'Añadir colores', 5, 'backlog', 4, 2),
-(3, 'Enviar e-mail', 2, 'backlog', 5, 2),
-(4, 'Probar querys', 5, 'backlog', 5, 2);
-
--- --------------------------------------------------------
+LOCK TABLES `especificaciones` WRITE;
+/*!40000 ALTER TABLE `especificaciones` DISABLE KEYS */;
+INSERT INTO `especificaciones` VALUES (1,'Crear tablas',2,'backlog',4,2),(2,'Añadir colores',5,'backlog',4,2),(3,'Enviar e-mail',2,'backlog',5,2),(4,'Probar querys',5,'backlog',5,2);
+/*!40000 ALTER TABLE `especificaciones` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Estructura de tabla para la tabla `grupos`
+-- Table structure for table `grupos`
 --
 
+DROP TABLE IF EXISTS `grupos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `grupos` (
-  `id_grupo` int(10) NOT NULL,
-  `nombre_grupo` varchar(40) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_grupo` int(10) NOT NULL AUTO_INCREMENT,
+  `nombre_grupo` varchar(40) DEFAULT NULL,
+  PRIMARY KEY (`id_grupo`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Volcado de datos para la tabla `grupos`
+-- Dumping data for table `grupos`
 --
 
-INSERT INTO `grupos` (`id_grupo`, `nombre_grupo`) VALUES
-(1, 'JRY'),
-(2, 'DEK');
-
--- --------------------------------------------------------
+LOCK TABLES `grupos` WRITE;
+/*!40000 ALTER TABLE `grupos` DISABLE KEYS */;
+INSERT INTO `grupos` VALUES (1,'JRY'),(2,'DEK');
+/*!40000 ALTER TABLE `grupos` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Estructura de tabla para la tabla `gruposproyectos`
+-- Table structure for table `gruposproyectos`
 --
 
+DROP TABLE IF EXISTS `gruposproyectos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gruposproyectos` (
   `id_proyecto` int(10) NOT NULL,
-  `id_grupo` int(10) NOT NULL
+  `id_grupo` int(10) NOT NULL,
+  PRIMARY KEY (`id_proyecto`,`id_grupo`),
+  KEY `id_grupo` (`id_grupo`),
+  CONSTRAINT `gruposproyectos_ibfk_1` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id_proyecto`),
+  CONSTRAINT `gruposproyectos_ibfk_2` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id_grupo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Volcado de datos para la tabla `gruposproyectos`
+-- Dumping data for table `gruposproyectos`
 --
 
-INSERT INTO `gruposproyectos` (`id_proyecto`, `id_grupo`) VALUES
-(2, 1),
-(2, 2),
-(5, 1);
-
--- --------------------------------------------------------
+LOCK TABLES `gruposproyectos` WRITE;
+/*!40000 ALTER TABLE `gruposproyectos` DISABLE KEYS */;
+INSERT INTO `gruposproyectos` VALUES (2,1),(5,1),(2,2);
+/*!40000 ALTER TABLE `gruposproyectos` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Estructura de tabla para la tabla `proyectos`
+-- Table structure for table `proyectos`
 --
 
+DROP TABLE IF EXISTS `proyectos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `proyectos` (
-  `id_proyecto` int(10) NOT NULL,
+  `id_proyecto` int(10) NOT NULL AUTO_INCREMENT,
   `nombre_proyecto` varchar(30) NOT NULL,
   `descripcion_proyecto` varchar(150) NOT NULL,
   `ScrumMaster` int(10) NOT NULL,
-  `ProductOwner` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ProductOwner` int(10) NOT NULL,
+  PRIMARY KEY (`id_proyecto`),
+  KEY `fk_id_scrummaster_proyectos` (`ScrumMaster`),
+  KEY `fk_id_productowner_proyectos` (`ProductOwner`),
+  CONSTRAINT `fk_id_productowner_proyectos` FOREIGN KEY (`ProductOwner`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE,
+  CONSTRAINT `fk_id_scrummaster_proyectos` FOREIGN KEY (`ScrumMaster`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Volcado de datos para la tabla `proyectos`
+-- Dumping data for table `proyectos`
 --
 
-INSERT INTO `proyectos` (`id_proyecto`, `nombre_proyecto`, `descripcion_proyecto`, `ScrumMaster`, `ProductOwner`) VALUES
-(1, 'Quien es quien', 'Es un juego', 7, 8),
-(2, 'Scrum', 'Es un método agile', 7, 8),
-(5, 'Prueba', 'Esto es una prueba', 7, 8),
-(6, 'Prueba2', '', 7, 8),
-(7, 'Prueba3', 'asdf', 7, 8);
-
--- --------------------------------------------------------
+LOCK TABLES `proyectos` WRITE;
+/*!40000 ALTER TABLE `proyectos` DISABLE KEYS */;
+INSERT INTO `proyectos` VALUES (1,'Quien es quien','Es un juego',7,8),(2,'Scrum','Es un método agile',7,8),(5,'Prueba','Esto es una prueba',7,8),(6,'Prueba2','',7,8),(7,'Prueba3','asdf',7,8);
+/*!40000 ALTER TABLE `proyectos` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Estructura de tabla para la tabla `sprints`
+-- Table structure for table `sprints`
 --
 
+DROP TABLE IF EXISTS `sprints`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sprints` (
-  `id_sprint` int(10) NOT NULL,
+  `id_sprint` int(10) NOT NULL AUTO_INCREMENT,
   `horasTotales` int(5) NOT NULL,
   `Fecha_Inicio` date NOT NULL,
   `Fecha_Fin` date NOT NULL,
-  `id_proyecto` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_proyecto` int(10) NOT NULL,
+  PRIMARY KEY (`id_sprint`),
+  KEY `fk_id_proyecto_sprints` (`id_proyecto`),
+  CONSTRAINT `fk_id_proyecto_sprints` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id_proyecto`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Volcado de datos para la tabla `sprints`
+-- Dumping data for table `sprints`
 --
 
-INSERT INTO `sprints` (`id_sprint`, `horasTotales`, `Fecha_Inicio`, `Fecha_Fin`, `id_proyecto`) VALUES
-(4, 24, '2018-12-13', '2018-12-13', 2),
-(5, 27, '2018-12-13', '2018-12-14', 2),
-(6, 20, '2018-12-14', '2018-12-21', 2),
-(7, 6, '2018-12-21', '2018-12-28', 2);
-
--- --------------------------------------------------------
+LOCK TABLES `sprints` WRITE;
+/*!40000 ALTER TABLE `sprints` DISABLE KEYS */;
+INSERT INTO `sprints` VALUES (4,24,'2018-12-13','2018-12-13',2),(5,27,'2018-12-13','2018-12-14',2),(6,20,'2018-12-14','2018-12-21',2),(7,6,'2018-12-21','2018-12-28',2);
+/*!40000 ALTER TABLE `sprints` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Estructura de tabla para la tabla `tareas`
+-- Table structure for table `tareas`
 --
 
+DROP TABLE IF EXISTS `tareas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tareas` (
-  `id_tarea` int(10) NOT NULL,
+  `id_tarea` int(10) NOT NULL AUTO_INCREMENT,
   `descripcion_tarea` varchar(150) NOT NULL,
   `horas` int(5) NOT NULL,
   `estado` varchar(20) NOT NULL,
   `dificultad` varchar(20) NOT NULL,
   `id_spec` int(10) NOT NULL,
-  `id_usuario` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tipos_usuario`
---
-
-CREATE TABLE `tipos_usuario` (
-  `id_tipo_usuario` int(10) NOT NULL,
-  `nombre_tipo` varchar(40) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `tipos_usuario`
---
-
-INSERT INTO `tipos_usuario` (`id_tipo_usuario`, `nombre_tipo`) VALUES
-(1, 'scrumMaster'),
-(2, 'productOwner'),
-(3, 'developer');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuarios`
---
-
-CREATE TABLE `usuarios` (
   `id_usuario` int(10) NOT NULL,
+  PRIMARY KEY (`id_tarea`),
+  KEY `fk_id_spec_tareas` (`id_spec`),
+  KEY `fk_id_usuario_tareas` (`id_usuario`),
+  CONSTRAINT `fk_id_spec_tareas` FOREIGN KEY (`id_spec`) REFERENCES `especificaciones` (`id_spec`) ON DELETE CASCADE,
+  CONSTRAINT `fk_id_usuario_tareas` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tareas`
+--
+
+LOCK TABLES `tareas` WRITE;
+/*!40000 ALTER TABLE `tareas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tareas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipos_usuario`
+--
+
+DROP TABLE IF EXISTS `tipos_usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipos_usuario` (
+  `id_tipo_usuario` int(10) NOT NULL AUTO_INCREMENT,
+  `nombre_tipo` varchar(40) NOT NULL,
+  PRIMARY KEY (`id_tipo_usuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipos_usuario`
+--
+
+LOCK TABLES `tipos_usuario` WRITE;
+/*!40000 ALTER TABLE `tipos_usuario` DISABLE KEYS */;
+INSERT INTO `tipos_usuario` VALUES (1,'scrumMaster'),(2,'productOwner'),(3,'developer');
+/*!40000 ALTER TABLE `tipos_usuario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usuarios`
+--
+
+DROP TABLE IF EXISTS `usuarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usuarios` (
+  `id_usuario` int(10) NOT NULL AUTO_INCREMENT,
   `nombre_usuario` varchar(100) NOT NULL,
   `password` varchar(512) NOT NULL,
   `email` varchar(50) NOT NULL,
   `id_tipo_usuario` int(10) NOT NULL,
   `id_grupo` int(10) DEFAULT NULL,
-  `id_spec` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_spec` int(10) DEFAULT NULL,
+  `token` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id_usuario`),
+  KEY `fk_id_grupo_usuarios` (`id_grupo`),
+  KEY `id_tipo_usuario_usuarios` (`id_tipo_usuario`),
+  KEY `id_spec_usuarios` (`id_spec`),
+  CONSTRAINT `fk_id_grupo_usuarios` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id_grupo`) ON DELETE CASCADE,
+  CONSTRAINT `id_spec_usuarios` FOREIGN KEY (`id_spec`) REFERENCES `especificaciones` (`id_spec`) ON DELETE CASCADE,
+  CONSTRAINT `id_tipo_usuario_usuarios` FOREIGN KEY (`id_tipo_usuario`) REFERENCES `tipos_usuario` (`id_tipo_usuario`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Dumping data for table `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `password`, `email`, `id_tipo_usuario`, `id_grupo`, `id_spec`) VALUES
-(1, 'Ruben', 'fa585d89c851dd338a70dcf535aa2a92fee7836dd6aff1226583e88e0996293f16bc009c652826e0fc5c706695a03cddce372f139eff4d13959da6f1f5d3eabe', 'r.olmocalderon@gmail.com', 3, 1, NULL),
-(2, 'Pop', 'fa585d89c851dd338a70dcf535aa2a92fee7836dd6aff1226583e88e0996293f16bc009c652826e0fc5c706695a03cddce372f139eff4d13959da6f1f5d3eabe', 'p.sortcusco@gmail.com', 3, 1, NULL),
-(3, 'Yaiza', '99c6b56cedf01890cf29b9db727af00a40ce393ccdb63662034dfdd7f5ca54c2ced364032280697915ce00f53f06a89550bc1b6d06698c20985e6a0313cc713e', 'yaizacortes94@gmail.com', 3, 1, NULL),
-(7, 'Leandro', 'fa585d89c851dd338a70dcf535aa2a92fee7836dd6aff1226583e88e0996293f16bc009c652826e0fc5c706695a03cddce372f139eff4d13959da6f1f5d3eabe', 'yaizacortes94@gmail.com', 1, NULL, NULL),
-(8, 'Enric', 'fa585d89c851dd338a70dcf535aa2a92fee7836dd6aff1226583e88e0996293f16bc009c652826e0fc5c706695a03cddce372f139eff4d13959da6f1f5d3eabe', 'yaizacortes94@gmail.com', 2, NULL, NULL);
+LOCK TABLES `usuarios` WRITE;
+/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (1,'Ruben','fa585d89c851dd338a70dcf535aa2a92fee7836dd6aff1226583e88e0996293f16bc009c652826e0fc5c706695a03cddce372f139eff4d13959da6f1f5d3eabe','r.olmocalderon@gmail.com',3,1,NULL,NULL),(2,'Pop','fa585d89c851dd338a70dcf535aa2a92fee7836dd6aff1226583e88e0996293f16bc009c652826e0fc5c706695a03cddce372f139eff4d13959da6f1f5d3eabe','p.sortcusco@gmail.com',3,1,NULL,NULL),(3,'Yaiza','99c6b56cedf01890cf29b9db727af00a40ce393ccdb63662034dfdd7f5ca54c2ced364032280697915ce00f53f06a89550bc1b6d06698c20985e6a0313cc713e','yaizacortes94@gmail.com',3,1,NULL,NULL),(7,'Leandro','fa585d89c851dd338a70dcf535aa2a92fee7836dd6aff1226583e88e0996293f16bc009c652826e0fc5c706695a03cddce372f139eff4d13959da6f1f5d3eabe','yaizacortes94@gmail.com',1,NULL,NULL,NULL),(8,'Enric','fa585d89c851dd338a70dcf535aa2a92fee7836dd6aff1226583e88e0996293f16bc009c652826e0fc5c706695a03cddce372f139eff4d13959da6f1f5d3eabe','yaizacortes94@gmail.com',2,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `especificaciones`
---
-ALTER TABLE `especificaciones`
-  ADD PRIMARY KEY (`id_spec`),
-  ADD KEY `fk_id_sprint_especificaciones` (`id_sprint`),
-  ADD KEY `fk_id_proyecto_especificaciones` (`id_proyecto`);
-
---
--- Indices de la tabla `grupos`
---
-ALTER TABLE `grupos`
-  ADD PRIMARY KEY (`id_grupo`);
-
---
--- Indices de la tabla `gruposproyectos`
---
-ALTER TABLE `gruposproyectos`
-  ADD PRIMARY KEY (`id_proyecto`,`id_grupo`),
-  ADD KEY `id_grupo` (`id_grupo`);
-
---
--- Indices de la tabla `proyectos`
---
-ALTER TABLE `proyectos`
-  ADD PRIMARY KEY (`id_proyecto`),
-  ADD KEY `fk_id_scrummaster_proyectos` (`ScrumMaster`),
-  ADD KEY `fk_id_productowner_proyectos` (`ProductOwner`);
-
---
--- Indices de la tabla `sprints`
---
-ALTER TABLE `sprints`
-  ADD PRIMARY KEY (`id_sprint`),
-  ADD KEY `fk_id_proyecto_sprints` (`id_proyecto`);
-
---
--- Indices de la tabla `tareas`
---
-ALTER TABLE `tareas`
-  ADD PRIMARY KEY (`id_tarea`),
-  ADD KEY `fk_id_spec_tareas` (`id_spec`),
-  ADD KEY `fk_id_usuario_tareas` (`id_usuario`);
-
---
--- Indices de la tabla `tipos_usuario`
---
-ALTER TABLE `tipos_usuario`
-  ADD PRIMARY KEY (`id_tipo_usuario`);
-
---
--- Indices de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id_usuario`),
-  ADD KEY `fk_id_grupo_usuarios` (`id_grupo`),
-  ADD KEY `id_tipo_usuario_usuarios` (`id_tipo_usuario`),
-  ADD KEY `id_spec_usuarios` (`id_spec`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `especificaciones`
---
-ALTER TABLE `especificaciones`
-  MODIFY `id_spec` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de la tabla `grupos`
---
-ALTER TABLE `grupos`
-  MODIFY `id_grupo` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `proyectos`
---
-ALTER TABLE `proyectos`
-  MODIFY `id_proyecto` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT de la tabla `sprints`
---
-ALTER TABLE `sprints`
-  MODIFY `id_sprint` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT de la tabla `tareas`
---
-ALTER TABLE `tareas`
-  MODIFY `id_tarea` int(10) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `tipos_usuario`
---
-ALTER TABLE `tipos_usuario`
-  MODIFY `id_tipo_usuario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `especificaciones`
---
-ALTER TABLE `especificaciones`
-  ADD CONSTRAINT `fk_id_proyecto_especificaciones` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id_proyecto`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_id_sprint_especificaciones` FOREIGN KEY (`id_sprint`) REFERENCES `sprints` (`id_sprint`) ON DELETE CASCADE;
-
---
--- Filtros para la tabla `gruposproyectos`
---
-ALTER TABLE `gruposproyectos`
-  ADD CONSTRAINT `gruposproyectos_ibfk_1` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id_proyecto`),
-  ADD CONSTRAINT `gruposproyectos_ibfk_2` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id_grupo`);
-
---
--- Filtros para la tabla `proyectos`
---
-ALTER TABLE `proyectos`
-  ADD CONSTRAINT `fk_id_productowner_proyectos` FOREIGN KEY (`ProductOwner`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_id_scrummaster_proyectos` FOREIGN KEY (`ScrumMaster`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE;
-
---
--- Filtros para la tabla `sprints`
---
-ALTER TABLE `sprints`
-  ADD CONSTRAINT `fk_id_proyecto_sprints` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id_proyecto`) ON DELETE CASCADE;
-
---
--- Filtros para la tabla `tareas`
---
-ALTER TABLE `tareas`
-  ADD CONSTRAINT `fk_id_spec_tareas` FOREIGN KEY (`id_spec`) REFERENCES `especificaciones` (`id_spec`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_id_usuario_tareas` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE;
-
---
--- Filtros para la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD CONSTRAINT `fk_id_grupo_usuarios` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id_grupo`) ON DELETE CASCADE,
-  ADD CONSTRAINT `id_spec_usuarios` FOREIGN KEY (`id_spec`) REFERENCES `especificaciones` (`id_spec`) ON DELETE CASCADE,
-  ADD CONSTRAINT `id_tipo_usuario_usuarios` FOREIGN KEY (`id_tipo_usuario`) REFERENCES `tipos_usuario` (`id_tipo_usuario`) ON DELETE CASCADE;
-COMMIT;
-
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-12-17 18:41:40
