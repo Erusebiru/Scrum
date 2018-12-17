@@ -44,10 +44,10 @@
             echo '<script> var global_error = "usuario" </script>';   
             $_SESSION['error'] = null; 
           }
-          else if ($_SESSION['error']=="errorUser") {
-            echo '<script> var global_error = "usuario" </script>';
-            $_SESSION['error'] = null;      
-          }
+          // else if ($_SESSION['error']=="errorUser") {
+          //   echo '<script> var global_error = "usuario" </script>';
+          //   $_SESSION['error'] = null;      
+          // }
         }
       ?>
 
@@ -70,8 +70,8 @@
           <div class = "col l12">
             <button class="btn waves-effect waves-light grey darken-2" type="submit" name="action">Submit
             <i class="material-icons right">send</i>
-            </button>
-
+            </button><p>&nbsp&nbsp&nbsp&nbsp&nbsp</p>
+            <a href="recuperarPassword.php">Recuperar Contraseña</a>
           </div>
         </form>
       </div>
