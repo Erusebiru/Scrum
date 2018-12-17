@@ -1,6 +1,7 @@
 var global_countTime;
 
-if (global_tipoUsuario != undefined) {
+//funcion para comprobar el tipo de usuario y si esta en la pagina de la lista de proyectos para crear el boton de add proyect
+if (global_tipoUsuario != undefined && window.location.href.indexOf('proyectos.php') != -1 ) {
 	newProyect(global_tipoUsuario);
 }
 
@@ -63,6 +64,7 @@ function newProyect(user){
 	}
 }
 
+//Función que crea de cero un formulario para añadir un nuevo proyecto.
 function showForm(){
 	document.querySelector("[name='addProyect']").disabled = true;
 	document.querySelector(".new-proyect-box").style.display = "block";
@@ -82,12 +84,14 @@ function showForm(){
 	addElement(form,"div","Crear",["class=button","onclick=checkNulls()"]);
 }
 
+//Función para crear un elemento de tipo texto para el formulario
 function createText(parent,labelText,name){
 	var divcol = addElement(parent, "div", undefined, ["class=input-field col s12"]);
 	addElement(divcol,"label",labelText,["for="+name]);
 	addElement(divcol,"input",undefined,["type=text","name="+name]);
 }
 
+//Función para crear un elemento de tipo select para el formulario
 function createSelect(parent,labelText,name){
 	var divcol = addElement(parent, "div", undefined, ["class=col s12"]);
 	addElement(divcol,"label",labelText,undefined);
@@ -98,6 +102,7 @@ function createSelect(parent,labelText,name){
 	initSelect();
 }
 
+//Función que añade los options al formulario según el tipo de usuario
 function createDropDown(select,global_tipoUsuario){
 	global_personas.forEach(function(element){
 		if(element.tipo == global_tipoUsuario){
@@ -109,6 +114,7 @@ function createDropDown(select,global_tipoUsuario){
 	});
 }
 
+//Función para crear un select de grupos, que será un select multiple
 function createGroup(parent,labelText,name){
 	var divcol = addElement(parent, "div", undefined, ["class=col s12"]);
 	addElement(divcol,"label",labelText,undefined);
@@ -118,6 +124,8 @@ function createGroup(parent,labelText,name){
 	insertGroup(select,name);
 	initSelect();
 }
+
+//Función para insertar los option con los nombres de los grupos en el select
 function insertGroup(select){
 	global_grupos.forEach(function(element){
 		var option = addElement(select,"option");
@@ -148,6 +156,8 @@ function addElement(parent, child, text,attributes){
 	return childElement;
 }
 
+
+//Función para comprobar los elementos vacíos del formulario que añade un nuevo proyecto
 function checkNulls(){
 	
 	form = document.getElementById("createProyect");
@@ -164,4 +174,144 @@ function checkNulls(){
 	if(control){
 		form.submit();
 	}
+}
+
+//Función que despliega las características del Sprint
+function showSprint(element){
+	var elementoDesplegado = element.parentNode.querySelector("ul");
+	if(!elementoDesplegado.classList.contains("desplegado")){
+		removeClass();
+		elementoDesplegado.classList.toggle("desplegado");
+		element.parentNode.classList.toggle("sprint-desplegado");
+	}else{
+		removeClass();
+	}
+}
+
+//Función que pliega el Sprint
+function removeClass(){
+	var elements = document.querySelectorAll("ul");
+	elements.forEach(function(element){
+		element.classList.remove("desplegado");
+		element.parentNode.classList.remove("sprint-desplegado");
+	});
+}
+
+function vistaProyecto(proyecto) {
+	var proyecto_seleccionado = proyecto.name;
+	Enviar_Nombre_Proyecto();
+	document.querySelector("input[name=selectedProyect]").value=proyecto_seleccionado;
+	document.getElementById("sendProyect").submit();
+	}
+
+function Enviar_Nombre_Proyecto() {
+	var parent = document.querySelector(".new-proyect-view-box");
+	var form = addElement(parent,"form",undefined,["action=vistaproyecto.php","method=post","id=sendProyect"]);
+	addElement(form,"input",undefined,["type=hidden","name=selectedProyect"]);
+	
+}
+
+
+//Funciones para añadir eventos al clickar en los botones de subir, bajar y eliminar
+
+function clickUP(){
+	var button = document.querySelectorAll(".upside");
+	button.forEach(function(element){
+		element.addEventListener("click",subir);
+	});
+}
+
+function clickDOWN(){
+	var button = document.querySelectorAll(".downside");
+	button.forEach(function(element){
+		element.addEventListener("click",bajar);
+	});
+}
+
+function clickDROP(){
+	var button = document.querySelectorAll(".del");
+	button.forEach(function(element){
+		element.addEventListener("click",eliminar);
+	});
+}
+
+//Con esta función se ponen los números de especificación en orden cada vez que se haga una acción (subir, bajar, eliminar o añadir)
+function reNumber(){
+	var numeros = document.getElementsByName("numSpec");
+	var num = 1;
+	for(var i=0;i<numeros.length;i++){
+		numeros[i].textContent = num;
+		num++;
+	}
+}
+
+//Función que lanza el conjunto de funciones para añadir eventos
+//Con esta función centralizamos todos los eventos y si quisiéramos hacer nuevas cosas, sólo habría que añadir la llamada en ésta
+function addEvents(){
+	clickUP();
+	clickDOWN();
+	clickDROP();
+	reNumber();
+}
+
+addEvents();
+
+
+//Función para subir una especificación en el listado
+function subir(){
+	var parent = this.parentNode.parentNode.parentNode;
+	var elemento = this.parentNode.parentNode;
+	
+	if(elemento !== parent.firstElementChild.nextElementSibling){
+		var previo = elemento.previousElementSibling;
+		var cloned = elemento.cloneNode(true);
+		parent.insertBefore(cloned,previo);
+		parent.removeChild(elemento);
+		addEvents();
+	}	
+}
+
+//Función para bajar una especificación en el listado
+function bajar(){
+	var parent = this.parentNode.parentNode.parentNode;
+	var elemento = this.parentNode.parentNode;
+	if(elemento !== parent.lastElementChild){
+		var siguiente = elemento.nextElementSibling.nextElementSibling;
+		var cloned = elemento.cloneNode(true);
+		parent.insertBefore(cloned,siguiente);
+		parent.removeChild(elemento);
+		addEvents();
+	}
+	
+}
+
+//Función que elimina una especificación
+function eliminar(){
+	var parent = this.parentNode.parentNode.parentNode;
+	var elemento = this.parentNode.parentNode;
+	parent.removeChild(elemento);
+	reNumber();
+}
+
+//Función que añade una nueva especificación
+//Si el valor del input estuviera vacío devolvería un error
+function addNewSpec(){
+	var newSpec = document.getElementById("newSpec");
+	if(newSpec.value == ""){
+		var texto = "La especificación no puede estar vacía";
+		createErrorWindow(texto);
+	}else{
+		var parent = document.querySelector(".especificacion > table").firstElementChild;
+
+		var tr = addElement(parent,"tr",undefined,["class=spec"]);
+		addElement(tr,"td","0",["name=numSpec"]);
+		addElement(tr,"td",newSpec.value);
+		addElement(tr,"td","Backlog")
+		var td = addElement(tr,"td");
+		addElement(td,"img",undefined,["src=images/up.png","class=upside"]);
+		addElement(td,"img",undefined,["src=images/down.png","class=downside"]);
+		addElement(td,"img",undefined,["src=images/del.png","class=del"]);
+		addEvents();
+	}
+	newSpec.value = "";
 }
