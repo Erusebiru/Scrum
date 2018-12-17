@@ -1,67 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Cambiar Contraseña</title>
+	
+  <link rel="stylesheet" href="css/style.css"> 
+  <title>Cambio de Password</title>
+  <meta name = "viewport" content = "width = device-width, initial-scale = 1">      
+  <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+  <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+  <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css">
+  <link rel="shortcut icon" href="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png">
+  <script type="text/javascript" src="js/script.js" defer>
+  	
+  </script>
+  <script type="text/javascript" src="js/clases.js"></script>
 </head>
 <body>
-	
+	<?php
+	if (isset($_POST['Password'])) {
+		include 'connection.php';
+		$consulta_token=("UPDATE usuarios set password where token='".$token."')";
+		$query = "UPDATE usuarios SET token = '$token' WHERE nombre_usuario = '$user'";
 
-<?php
-	session_start();
-	session_destroy();
-	session_start();
-
-
-
-	if(isset($_SESSION['user'])){
-		header('Location: proyectos.php');
-
-	} else {
-		$user = $_POST["username"];
+	}else{	
 		
 
-		$conn = mysqli_connect('localhost','Admin','Admin');
-		mysqli_select_db($conn, 'proyectoscrum');
-
-		$consulta_user ="SELECT nombre_usuario FROM usuarios where nombre_usuario='".$user."';";
-
-		$user_comprovar = mysqli_num_rows(mysqli_query($conn,$consulta_user));
-		
-		if ($user_comprovar == 0) {
-			$error = "errorUser";
-			$_SESSION['error'] = $error;
-			header('Location: recuperarPassword.php');
-			}
-		}
+	}
 
 
-   // $to = "kalouan@iesesteveterradas.cat";
-   // $subject = "Checking PHP mail";
-   // $message = "PHP mail works just fine";
-   //$headers = "From:ubuntu@gfjkghjkflk.com";
-   // mail($to,$subject,$message, $headers);
-   
-    
-		
+
+
 	?>
-	<div class="s12 m12 l12"><br> <br></div>    
+	 <div class="container">
+    <div class = "row" style = "width:100%;">
+      <div id="divcabecera" class = "col s12 m12 l12" >
+        <nav>
+          <div class = "nav-wrapper">
+            <a href = "#" class = "brand-logo nombrelogo">Login</a>
+            <a href="#!" class="brand-logo center"><img src="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png"></a>
+          </div>
+        </nav>
+      </div>
+<div class="parallax"><img src="https://cdn.pixabay.com/photo/2016/06/02/02/38/mesh-1430108_960_720.png"></div>
+      <div class="s12 m12 l12"><br> <br></div>    
       <div id="formulario" class="col m8 s8 l8 offset-m2 offset-s2 offset-l2 center z-depth-3">
-        <form class = "col l12" method="post" name="formemail" action="recuperarPasswordValidar.php">
+        <form class = "col l12" method="post"  id="formpass" >
           <div align="center" class = "center input-field col l12">
-            <i class = "material-icons prefix">account_circle</i>
-            <input placeholder = "Username" name = "username" type = "text" class = "active validate" required />
-            <label for = "username">Username</label>
+            <input placeholder = "Password" name = "Password" id="primerPassword" type = "password" class = "active validate" required />
+            <label for = "username">Password</label>
+          </div>
+          <div align="center" class = "center input-field col l12">
+            <input placeholder = "Password" name = "Password2" id="segundoPassword"type = "password" class = "active validate" required />
+            <label for = "username">Password</label>
           </div>
 
           <div class = "col l12">
-            <button class="btn waves-effect waves-light grey darken-2" type="submit" name="action">Enviar
+          </form>
+            <button class="btn waves-effect waves-light grey darken-2" type="submit" name="action">Submit
             <i class="material-icons right">send</i>
           </div>
-        </form>
+        
       </div>
     </div>
   </div>
-
+	
 
 
 </body>

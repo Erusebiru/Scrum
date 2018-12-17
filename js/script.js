@@ -315,3 +315,17 @@ function addNewSpec(){
 	}
 	newSpec.value = "";
 }
+
+function compararPassword(){
+	var password1=document.getElementById("primerPassword");
+	var password2=document.getElementById("segundPassword");
+	var formpass=document.getElementById("formpass");
+
+	if (password1==password2) {
+		formpass.submit();
+
+	}
+	else{
+		createErrorWindow("Las Contraseña no coinciden");
+	}
+}
