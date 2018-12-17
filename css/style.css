@@ -1,0 +1,319 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: #D9D9D9;
+}
+
+a:link, a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+/* INICIO TABLA PROYECTOS */
+.proyect-list{
+	width: 80%;
+	margin: auto;
+	border: 1px solid black;
+	margin-top: 5%;
+	background-color: white;
+}
+
+.proyect-title{
+	width: auto;
+	height: auto;
+	text-align: center;
+	border-style: solid;
+    border-color: black;
+    border-width: 0px 0px 1px 1px;
+	float: right;
+	font-size: 25px;
+	padding: 10px;
+}
+
+.proyect-table{
+	width: 30%;
+	margin: 20px auto;
+	font-size: 20px;
+}
+.proyect-table li{
+	list-style-type:none;
+	text-align: center;
+	border: 1px solid black;
+	margin: 5px;
+	border-radius: 6px;
+	padding: 5px;
+}
+
+.proyect-table li a:hover{
+	color: purple;
+	text-decoration: underline;
+}
+
+
+.proyect-table li:hover{
+	background-color: pink;
+}
+
+.proyect-table button{
+	padding: 10px;
+	margin: 5px;
+}
+
+/* FIN TABLA PROYECTOS */ 
+
+/* INICIO FORMULARIO AGREGAR PROYECTO */
+
+.proyect-form{
+	width: 30%;
+	margin: auto;
+	border: 1px solid black;
+	margin-top: 1%;
+	padding: 20px;
+}
+
+.form-element{
+	width: 100%;
+	margin: 10px auto;
+}
+
+.form-element select{
+	width: 170px;
+}
+
+.button{
+	margin-left: 30%;
+	margin-bottom: 5%;
+	width: 100px;
+	padding: 5px;
+	border: 1px solid black;
+	text-align: center;
+	cursor: pointer;
+	border-radius: 3px;
+}
+
+.button:hover{
+	text-decoration: underline;
+}
+
+/* FIN FORMULARIO AGREGAR PROYECTO */
+
+/* INICIO ERROR MESSAGE */
+
+.window-message{
+	position: fixed;
+	top: 2%;	
+	width: 100%;
+	display: none;
+}
+
+.error{
+	margin: auto;
+	min-height: auto;
+	width: 400px;
+	background-color: white;
+	border-radius: 10px;
+	border: 1px solid red;
+	animation: blinking 4s linear infinite;
+}
+
+.image-error{
+	margin: 15px;
+	width: 100%;
+	text-align: center;
+	height: 50px;
+}
+
+.image-error img{
+	animation: blinker 4s linear infinite;
+	float: left;
+	width: 40px;
+	height: 40px;
+}
+
+.image-error span{
+	width: 100%;
+	float: right;
+	margin-top: -30px;
+	font-size: 16px;
+	color: #E53F3F;
+	font-weight: bold;
+}
+
+@keyframes blinking {
+    50% { 
+    	background-color: rgba(255,255,255,0.3);
+    	border: 1px solid rgba(0,0,0,0.3); 
+    }
+}
+
+@keyframes blinker {  
+	50% { opacity: 0.3; }
+}
+/* FIN ERROR MESSAGE */
+
+/*Login css*/
+
+.nav-wrapper{
+ background-color: #3B3B3C;
+}
+.brand-logo >img {
+	width: 50px;
+	height: 50px;
+	margin-top: 5px;
+}
+
+#formulario {
+	background-color: white;
+	padding-top: 5%;
+	padding-bottom: 5%;
+	border-radius: 5px;
+	margin-top: 10%;
+}
+
+#nav-mobile span{
+	color: #e91e63 !important;
+}
+#nav-mobile span:hover {
+	color: white !important;
+}
+
+.new-proyect-box{
+	display: none;
+}
+
+.nombrelogo {
+	margin-left: 2%;
+}
+
+
+button[name="addProyect"] {
+	background-color: #c84344;
+	color: white;
+	border-radius: 3%;
+	margin-left: 28%;
+}
+
+button[name="addProyect"]:hover {
+	background-color: white;
+	color: #ff3333;
+}
+
+.plegado{
+    max-height: 0;
+    max-width: 200px;
+    overflow: hidden;
+    transition: max-height 0.8s ease-out;
+    overflow: hidden;
+    background: #d5d5d5;
+}
+
+.desplegado {
+	max-width: 500px !important;
+    max-height: 500px !important;
+    transition: max-height 1.6s ease-in;
+}
+
+
+#TablaSprints h4, #TablaProyectos h4, #TablaEspecificaciones h4{
+	text-align: center;
+}
+.tabla-vistaproyectos{
+	margin: auto;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	width: 80%;
+	border: 1px solid black;
+}
+
+.sprint,.proyecto,.especificacion {
+	margin: 20px auto;
+	max-width: 450px;
+	padding: 5px;
+	border-radius: 5px;
+	transition: max-width 1.6s ease-in;
+	justify-content: center;
+}
+
+.sprint-desplegado{
+	max-width: 500px !important;
+	transition: max-width 1.6s ease-in;
+}
+
+.sprint{
+	cursor: pointer;
+	max-width: 200px;
+}
+
+.sprint h6{
+	text-align: center;
+	font-weight: bold;
+}
+.sprint h6:hover{
+	text-decoration: underline;
+}
+
+.sprint ul{
+	background-color: transparent;
+	margin: auto;
+	width: 100%;
+}
+
+.sprint ul li{
+	color: black;
+	padding: 0 15px 15px 15px;
+}
+
+.sprint li ul li{
+	color: purple;
+}
+
+table tr td, table tr th{
+	text-align: center;
+}
+
+.spec img{
+	width: 15px;
+	height: 15px;
+	cursor: pointer;
+}
+.spec img:hover{
+	filter: invert(50%);
+}
+
+.title{
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: underline
+}
+
+li label{
+	font-size: 15px !important;
+	color: black !important;
+}
+
+.sprint-anterior{
+	background-color:  rgba(190,190,190);
+}
+.sprint-anterior h6{
+	color: rgba(79,79,79,0.5);
+}
+
+.sprint-actual{
+	background-color: #89bc89;
+}
+.sprint-actual h6{
+	color: #215521;
+}
+
+.sprint-proximo{
+	background-color: #5d5d5d;
+}
+
+.sprint-proximo h6{
+	color: black;
+}
