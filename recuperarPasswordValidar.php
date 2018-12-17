@@ -41,14 +41,20 @@
    // mail($to,$subject,$message, $headers);
 	// mail("kalouan@iesesteveterradas.cat","probando","probando mail","from: ubuntu@blablaslba.com");
    // echo "Se ha enviado un mensaje a tu cuenta de correo, para cambiar la contraseña de tu usuario";
-		
+
    include 'connection.php';
 
-   $consulta_correo ="SELECT email from usuarios where nombre_usuario'".$user."';";
-   $user_comprovar = mysqli_num_rows(mysqli_query($consulta_correo));
+   
+
+   	$consulta_correo = $dbh->prepare("SELECT email from usuarios where nombre_usuario'".$user."';");
+	$consulta_correo->bindValue(':user', $user);
+	$consulta_correo->execute();
+	$email = $consulta_correo ->fetch(PDO::FETCH_ASSOC);
+		
+	$_SESSION["email"] = $email;
 
 
-   mail($consulta_correo,"Recuperar Contraseña","Ve a la pagina siguiente para cambiar la contraseña de tu usuario: http://www.khalidomain.ml/Scrum/cambiarPassword.php","from: ubuntu@blablaslba.com");
+   mail($email,"Recuperar Contraseña","Ve a la pagina siguiente para cambiar la contraseña de tu usuario: http://www.khalidomain.ml/Scrum/cambiarPassword.php","from: ubuntu@blablaslba.com");
    echo "Se ha enviado un email a tu cuenta de correo electronico para el cambio de contraseña.";
     
 		
