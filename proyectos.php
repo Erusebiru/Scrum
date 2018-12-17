@@ -36,19 +36,6 @@
 	          <a href = "#" class = "brand-logo nombrelogo">Proyectos</a>
 	          <a href="#!" class="brand-logo center"><img src="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png"></a>
 	          <ul id="nav-mobile" class="right hide-on-med-and-down">
-<<<<<<< HEAD
-		          <!-- <li><a href="#"><span>Pestaña1</span></a></li>
-		          <li><a href="#"><span>Pestaña2</span></a></li>
-		          <li><a href="#"><span>Pestaña3</span></a></li> -->
-		          <li>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>
-=======
-		          <!--li><a href="#"><span>Pestaña1</span></a></li>
-		          <li><a href="#"><span>Pestaña2</span></a></li>
-		          <li><a href="#"><span>Pestaña3</span></a></li>
-		          <li>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>-->
-
-
->>>>>>> fa373a68457655e782a729cc55049080bc6ac8d9
 		          <li class="grey-text lighten-5">Usuario: <?php echo $user ?></li>
 		          <li><a href="logout.php"><i class="material-icons grey-text">exit_to_app</i></a></li>
 		      </ul>
