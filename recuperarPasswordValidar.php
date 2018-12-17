@@ -28,10 +28,20 @@
 			header('Location: recuperarPassword.php');
 			}
 		}
+		$token = md5(uniqid(mt_rand()));
 
-		mail($email,"Recuperar Contraseña","Ve a la pagina siguiente para cambiar la contraseña de tu usuario: http://www.khalidomain.ml/Scrum/cambiarPassword.php","from: ubuntu@blablaslba.com");
+		mail($email,"Recuperar Contraseña","Ve a la pagina siguiente para cambiar la contraseña de tu usuario: http://www.khalidomain.ml/Scrum/cambiarPassword.php?token=".$token,"from: ubuntu@blablaslba.com");
    		echo "Se ha enviado un email a tu cuenta de correo electronico para el cambio de contraseña.";
 		
+
+		function insertToken($token,$conn,$user){
+			$query = "UPDATE usuarios SET token = '$token' WHERE nombre_usuario = '$user'";
+			if (mysqli_query($conn, $query)) {
+				echo "Token insertado correctamente";
+			} else {
+				echo "Error: " . $query . "<br>" . mysqli_error($conn);
+			}
+		}
 	?>
 </body>
 </html>
