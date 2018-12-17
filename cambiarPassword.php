@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Validacion</title>
+	<title>Cambiar Contraseña</title>
 </head>
 <body>
 	
@@ -33,22 +33,34 @@
 			header('Location: recuperarPassword.php');
 			}
 		}
-	
+
+
    // $to = "kalouan@iesesteveterradas.cat";
    // $subject = "Checking PHP mail";
    // $message = "PHP mail works just fine";
    //$headers = "From:ubuntu@gfjkghjkflk.com";
    // mail($to,$subject,$message, $headers);
-   include 'connection.php';
-
-   $consulta_correo ="SELECT email from usuarios where nombre_usuario'".$user."';";
-
-   mail($consulta_correo,"Recuperar Contraseña","Ve a la pagina siguiente para cambiar la contraseña de tu usuario: http://www.khalidomain.ml/Scrum/cambiarPassword.php","from: ubuntu@blablaslba.com");
-   echo "Se ha enviado un email a tu cuenta de correo electronico para el cambio de contraseña.";
+   
     
 		
 	?>
+	<div class="s12 m12 l12"><br> <br></div>    
+      <div id="formulario" class="col m8 s8 l8 offset-m2 offset-s2 offset-l2 center z-depth-3">
+        <form class = "col l12" method="post" name="formemail" action="recuperarPasswordValidar.php">
+          <div align="center" class = "center input-field col l12">
+            <i class = "material-icons prefix">account_circle</i>
+            <input placeholder = "Username" name = "username" type = "text" class = "active validate" required />
+            <label for = "username">Username</label>
+          </div>
 
+          <div class = "col l12">
+            <button class="btn waves-effect waves-light grey darken-2" type="submit" name="action">Enviar
+            <i class="material-icons right">send</i>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
 
 

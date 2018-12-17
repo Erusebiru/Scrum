@@ -65,7 +65,6 @@
           <div class = "col l12">
             <button class="btn waves-effect waves-light grey darken-2" type="submit" name="action">Submit
             <i class="material-icons right">send</i>
-            <a href="mailto:kalit.alouan668@gmail.com"></a>
           </div>
         </form>
       </div>
