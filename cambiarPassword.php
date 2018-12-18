@@ -55,9 +55,9 @@
               <div class="button" onclick="compararPassword()">Cambiar Password</div>
             </div>
           </div>
-          <div class="window-message">
-          <div class="error"></div>
         </div>
+        <div class="window-message">
+          <div class="error"></div>
         </div>
         <?
       }else{
