@@ -55,10 +55,11 @@
               <div class="button" onclick="compararPassword()">Cambiar Password</div>
             </div>
           </div>
-        </div>
-        <div class="window-message">
+          <div class="window-message">
           <div class="error"></div>
-        </div><?
+        </div>
+        </div>
+        <?
       }else{
         echo "<h5>ENLACE DE RECUPERACIÓN INCORRECTO</h5>";
         exit;
