@@ -201,6 +201,7 @@ function vistaProyecto(proyecto) {
 	var proyecto_seleccionado = proyecto.name;
 	Enviar_Nombre_Proyecto();
 	document.querySelector("input[name=selectedProyect]").value=proyecto_seleccionado;
+	document.querySelector("input[name=tipoUsuario]").value=global_tipoUsuario;
 	document.getElementById("sendProyect").submit();
 	}
 
@@ -208,6 +209,7 @@ function Enviar_Nombre_Proyecto() {
 	var parent = document.querySelector(".new-proyect-view-box");
 	var form = addElement(parent,"form",undefined,["action=vistaproyecto.php","method=post","id=sendProyect"]);
 	addElement(form,"input",undefined,["type=hidden","name=selectedProyect"]);
+	addElement(form,"input",undefined,["type=hidden","name=tipoUsuario"]);
 	
 }
 
@@ -295,7 +297,7 @@ function eliminar(){
 
 //Función que añade una nueva especificación
 //Si el valor del input estuviera vacío devolvería un error
-function addNewSpec(){
+function addNewSpec(tipoUsuario){
 	var newSpec = document.getElementById("newSpec");
 	if(newSpec.value == ""){
 		var texto = "La especificación no puede estar vacía";
@@ -306,11 +308,15 @@ function addNewSpec(){
 		var tr = addElement(parent,"tr",undefined,["class=spec"]);
 		addElement(tr,"td","0",["name=numSpec"]);
 		addElement(tr,"td",newSpec.value);
-		addElement(tr,"td","Backlog")
-		var td = addElement(tr,"td");
-		addElement(td,"img",undefined,["src=images/up.png","class=upside"]);
-		addElement(td,"img",undefined,["src=images/down.png","class=downside"]);
-		addElement(td,"img",undefined,["src=images/del.png","class=del"]);
+		addElement(tr,"td","Backlog");
+		alert(global_tipoUsuario);
+		if(global_tipoUsuario == "productOwner"){
+			var td = addElement(tr,"td");
+			addElement(td,"img",undefined,["src=images/up.png","class=upside"]);
+			addElement(td,"img",undefined,["src=images/down.png","class=downside"]);
+			addElement(td,"img",undefined,["src=images/del.png","class=del"]);
+		}
+		
 		addEvents();
 	}
 	newSpec.value = "";

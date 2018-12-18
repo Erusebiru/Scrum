@@ -25,7 +25,8 @@
 
 		include 'connection.php';
 		$nombre_proyecto = $_POST["selectedProyect"];
-		$tipo_usuario = "scrumMaster";
+		$tipo_usuario = $_POST['tipoUsuario'];
+		echo "<script>var global_tipoUsuario = '".$tipo_usuario."'</script>";
 		$sprints = getSprints($conn,$nombre_proyecto);
 		$specs = getSpecs($conn);
 		$proyecto = findProyects($conn,$nombre_proyecto);
@@ -156,7 +157,7 @@
 							<td name="numSpec"><?=$numSpec?></td>
 							<td><?=$spec['nombre_spec']?></td>
 							<td><?=$spec['estado']?></td>
-							<?if($tipo_usuario == "scrumMaster"){
+							<?if($tipo_usuario == "productOwner"){
 								?><td><img class="upside" src="images/up.png"><img class="downside" src="images/down.png"><img class="del" src="images/del.png"></td><?
 							}?>
 						</tr>
@@ -167,7 +168,7 @@
 				?>
 				</table>
 				<br>
-				<?if($tipo_usuario === "scrumMaster"){?>
+				<?if($tipo_usuario === "productOwner"){?>
 					<div class="row">
 	            		<div class="col s12">
 	                		<div class="row">
