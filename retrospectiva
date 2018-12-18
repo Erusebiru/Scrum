@@ -1,0 +1,18 @@
+Retrospectiva de grupo del segundo Sprint:
+
+	Grupo Yaiza Cortés, Rubén Del Olmo y Khalid Alouan.
+
+
+	Cosas a mejorar:
+
+		- Nos han faltado conocimientos y debido a eso ha habido especificaciones con las que hemos tomado más tiempo del necesario, como por ejemplo a la hora de envíar el correo para recuperar la contraseña.
+
+		- Tenemos que administrar mejor el tiempo de trabajo y organizarnos mejor.
+
+		- Nos ha faltado pensar más allá de lo que teníamos que hacer en el momento y debido a eso hemos tenido que modificar específicaciones que teníamos acabadas, como por ejemplo, a la hora de hacer el envío del correo para recuperar la contraseña, no pensamos en hacer un campo para guardar el token y después tuvimos que modificar la base de datos.
+
+	Que podemos hacer para mejorar:
+		
+		- Tener una visión futura de trabajo para después no tener que modificar tareas acabadas.
+
+		- Dividir más las específicaciones para poder organizar mejor las tareas necesarias.

@@ -16,7 +16,7 @@
 			$productowner = $_POST['productOwner'];
 			$scrummaster = $_POST['scrumMaster'];
 
-			$conn = mysqli_connect('localhost','Admin','Admin','proyectoscrum');
+			include 'connection.php';
 
 			//Inserción del proyecto en la base de datos
 			$query = "INSERT INTO proyectos (nombre_proyecto,descripcion_proyecto,ScrumMaster,ProductOwner) VALUES ('$nombreproyecto','$descripcion','$scrummaster','$productowner')";

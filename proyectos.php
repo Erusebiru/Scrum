@@ -22,7 +22,7 @@
 			header('Location: '."login.php");
 		}
 
-		$conn = mysqli_connect('localhost','Admin','Admin','proyectoscrum');
+		include 'connection.php';
 		userData($conn,$user);
 		findUsers($conn);
 		findGroups($conn);
@@ -36,10 +36,10 @@
 	          <a href = "#" class = "brand-logo nombrelogo">Proyectos</a>
 	          <a href="#!" class="brand-logo center"><img src="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png"></a>
 	          <ul id="nav-mobile" class="right hide-on-med-and-down">
-		          <li><a href="#"><span>Pestaña1</span></a></li>
+		          <!--li><a href="#"><span>Pestaña1</span></a></li>
 		          <li><a href="#"><span>Pestaña2</span></a></li>
 		          <li><a href="#"><span>Pestaña3</span></a></li>
-		          <li>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>
+		          <li>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>-->
 		          <li class="grey-text lighten-5">Usuario: <?php echo $user ?></li>
 		          <li><a href="logout.php"><i class="material-icons grey-text">exit_to_app</i></a></li>
 		      </ul>
@@ -52,10 +52,12 @@
 			<div class="proyect-table">
 				<ul>
 				<?
-					while($registre = mysqli_fetch_assoc($proyectos)){
-						?><li>
-							<a href="#" name="proyecto"><?=$registre['nombre_proyecto']?></a>
-						</li><?
+
+				while($registre = mysqli_fetch_assoc($proyectos)){
+						$nombre_proyecto=$registre['nombre_proyecto'];
+						echo "<li>";
+						echo '<a href="#"  onclick="vistaProyecto(this)" name="'.$nombre_proyecto.'">'.$registre['nombre_proyecto']?></a>
+						</li> <?
 					}
 				?>
 				</ul>
@@ -66,6 +68,9 @@
 		</div>
 		<div class="row">
 			<div class="col card hoverable push-s1 s10 push-m2 m8 push-l4 l4 new-proyect-box"></div>
+		</div>
+		<div class="row">
+			<div hidden="True" class="col card hoverable push-s1 s10 push-m2 m8 push-l4 l4 new-proyect-view-box"></div>
 		</div>
 	</div>
 
@@ -84,13 +89,13 @@
 			$id = $registre['id_usuario'];
 			$tipo_usuario = $registre['nombre_tipo'];
 			$grupo = $registre['id_grupo'];
-			?><script>var tipoUsuario = "<?=$tipo_usuario?>"</script><?
+			?><script>var global_tipoUsuario = "<?=$tipo_usuario?>"</script><?
 		}
 	}
 
 	function findProyects($conn,$user,$tipo_usuario,$grupo){
 		if($tipo_usuario == "scrumMaster"){
-			$proyectos = proyectos_scrumMaster($conn);
+			$proyectos = proyectos_scrumMaster($conn,$user);
 		}else if($tipo_usuario == "productOwner"){
 			$proyectos = proyectos_ProductOwner($conn,$user);
 		}else{
@@ -100,8 +105,8 @@
 		return $proyectos;
 	}
 
-	function proyectos_scrumMaster($conn) {
-    	$consulta_proyectos_scrumMaster = "SELECT nombre_proyecto FROM proyectos;";
+	function proyectos_scrumMaster($conn,$user) {
+    	$consulta_proyectos_scrumMaster = "SELECT nombre_proyecto FROM proyectos WHERE ScrumMaster=(SELECT id_usuario FROM usuarios where nombre_usuario ='".$user."');";
     	return (mysqli_query($conn,$consulta_proyectos_scrumMaster));
     }
 
@@ -123,7 +128,7 @@
         while($persona = mysqli_fetch_array($results)) {
         	
        		 echo "var persona = new Persona(" . $persona['id_usuario'] . ",'" . $persona['nombre_usuario'] . "','" . $persona['nombre_tipo'] . "');";
-       		 echo "personas.push(persona);";
+       		 echo "global_personas.push(persona);";
        	}
        	echo "</script>";
 	}
@@ -139,10 +144,12 @@
         echo "<script>";
         while($grup = mysqli_fetch_array($results)) {
        		 echo "var grup = new Grupo(" . $grup['id_grupo'] . ",'" . $grup['nombre_grupo'] . "');";
-       		 echo "grupos.push(grup);";
+       		 echo "global_grupos.push(grup);";
        	}
        	echo "</script>";
 	}
+
+
 	?>
 </body>
 </html>

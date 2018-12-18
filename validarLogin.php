@@ -18,8 +18,7 @@
 		$user = $_POST["username"];
 		$password = $_POST["password"];
 
-		$conn = mysqli_connect('localhost','Admin','Admin');
-		mysqli_select_db($conn, 'proyectoscrum');
+		include 'connection.php';
 
 		$consulta_user ="SELECT nombre_usuario FROM usuarios where nombre_usuario='".$user."';";
 		$consulta_psw = "SELECT nombre_usuario FROM usuarios where nombre_usuario='".$user."' and password=sha2('".$password."',512);";

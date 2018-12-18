@@ -1,9 +1,9 @@
-var error;
-var personas = [];
+var global_error;
+var global_personas = [];
 
-var error = "";
+var global_error = "";
 
-var tipoUsuario = "";
+var global_tipoUsuario = "";
 
 class Persona{
 	constructor(id,name,tipo){
@@ -13,7 +13,7 @@ class Persona{
 	}
 }
 
-var grupos = [];
+var global_grupos = [];
 
 class Grupo{
 	constructor(id,name){
