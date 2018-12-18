@@ -40,7 +40,6 @@
 			$query = "UPDATE usuarios SET token = '$token' WHERE nombre_usuario = '$user'";
 			$_SESSION['token']=$token;
 			if (mysqli_query($conn, $query)) {
-				echo "Token insertado correctamente";
 			} else {
 				echo "Error: " . $query . "<br>" . mysqli_error($conn);
 			}

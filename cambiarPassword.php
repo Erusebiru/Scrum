@@ -37,8 +37,8 @@
             <div class="parallax"><img src="https://cdn.pixabay.com/photo/2016/06/02/02/38/mesh-1430108_960_720.png"></div>
             <div class="s12 m12 l12"><br> <br></div>    
             <div class="col m8 s8 l8 offset-m2 offset-s2 offset-l2 center z-depth-3">
-              <h3>Password cambiada correctamente</h3>
-              <div class="button"><a href="login.php">Cambiar Password</a></div>
+              <h5>Password cambiada correctamente</h5>
+              <div class="button"><a href="login.php">Volver al Login</a></div>
             </div>
           </div>
         </div>
