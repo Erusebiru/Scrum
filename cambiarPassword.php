@@ -47,32 +47,35 @@
 	}else{
     if(isset($_GET['token'])){
       if(checkToken($_GET['token'])){
-        ?><div class="container">
-          <div class = "row" style = "width:100%;">
-            <div id="divcabecera" class = "col s12 m12 l12" >
-              <nav>
-                <div class = "nav-wrapper">
-                  <a href = "#" class = "brand-logo nombrelogo">Cambiar Password</a>
-                  <a href="#!" class="brand-logo center"><img src="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png"></a>
-                </div>
-              </nav>
-            </div>
-            <div class="parallax"><img src="https://cdn.pixabay.com/photo/2016/06/02/02/38/mesh-1430108_960_720.png"></div>
-            <div class="s12 m12 l12"><br> <br></div>    
-            <div id="formulario" class="col m8 s8 l8 offset-m2 offset-s2 offset-l2 center z-depth-3">
-              <form class = "col l12" method="post" action="#" id="formpass" >
-                <div align="center" class = "center input-field col l12">
-                  <input placeholder = "Password" name = "Password" id="primerPassword" type = "password" class = "active validate" required />
-                  <label for = "username">Password</label>
-                </div>
-                <div align="center" class = "center input-field col l12">
-                  <input placeholder = "Password" name = "Password2" id="segundoPassword"type = "password" class = "active validate" required />
-                  <label for = "username">Password</label>
-                </div>
+        ?>
+        <div class="contenedor">
+          <div class="container">
+            <div class = "row" style = "width:100%;">
+              <div id="divcabecera" class = "col s12 m12 l12" >
+                <nav>
+                  <div class = "nav-wrapper">
+                    <a href = "#" class = "brand-logo nombrelogo">Cambiar Password</a>
+                    <a href="#!" class="brand-logo center"><img src="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png"></a>
+                  </div>
+                </nav>
+              </div>
+              <div class="parallax"><img src="https://cdn.pixabay.com/photo/2016/06/02/02/38/mesh-1430108_960_720.png"></div>
+              <div class="s12 m12 l12"><br> <br></div>    
+              <div id="formulario" class="col m8 s8 l8 offset-m2 offset-s2 offset-l2 center z-depth-3">
+                <form class = "col l12" method="post" action="#" id="formpass" >
+                  <div align="center" class = "center input-field col l12">
+                    <input placeholder = "Password" name = "Password" id="primerPassword" type = "password" class = "active validate" required />
+                    <label for = "username">Password</label>
+                  </div>
+                  <div align="center" class = "center input-field col l12">
+                    <input placeholder = "Password" name = "Password2" id="segundoPassword"type = "password" class = "active validate" required />
+                    <label for = "username">Password</label>
+                  </div>
 
-                <div class = "col l12">
-              </form>
-              <div class="button" onclick="compararPassword()">Cambiar Password</div>
+                  <div class = "col l12">
+                </form>
+                <div class="button" onclick="compararPassword()">Cambiar Password</div>
+              </div>
             </div>
           </div>
         </div>
