@@ -43,10 +43,6 @@
           
 
       }
-          // else if ($_SESSION['error']=="errorUser") {
-          //   echo '<script> var global_error = "usuario" </script>';
-          //   $_SESSION['error'] = null;      
-          // }
         
       ?>
 

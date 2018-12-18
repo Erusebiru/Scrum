@@ -316,6 +316,8 @@ function addNewSpec(){
 	newSpec.value = "";
 }
 
+
+//Función para comparar los input de password. Si son correctos enviará el formulario, si son incorrectos aparecerá un mensaje tipo.
 function compararPassword(){
 	var password1=document.getElementById("primerPassword").value;
 	var password2=document.getElementById("segundoPassword").value;
