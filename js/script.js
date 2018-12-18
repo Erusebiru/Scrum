@@ -318,7 +318,7 @@ function addNewSpec(){
 
 function compararPassword(){
 	var password1=document.getElementById("primerPassword").value;
-	var password2=document.getElementById("segundPassword").value;
+	var password2=document.getElementById("segundoPassword").value;
 	var formpass=document.getElementById("formpass");
 
 	if(password1==password2) {
