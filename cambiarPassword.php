@@ -20,10 +20,30 @@
 	<?php
 	if (isset($_POST['Password'])) {
 		
-    updatePassword($_GET['token'],$_POST['Password']);
+    if(updatePassword($_GET['token'],$_POST['Password'])){
+
+    }
+    ?>
+		<div class="container">
+          <div class = "row" style = "width:100%;">
+            <div id="divcabecera" class = "col s12 m12 l12" >
+              <nav>
+                <div class = "nav-wrapper">
+                  <a href = "#" class = "brand-logo nombrelogo">Cambiar Password</a>
+                  <a href="#!" class="brand-logo center"><img src="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png"></a>
+                </div>
+              </nav>
+            </div>
+            <div class="parallax"><img src="https://cdn.pixabay.com/photo/2016/06/02/02/38/mesh-1430108_960_720.png"></div>
+            <div class="s12 m12 l12"><br> <br></div>    
+            <div class="col m8 s8 l8 offset-m2 offset-s2 offset-l2 center z-depth-3">
+              <h3>Password cambiada correctamente</h3>
+              <div class="button"><a href="login.php">Cambiar Password</a></div>
+            </div>
+          </div>
+        </div>
 		
-		
-    echo "CORRECTO";
+    <?
 	}else{
     if(isset($_GET['token'])){
       if(checkToken($_GET['token'])){
@@ -85,9 +105,9 @@
       include 'connection.php';
       $query = "UPDATE usuarios set password = sha2('".$password."',512) WHERE token='".$token."'";
       if (mysqli_query($conn, $query)) {
-        echo "Usuario actualizado correctamente";
+        return true;
       } else {
-        echo "Error: " . $query . "<br>" . mysqli_error($conn);
+        return false;
       }
     }
 
