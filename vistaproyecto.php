@@ -23,8 +23,10 @@
 		}
 
 		include 'connection.php';
-		$nombre_proyecto = $_POST["selectedProyect"];
-		$tipo_usuario = $_POST['tipoUsuario'];
+		if(isset($_POST['tipoUsuario'])){
+			$nombre_proyecto = $_POST["selectedProyect"];
+			$tipo_usuario = $_POST['tipoUsuario'];
+		}
 		echo "<script>var global_tipoUsuario = '".$tipo_usuario."'</script>";
 		$sprints = getSprints($conn,$nombre_proyecto);
 		$specs = getSpecs($conn);
