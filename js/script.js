@@ -176,6 +176,15 @@ function checkNulls(){
 	}
 }
 
+//funcion que pliega el sprint pasado
+function sprintTancat(element){
+	var elements = document.querySelectorAll("ul");
+	elements.forEach(function(element){
+		element.classList.remove("desplegado");
+		element.parentNode.classList.remove("sprint-desplegado");
+	});
+}
+
 //Función que despliega las características del Sprint
 function showSprint(element){
 	var elementoDesplegado = element.parentNode.querySelector("ul");
