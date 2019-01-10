@@ -91,7 +91,7 @@
 									$fechaFin = date("d-m-Y", strtotime($sprint['Fecha_Fin']));
 									?>
 									<li><p class="title">Información</p>
-										<i onclick="deleteSprint()" class="material-icons deleteicon">delete</i>
+										<i onclick="deleteSprint(this)" class="material-icons deleteicon">delete</i>
 										<ul>
 											<li>
 												<table>
@@ -121,7 +121,7 @@
 													<?$specsSprint = getSpecsSprint($conn,$sprint['id_sprint']);
 													foreach($specsSprint as $spec){
 														?>
-														<tr>
+														<tr name="specs">
 															<td><?=$spec['nombre_spec']?></td>
 															<td><?=$spec['horas']?></td>
 															<td><?=$spec['estado']?></td>
@@ -228,7 +228,7 @@
 
 	
 	function getSpecs($conn){
-		$query = "SELECT * FROM especificaciones ORDER BY id_sprint";
+		$query = "SELECT * FROM especificaciones WHERE estado='backlog' ORDER BY id_sprint";
 		$specs = [];
 		$result = mysqli_query($conn, $query);
 		while($registre = mysqli_fetch_assoc($result)){
