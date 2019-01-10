@@ -339,3 +339,19 @@ function compararPassword(){
 		createErrorWindow("Las Contraseña no coinciden");
 	}
 }
+
+function deleteSprint() {
+	reasignar_specs();
+
+}
+
+//funcion para pasar las especificaciones a backlog
+function reasignar_specs(element) {
+	console.log(this);
+	//alert(element.parentNode);
+	var specs = document.querySelectorAll("[name='specs']");
+	for (var i=0;i<specs.length;i++){
+		alert(specs[i].firstElementChild.innerText);
+	}
+
+}

@@ -71,8 +71,9 @@
 				</table>
 			</div>
 	    </div>
-		
-		<div id="TablaSprints" class="tabla-vistaproyectos">
+	    <div class="container">
+		<div class="row">
+		<div id="TablaSprints" class="col s5 m5 l5 tabla-vistaproyectos">
 			<?
 				echo "<h4>Listado de Sprints</h4>";
 				$numSprint = 1;
@@ -94,6 +95,7 @@
 									$fechaFin = date("d-m-Y", strtotime($sprint['Fecha_Fin']));
 									?>
 									<li><p class="title">Información</p>
+										<i onclick="deleteSprint(this)" class="material-icons deleteicon">delete</i>
 										<ul>
 											<li>
 												<table>
@@ -123,7 +125,7 @@
 													<?$specsSprint = getSpecsSprint($conn,$sprint['id_sprint']);
 													foreach($specsSprint as $spec){
 														?>
-														<tr>
+														<tr name="specs">
 															<td><?=$spec['nombre_spec']?></td>
 															<td><?=$spec['horas']?></td>
 															<td><?=$spec['estado']?></td>
@@ -141,7 +143,7 @@
 				}
 			?>
 		</div>
-		<div id="TablaEspecificaciones" class="tabla-vistaproyectos">
+		<div id="TablaEspecificaciones" class="col s6 m6 l6 offset-m1 offset-l1 tabla-vistaproyectos">
 			<?echo "<h4>Listado de Especificaciones</h4>";
 			$numSpec = 1;
 			?>
@@ -185,6 +187,8 @@
 	                		</div>
 	           			</div>
 	        		</div>
+	        	</div>
+			</div>
         		<?}?>
 			</div>
 		</div>
@@ -228,7 +232,7 @@
 
 	
 	function getSpecs($conn){
-		$query = "SELECT * FROM especificaciones ORDER BY id_sprint";
+		$query = "SELECT * FROM especificaciones WHERE estado='backlog' ORDER BY id_sprint";
 		$specs = [];
 		$result = mysqli_query($conn, $query);
 		while($registre = mysqli_fetch_assoc($result)){
