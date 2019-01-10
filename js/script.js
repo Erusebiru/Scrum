@@ -330,3 +330,7 @@ function compararPassword(){
 		createErrorWindow("Las Contraseña no coinciden");
 	}
 }
+
+function deleteSprint() {
+	
+}

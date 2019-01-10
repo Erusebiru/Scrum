@@ -13,6 +13,10 @@ a:link, a:visited {
     color: black;
 }
 
+.deleteicon:hover {
+	color: purple !important;
+}
+
 /* INICIO TABLA PROYECTOS */
 
 .usersTable{
@@ -231,6 +235,8 @@ button[name="addProyect"]:hover {
 
 #TablaSprints h4, #TablaProyectos h4, #TablaEspecificaciones h4{
 	text-align: center;
+	margin-right: 10% !important; 
+	margin-left: 10% !important;
 }
 .tabla-vistaproyectos{
 	width: 60%;

@@ -71,8 +71,9 @@
 				</table>
 			</div>
 	    </div>
-		
-		<div id="TablaSprints" class="tabla-vistaproyectos">
+	    <div class="container">
+		<div class="row">
+		<div id="TablaSprints" class="col s5 m5 l5 tabla-vistaproyectos">
 			<?
 				echo "<h4>Listado de Sprints</h4>";
 				$numSprint = 1;
@@ -90,6 +91,7 @@
 									$fechaFin = date("d-m-Y", strtotime($sprint['Fecha_Fin']));
 									?>
 									<li><p class="title">Información</p>
+										<i onclick="deleteSprint()" class="material-icons deleteicon">delete</i>
 										<ul>
 											<li>
 												<table>
@@ -137,7 +139,7 @@
 				}
 			?>
 		</div>
-		<div id="TablaEspecificaciones" class="tabla-vistaproyectos">
+		<div id="TablaEspecificaciones" class="col s6 m6 l6 offset-m1 offset-l1 tabla-vistaproyectos">
 			<?echo "<h4>Listado de Especificaciones</h4>";
 			$numSpec = 1;
 			?>
@@ -181,6 +183,8 @@
 	                		</div>
 	           			</div>
 	        		</div>
+	        	</div>
+			</div>
         		<?}?>
 			</div>
 		</div>
