@@ -357,3 +357,59 @@ function reasignar_specs(element) {
 	}
 
 }
+
+//Función que comprueba las fechas de los sprints
+//En primera instancia comprueba si la fecha de inicio introducida es menor que la de fin
+//Y luego comprueba que la fecha de inicio es superior a la fecha de fin del último sprint
+function checkSprints(form){
+	form = form.parentNode;
+	console.log(form);
+	var sprints = document.querySelectorAll(".sprintData");
+	var startDate = getStartDate();
+	var endDate = getEndDate();
+	var sprint = sprints[sprints.length-1];
+
+	if(startDate < endDate){
+		var fecha_inicio_sprint = getSprintStartDate(sprint);
+		var fecha_fin_sprint = getSprintEndDate(sprint)
+		if(startDate > fecha_inicio_sprint){
+			form.submit();
+		}else{
+			console.log("Mal");
+		}
+	}else{
+		console.log("WRONG");
+	}
+	
+
+}
+
+//Función que devuelve la fecha de inicio introducida en el formulario que añade un nuevo sprint
+function getStartDate(){
+	var startDate = document.querySelector("[name='inicio']").value;
+	startDate = new Date(startDate).getTime();
+	return startDate;
+}
+
+//Función que devuelve la fecha de fin introducida en el formulario que añade un nuevo sprint
+function getEndDate(){
+	var endDate = document.querySelector("[name='fin']").value;
+	endDate = new Date(endDate).getTime();
+	return endDate;
+}
+
+//Función que devuelve la fecha de inicio del sprint que se le pasa por parámetro
+function getSprintStartDate(sprint){
+	var fecha_inicio_sprint = sprint.querySelector("[name='fechaInicio']").innerHTML;
+	fecha_inicio_sprint = fecha_inicio_sprint.split("-").reverse().join("-");
+	fecha_inicio_sprint = new Date(fecha_inicio_sprint).getTime();
+	return fecha_inicio_sprint;
+}
+
+//Función que devuelve la fecha de fin del sprint que se le pasa por parámetro
+function getSprintEndDate(sprint){
+	var fecha_fin_sprint = sprint.querySelector("[name='fechaInicio']").innerHTML;
+	fecha_fin_sprint = fecha_fin_sprint.split("-").reverse().join("-");
+	fecha_fin_sprint = new Date(fecha_fin_sprint).getTime();
+	return fecha_fin_sprint;
+}

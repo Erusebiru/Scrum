@@ -83,15 +83,14 @@
 				echo "<h4>Listado de Sprints</h4>";
 				$numSprint = 1;
 				foreach($sprints as $sprint){
-					if($hoy > $sprint['Fecha_Inicio'] && $hoy < $sprint['Fecha_Fin']){
+					if($hoy >= $sprint['Fecha_Inicio'] && $hoy <= $sprint['Fecha_Fin']){
 						?><div class="sprint sprint-actual">
-							<!--<img id="abierto" src="images/abierto.png">-->
-							<i id="abierto"  class="material-icons">lock_open</i><?
+							<i id="abierto" class="material-icons">lock_open</i><?
 					}else if($hoy < $sprint['Fecha_Inicio']){
 						?><div class="sprint sprint-proximo">
 							<i id="proximo" class="material-icons">lock_open</i><?
 					}else{
-						?><div onclick="sprintTancat()" class="sprint sprint-anterior">
+						?><div class="sprint sprint-anterior">
 							<i id="cerrado" class="material-icons">lock</i><?
 					}?>
 							<?echo "<h6  onclick='showSprint(this)'>Sprint ".$numSprint."</h6>";
@@ -109,10 +108,10 @@
 														<th>Fecha de inicio</th>
 														<th>Fecha de fin</th>
 													</tr>
-													<tr>
+													<tr class="sprintData">
 														<td><?=$sprint['horasTotales']?></td>
-														<td><?=$fechaInicio?></td>
-														<td><?=$fechaFin?></td>
+														<td name="fechaInicio"><?=$fechaInicio?></td>
+														<td name="fechaFin"><?=$fechaFin?></td>
 													</tr>
 												</table>
 											</li>
@@ -155,7 +154,7 @@
 
 			<div class="cuadro" id="modify">
 	            <div class="centro">
-	            	<form action="update.php" method="POST">
+	            	<form action="pass.php" method="POST">
 	            		<label for="numSprint">Número de Sprint</label>
 	            		<input type="number" name="numSprint" disabled value="<?=$numSprint?>">
 	            		<label for="inicio">Fecha de inicio</label>
@@ -165,11 +164,13 @@
 	            		<label for="horastotales">Horas totales</label>
 	            		<input type="number" name="horastotales" min="1" required>
 	            		<br><br>
-		                <button class="btn waves-effect waves-light" type="submit" name="action">Crea
-		    				<i class="material-icons right">send</i>
-		  				</button>
-		                <a href="#close" title="Close"></a>
-	                </form>
+	            		<button class="btn waves-effect waves-light" type="button" name="action" onclick="checkSprints(this)">Crea
+	    					<i class="material-icons right">send</i>
+	  					</button>
+	  					<a href="#close" title="Close" ></a>
+            		</form>
+	                
+	                
 	            </div>
         	</div>
 		</div>

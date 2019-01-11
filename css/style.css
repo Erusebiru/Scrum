@@ -331,6 +331,10 @@ li label{
 	background-color: #89bc89;
 
 }
+
+.sprint .material-icons{
+	float: left;
+}
 .sprint-actual h6{
 	color: #215521;
 }
