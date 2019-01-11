@@ -95,9 +95,8 @@
 				foreach($sprints as $sprint){
 
 					if($hoy > $sprint['Fecha_Inicio'] && $hoy < $sprint['Fecha_Fin']){
-						?><div onclick="sprintTancat()" class="sprint sprint-actual">
-							
-							<i onclick="cambiarIcono()"  id="abierto"  class="material-icons">lock</i><?
+						?><div class="sprint sprint-actual">
+							<i onclick="cambiarIcono()" id="abierto"  class="material-icons">lock</i><?
 					}else if($hoy < $sprint['Fecha_Inicio']){
 						?><div class="sprint sprint-proximo">
 							<i  onclick="cambiarIconoProximo()" id="proximo" class="material-icons">lock</i><?
