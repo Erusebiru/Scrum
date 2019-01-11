@@ -331,18 +331,26 @@ function compararPassword(){
 	}
 }
 
-function deleteSprint() {
-	reasignar_specs();
+function deleteSprint(element) {
+	reasignar_specs(element);
 
 }
 
 //funcion para pasar las especificaciones a backlog
 function reasignar_specs(element) {
-	console.log(this);
+	//alert(element);
 	//alert(element.parentNode);
-	var specs = document.querySelectorAll("[name='specs']");
+	var specs = document.querySelectorAll("[name='specs"+element+"']");
+	var parent = document.querySelector(".remove-specs-box");
+	var form = addElement(parent,"form",undefined,["action=removeSpecs.php","method=post","id=sendSpecs"]);
+	var num_specs = specs.length;
+	addElement(form,"input",undefined,["type=hidden","name=num_specs","value="+specs.length]);
+
 	for (var i=0;i<specs.length;i++){
-		alert(specs[i].firstElementChild.innerText);
+		var especificacion = specs[i].firstElementChild.innerText;
+		addElement(form,"input",undefined,["type=hidden","name=spec[]", "value="+especificacion]);
 	}
+	form.submit();
+
 
 }

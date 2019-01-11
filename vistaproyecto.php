@@ -24,7 +24,15 @@
 		}
 
 		include 'connection.php';
-		$nombre_proyecto = $_POST["selectedProyect"];
+
+		if (isset($_SESSION['selectedProyect']) || $_SESSION['selectedProyect']!=null) {
+			$nombre_proyecto = $_SESSION['selectedProyect'];
+		}
+		else {
+			$nombre_proyecto = $_POST["selectedProyect"];
+			$_SESSION['selectedProyect'] = $nombre_proyecto;
+		}
+		
 		$tipo_usuario = "scrumMaster";
 		$sprints = getSprints($conn,$nombre_proyecto);
 		$specs = getSpecs($conn);
@@ -63,9 +71,9 @@
 							}
 							echo "</td>";
 							}
-						else {
+						/*else {
 							echo "<td>Todavía no se han añadido datos de este proyecto</td>";
-						}
+						}*/
 						?>
 					</tr>
 				</table>
@@ -91,7 +99,7 @@
 									$fechaFin = date("d-m-Y", strtotime($sprint['Fecha_Fin']));
 									?>
 									<li><p class="title">Información</p>
-										<i onclick="deleteSprint(this)" class="material-icons deleteicon">delete</i>
+										<button onclick="deleteSprint('<?= $numSprint ?>')"><i class="material-icons deleteicon">delete</i></button>
 										<ul>
 											<li>
 												<table>
@@ -121,7 +129,7 @@
 													<?$specsSprint = getSpecsSprint($conn,$sprint['id_sprint']);
 													foreach($specsSprint as $spec){
 														?>
-														<tr name="specs">
+														<tr name="specs<?=$numSprint?>">
 															<td><?=$spec['nombre_spec']?></td>
 															<td><?=$spec['horas']?></td>
 															<td><?=$spec['estado']?></td>
@@ -190,6 +198,7 @@
 		</div>
 	</div>
 
+	<div class="remove-specs-box"></div>
 	<div class="window-message">
 		<div class="error"></div>
 	</div>
