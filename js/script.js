@@ -201,6 +201,7 @@ function vistaProyecto(proyecto) {
 	var proyecto_seleccionado = proyecto.name;
 	Enviar_Nombre_Proyecto();
 	document.querySelector("input[name=selectedProyect]").value=proyecto_seleccionado;
+	document.querySelector("input[name=tipoUsuario]").value=global_tipoUsuario;
 	document.getElementById("sendProyect").submit();
 	}
 
@@ -208,6 +209,7 @@ function Enviar_Nombre_Proyecto() {
 	var parent = document.querySelector(".new-proyect-view-box");
 	var form = addElement(parent,"form",undefined,["action=vistaproyecto.php","method=post","id=sendProyect"]);
 	addElement(form,"input",undefined,["type=hidden","name=selectedProyect"]);
+	addElement(form,"input",undefined,["type=hidden","name=tipoUsuario"]);
 	
 }
 

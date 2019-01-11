@@ -24,12 +24,17 @@
 		}
 
 		include 'connection.php';
-		$nombre_proyecto = $_POST["selectedProyect"];
-		$tipo_usuario = "scrumMaster";
+		if(isset($_POST['tipoUsuario'])){
+			$nombre_proyecto = $_POST["selectedProyect"];
+			$tipo_usuario = $_POST['tipoUsuario'];
+		}
+		
+		echo "<script>var global_tipoUsuario = '".$tipo_usuario."'</script>";
 		$sprints = getSprints($conn,$nombre_proyecto);
 		$specs = getSpecs($conn);
 		$proyecto = findProyects($conn,$nombre_proyecto);
 		$hoy = date('Y-m-d');
+		$dema = mktime(0,0,0, date("m"), date("d")+1, date("Y"))
 	?>
 
 	<div class="contenedor">
@@ -135,7 +140,32 @@
 						</div>
 					<?
 				}
-			?>
+
+			if($tipo_usuario === "scrumMaster"){?>
+				<div class="newSprint">
+					<a href="#modify" class="btn waves-effect waves-light openmodal">Añadir nuevo Sprint</a>
+				</div>
+			<?}?>
+
+			<div class="cuadro" id="modify">
+	            <div class="centro">
+	            	<form action="update.php" method="POST">
+	            		<label for="numSprint">Número de Sprint</label>
+	            		<input type="number" name="numSprint" disabled value="<?=$numSprint?>">
+	            		<label for="inicio">Fecha de inicio</label>
+	            		<input type="date" name="inicio" min="<?=$hoy?>" required>
+	            		<label for="fin">Fecha de fin</label>
+	            		<input type="date" name="fin" required>
+	            		<label for="horastotales">Horas totales</label>
+	            		<input type="number" name="horastotales" min="1" required>
+	            		<br><br>
+		                <button class="btn waves-effect waves-light" type="submit" name="action">Crea
+		    				<i class="material-icons right">send</i>
+		  				</button>
+		                <a href="#close" title="Close"></a>
+	                </form>
+	            </div>
+        	</div>
 		</div>
 		<div id="TablaEspecificaciones" class="tabla-vistaproyectos">
 			<?echo "<h4>Listado de Especificaciones</h4>";
@@ -156,7 +186,7 @@
 							<td name="numSpec"><?=$numSpec?></td>
 							<td><?=$spec['nombre_spec']?></td>
 							<td><?=$spec['estado']?></td>
-							<?if($tipo_usuario == "scrumMaster"){
+							<?if($tipo_usuario == "productOwner"){
 								?><td><img class="upside" src="images/up.png"><img class="downside" src="images/down.png"><img class="del" src="images/del.png"></td><?
 							}?>
 						</tr>
@@ -167,7 +197,7 @@
 				?>
 				</table>
 				<br>
-				<?if($tipo_usuario === "scrumMaster"){?>
+				<?if($tipo_usuario === "productOwner"){?>
 					<div class="row">
 	            		<div class="col s12">
 	                		<div class="row">
