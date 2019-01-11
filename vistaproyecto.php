@@ -87,13 +87,17 @@
 				$numSprint = 1;
 				foreach($sprints as $sprint){
 					if($hoy > $sprint['Fecha_Inicio'] && $hoy < $sprint['Fecha_Fin']){
-						?><div class="sprint sprint-actual"><?
+						?><div onclick="sprintTancat()" class="sprint sprint-actual">
+							
+							<i onclick="cambiarIcono()"  id="abierto"  class="material-icons">lock</i><?
 					}else if($hoy < $sprint['Fecha_Inicio']){
-						?><div class="sprint sprint-proximo"><?
+						?><div class="sprint sprint-proximo">
+							<i  onclick="cambiarIconoProximo()" id="proximo" class="material-icons">lock</i><?
 					}else{
-						?><div class="sprint sprint-anterior"><?
+						?><div onclick="sprintTancat()" class="sprint sprint-anterior">
+							<i id="cerrado" class="material-icons">lock</i><?
 					}?>
-							<?echo "<h6 onclick='showSprint(this)'>Sprint ".$numSprint."</h6>";
+							<?echo "<h6  onclick='showSprint(this)'>Sprint ".$numSprint."</h6>";
 							?><ul class="plegado" name="primero"><?
 									$fechaInicio = date("d-m-Y", strtotime($sprint['Fecha_Inicio']));
 									$fechaFin = date("d-m-Y", strtotime($sprint['Fecha_Fin']));
@@ -247,5 +251,7 @@
 	}
 
 	?>
+
+
 </body>
 </html>

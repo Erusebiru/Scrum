@@ -176,6 +176,33 @@ function checkNulls(){
 	}
 }
 
+
+
+//funcion que cambia el icono del sprintProximo(candado)
+function cambiarIconoProximo(){
+	var candadoAbierto=document.getElementById("proximo");
+	
+	if (candadoAbierto.innerText=="lock") {
+		candadoAbierto.innerText="lock_open";
+	}else{
+		candadoAbierto.innerText="lock";
+	}
+	
+}
+
+
+
+//funcion que bloquea el sprint pasado
+function sprintTancat(element){
+	var elements = document.querySelectorAll("ul");
+	elements.forEach(function(element){
+		element.classList.remove("desplegado");
+		element.parentNode.classList.remove("sprint-desplegado");
+	});
+	
+}
+
+
 //Función que despliega las características del Sprint
 function showSprint(element){
 	var elementoDesplegado = element.parentNode.querySelector("ul");
@@ -186,6 +213,7 @@ function showSprint(element){
 	}else{
 		removeClass();
 	}
+	
 }
 
 //Función que pliega el Sprint
