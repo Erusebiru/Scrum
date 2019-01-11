@@ -24,21 +24,21 @@
 		}
 
 		include 'connection.php';
-
-		if(isset($_POST['tipoUsuario'])){
-			$nombre_proyecto = $_POST["selectedProyect"];
-			$tipo_usuario = $_POST['tipoUsuario'];
-		}
 		
-		echo "<script>var global_tipoUsuario = '".$tipo_usuario."'</script>";
+
 
 		if (isset($_SESSION['selectedProyect']) || $_SESSION['selectedProyect']!=null) {
 			$nombre_proyecto = $_SESSION['selectedProyect'];
+			$tipo_usuario = $_SESSION['tipo_usuario'];
 		}
 		else {
 			$nombre_proyecto = $_POST["selectedProyect"];
 			$_SESSION['selectedProyect'] = $nombre_proyecto;
+			$tipo_usuario = $_POST['tipoUsuario'];
+			$_SESSION['tipo_usuario'] = $tipo_usuario;
 		}
+
+		echo "<script>var global_tipoUsuario = '".$tipo_usuario."'</script>";
 		
 		$sprints = getSprints($conn,$nombre_proyecto);
 		$specs = getSpecs($conn);
