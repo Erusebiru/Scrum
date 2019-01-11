@@ -24,12 +24,22 @@
 		}
 
 		include 'connection.php';
+
 		if(isset($_POST['tipoUsuario'])){
 			$nombre_proyecto = $_POST["selectedProyect"];
 			$tipo_usuario = $_POST['tipoUsuario'];
 		}
 		
 		echo "<script>var global_tipoUsuario = '".$tipo_usuario."'</script>";
+
+		if (isset($_SESSION['selectedProyect']) || $_SESSION['selectedProyect']!=null) {
+			$nombre_proyecto = $_SESSION['selectedProyect'];
+		}
+		else {
+			$nombre_proyecto = $_POST["selectedProyect"];
+			$_SESSION['selectedProyect'] = $nombre_proyecto;
+		}
+		
 		$sprints = getSprints($conn,$nombre_proyecto);
 		$specs = getSpecs($conn);
 		$proyecto = findProyects($conn,$nombre_proyecto);
@@ -68,9 +78,9 @@
 							}
 							echo "</td>";
 							}
-						else {
+						/*else {
 							echo "<td>Todavía no se han añadido datos de este proyecto</td>";
-						}
+						}*/
 						?>
 					</tr>
 				</table>
@@ -83,12 +93,14 @@
 				echo "<h4>Listado de Sprints</h4>";
 				$numSprint = 1;
 				foreach($sprints as $sprint){
-					if($hoy >= $sprint['Fecha_Inicio'] && $hoy <= $sprint['Fecha_Fin']){
-						?><div class="sprint sprint-actual">
-							<i id="abierto" class="material-icons">lock_open</i><?
+
+					if($hoy > $sprint['Fecha_Inicio'] && $hoy < $sprint['Fecha_Fin']){
+						?><div onclick="sprintTancat()" class="sprint sprint-actual">
+							
+							<i onclick="cambiarIcono()"  id="abierto"  class="material-icons">lock</i><?
 					}else if($hoy < $sprint['Fecha_Inicio']){
 						?><div class="sprint sprint-proximo">
-							<i id="proximo" class="material-icons">lock_open</i><?
+							<i  onclick="cambiarIconoProximo()" id="proximo" class="material-icons">lock</i><?
 					}else{
 						?><div class="sprint sprint-anterior">
 							<i id="cerrado" class="material-icons">lock</i><?
@@ -99,7 +111,7 @@
 									$fechaFin = date("d-m-Y", strtotime($sprint['Fecha_Fin']));
 									?>
 									<li><p class="title">Información</p>
-										<i onclick="deleteSprint(this)" class="material-icons deleteicon">delete</i>
+										<button onclick="deleteSprint('<?= $numSprint ?>')"><i class="material-icons deleteicon">delete</i></button>
 										<ul>
 											<li>
 												<table>
@@ -129,7 +141,7 @@
 													<?$specsSprint = getSpecsSprint($conn,$sprint['id_sprint']);
 													foreach($specsSprint as $spec){
 														?>
-														<tr name="specs">
+														<tr name="specs<?=$numSprint?>">
 															<td><?=$spec['nombre_spec']?></td>
 															<td><?=$spec['horas']?></td>
 															<td><?=$spec['estado']?></td>
@@ -225,6 +237,7 @@
 		</div>
 	</div>
 
+	<div class="remove-specs-box"></div>
 	<div class="window-message">
 		<div class="error"></div>
 	</div>

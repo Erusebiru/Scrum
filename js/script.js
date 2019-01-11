@@ -176,14 +176,32 @@ function checkNulls(){
 	}
 }
 
-//funcion que pliega el sprint pasado
+
+
+//funcion que cambia el icono del sprintProximo(candado)
+function cambiarIconoProximo(){
+	var candadoAbierto=document.getElementById("proximo");
+	
+	if (candadoAbierto.innerText=="lock") {
+		candadoAbierto.innerText="lock_open";
+	}else{
+		candadoAbierto.innerText="lock";
+	}
+	
+}
+
+
+
+//funcion que bloquea el sprint pasado
 function sprintTancat(element){
 	var elements = document.querySelectorAll("ul");
 	elements.forEach(function(element){
 		element.classList.remove("desplegado");
 		element.parentNode.classList.remove("sprint-desplegado");
 	});
+	
 }
+
 
 //Función que despliega las características del Sprint
 function showSprint(element){
@@ -195,6 +213,7 @@ function showSprint(element){
 	}else{
 		removeClass();
 	}
+	
 }
 
 //Función que pliega el Sprint
@@ -342,19 +361,27 @@ function compararPassword(){
 	}
 }
 
-function deleteSprint() {
-	reasignar_specs();
+function deleteSprint(element) {
+	reasignar_specs(element);
 
 }
 
 //funcion para pasar las especificaciones a backlog
 function reasignar_specs(element) {
-	console.log(this);
+	//alert(element);
 	//alert(element.parentNode);
-	var specs = document.querySelectorAll("[name='specs']");
+	var specs = document.querySelectorAll("[name='specs"+element+"']");
+	var parent = document.querySelector(".remove-specs-box");
+	var form = addElement(parent,"form",undefined,["action=removeSpecs.php","method=post","id=sendSpecs"]);
+	var num_specs = specs.length;
+	addElement(form,"input",undefined,["type=hidden","name=num_specs","value="+specs.length]);
+
 	for (var i=0;i<specs.length;i++){
-		alert(specs[i].firstElementChild.innerText);
+		var especificacion = specs[i].firstElementChild.innerText;
+		addElement(form,"input",undefined,["type=hidden","name=spec[]", "value="+especificacion]);
 	}
+	form.submit();
+
 
 }
 
