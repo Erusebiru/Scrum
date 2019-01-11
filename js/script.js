@@ -176,6 +176,15 @@ function checkNulls(){
 	}
 }
 
+//funcion que pliega el sprint pasado
+function sprintTancat(element){
+	var elements = document.querySelectorAll("ul");
+	elements.forEach(function(element){
+		element.classList.remove("desplegado");
+		element.parentNode.classList.remove("sprint-desplegado");
+	});
+}
+
 //Función que despliega las características del Sprint
 function showSprint(element){
 	var elementoDesplegado = element.parentNode.querySelector("ul");
@@ -331,4 +340,20 @@ function compararPassword(){
 	else{
 		createErrorWindow("Las Contraseña no coinciden");
 	}
+}
+
+function deleteSprint() {
+	reasignar_specs();
+
+}
+
+//funcion para pasar las especificaciones a backlog
+function reasignar_specs(element) {
+	console.log(this);
+	//alert(element.parentNode);
+	var specs = document.querySelectorAll("[name='specs']");
+	for (var i=0;i<specs.length;i++){
+		alert(specs[i].firstElementChild.innerText);
+	}
+
 }

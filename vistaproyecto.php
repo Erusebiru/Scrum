@@ -76,25 +76,31 @@
 				</table>
 			</div>
 	    </div>
-		
-		<div id="TablaSprints" class="tabla-vistaproyectos">
+	    <div class="container">
+		<div class="row">
+		<div id="TablaSprints" class="col s5 m5 l5 tabla-vistaproyectos">
 			<?
 				echo "<h4>Listado de Sprints</h4>";
 				$numSprint = 1;
 				foreach($sprints as $sprint){
 					if($hoy > $sprint['Fecha_Inicio'] && $hoy < $sprint['Fecha_Fin']){
-						?><div class="sprint sprint-actual"><?
+						?><div class="sprint sprint-actual">
+							<!--<img id="abierto" src="images/abierto.png">-->
+							<i id="abierto"  class="material-icons">lock_open</i><?
 					}else if($hoy < $sprint['Fecha_Inicio']){
-						?><div class="sprint sprint-proximo"><?
+						?><div class="sprint sprint-proximo">
+							<i id="proximo" class="material-icons">lock_open</i><?
 					}else{
-						?><div class="sprint sprint-anterior"><?
+						?><div onclick="sprintTancat()" class="sprint sprint-anterior">
+							<i id="cerrado" class="material-icons">lock</i><?
 					}?>
-							<?echo "<h6 onclick='showSprint(this)'>Sprint ".$numSprint."</h6>";
+							<?echo "<h6  onclick='showSprint(this)'>Sprint ".$numSprint."</h6>";
 							?><ul class="plegado" name="primero"><?
 									$fechaInicio = date("d-m-Y", strtotime($sprint['Fecha_Inicio']));
 									$fechaFin = date("d-m-Y", strtotime($sprint['Fecha_Fin']));
 									?>
 									<li><p class="title">Información</p>
+										<i onclick="deleteSprint(this)" class="material-icons deleteicon">delete</i>
 										<ul>
 											<li>
 												<table>
@@ -124,7 +130,7 @@
 													<?$specsSprint = getSpecsSprint($conn,$sprint['id_sprint']);
 													foreach($specsSprint as $spec){
 														?>
-														<tr>
+														<tr name="specs">
 															<td><?=$spec['nombre_spec']?></td>
 															<td><?=$spec['horas']?></td>
 															<td><?=$spec['estado']?></td>
@@ -167,7 +173,7 @@
 	            </div>
         	</div>
 		</div>
-		<div id="TablaEspecificaciones" class="tabla-vistaproyectos">
+		<div id="TablaEspecificaciones" class="col s6 m6 l6 offset-m1 offset-l1 tabla-vistaproyectos">
 			<?echo "<h4>Listado de Especificaciones</h4>";
 			$numSpec = 1;
 			?>
@@ -211,6 +217,8 @@
 	                		</div>
 	           			</div>
 	        		</div>
+	        	</div>
+			</div>
         		<?}?>
 			</div>
 		</div>
@@ -254,7 +262,7 @@
 
 	
 	function getSpecs($conn){
-		$query = "SELECT * FROM especificaciones ORDER BY id_sprint";
+		$query = "SELECT * FROM especificaciones WHERE estado='backlog' ORDER BY id_sprint";
 		$specs = [];
 		$result = mysqli_query($conn, $query);
 		while($registre = mysqli_fetch_assoc($result)){
@@ -264,5 +272,7 @@
 	}
 
 	?>
+
+
 </body>
 </html>

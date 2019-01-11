@@ -13,6 +13,10 @@ a:link, a:visited {
     color: black;
 }
 
+.deleteicon:hover {
+	color: purple !important;
+}
+
 /* INICIO TABLA PROYECTOS */
 
 .usersTable{
@@ -231,6 +235,8 @@ button[name="addProyect"]:hover {
 
 #TablaSprints h4, #TablaProyectos h4, #TablaEspecificaciones h4{
 	text-align: center;
+	margin-right: 10% !important; 
+	margin-left: 10% !important;
 }
 
 .tabla-vistaproyectos{
@@ -323,6 +329,7 @@ li label{
 
 .sprint-actual{
 	background-color: #89bc89;
+
 }
 .sprint-actual h6{
 	color: #215521;
@@ -335,6 +342,7 @@ li label{
 .sprint-proximo h6{
 	color: black;
 }
+
 
 .newSprint{
 
@@ -545,4 +553,3 @@ li label{
 .centro input[type=text]:enabled{
 	color: black !important;
 }
-
