@@ -179,28 +179,51 @@ function checkNulls(){
 
 
 //funcion que cambia el icono del sprintProximo(candado)
-function cambiarIconoProximo(){
+function cambiarIconoProximo(element){
+	console.log(element.parentNode);
 	var candadoAbierto=document.getElementById("proximo");
 	
 	if (candadoAbierto.innerText=="lock") {
 		candadoAbierto.innerText="lock_open";
+		modificar(element);
 	}else{
 		candadoAbierto.innerText="lock";
+		modificarDeshabilitado();
 	}
+
 	
+	
+}
+
+//Funcion que permite habilita la modificación de las especificaciones
+function modificar(element){
+	
+	var especificaciones=element.parentNode.getElementsByClassName("modificarEsp");
+	console.log(especificaciones);
+	for (var i=0; i <especificaciones.length; i++) {
+		especificaciones[i].disabled=false;
+	}
+}
+//Funcion que deshabilita los input de  las especificaciones
+function modificarDeshabilitado(){
+	var especificaciones=document.getElementsByClassName("modificarEsp");
+
+	for (var i=0; i <especificaciones.length; i++) {
+		especificaciones[i].disabled=true;
+	}
 }
 
 
 
 //funcion que bloquea el sprint pasado
-function sprintTancat(element){
-	var elements = document.querySelectorAll("ul");
-	elements.forEach(function(element){
-		element.classList.remove("desplegado");
-		element.parentNode.classList.remove("sprint-desplegado");
-	});
+// function sprintTancat(element){
+// 	var elements = document.querySelectorAll("ul");
+// 	elements.forEach(function(element){
+// 		element.classList.remove("desplegado");
+// 		element.parentNode.classList.remove("sprint-desplegado");
+// 	});
 	
-}
+// }
 
 
 //Función que despliega las características del Sprint
@@ -434,7 +457,7 @@ function getEndDate(){
 
 //Función que devuelve la fecha de inicio del sprint que se le pasa por parámetro
 function getSprintStartDate(sprint){
-	var fecha_inicio_sprint = sprint.querySelector("[name='fechaInicio']").innerHTML;
+	var fecha_inicio_sprint = sprint.querySelector("[name='fechaInicio'] > input").value;
 	fecha_inicio_sprint = fecha_inicio_sprint.split("-").reverse().join("-");
 	fecha_inicio_sprint = new Date(fecha_inicio_sprint).getTime();
 	return fecha_inicio_sprint;
@@ -442,9 +465,9 @@ function getSprintStartDate(sprint){
 
 //Función que devuelve la fecha de fin del sprint que se le pasa por parámetro
 function getSprintEndDate(sprint){
-	var fecha_fin_sprint = sprint.querySelector("[name='fechaInicio']").innerHTML;
+	var fecha_fin_sprint = sprint.querySelector("[name='fechaFin'] > input").value;
 	fecha_fin_sprint = fecha_fin_sprint.split("-").reverse().join("-");
-	console.log(fecha_fin_sprint);
+	console.log("Fecha fin sprint: "+fecha_fin_sprint);
 	fecha_fin_sprint = new Date(fecha_fin_sprint).getTime();
 	return fecha_fin_sprint;
 }

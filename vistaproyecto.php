@@ -89,76 +89,83 @@
 	    </div>
 	    <div class="container">
 		<div class="row">
-			<div id="TablaSprints" class="col s5 m5 l5 tabla-vistaproyectos">
-				<?
-					echo "<h4>Listado de Sprints</h4>";
-					$numSprint = 1;
-					foreach($sprints as $sprint){
+			
+		<div id="TablaSprints" class="col s5 m5 l5 tabla-vistaproyectos">
+			<?
+				echo "<h4>Listado de Sprints</h4>";
+				$numSprint = 1;
+				foreach($sprints as $sprint){
 
-						if($hoy > $sprint['Fecha_Inicio'] && $hoy < $sprint['Fecha_Fin']){
-							?><div id=<?= $sprint['id_sprint']?> class="sprint sprint-actual">
-								<i onclick="cambiarIcono()" id="abierto"  class="material-icons">lock</i><?
-						}else if($hoy < $sprint['Fecha_Inicio']){
-							?><div id=<?= $sprint['id_sprint']?> class="sprint sprint-proximo">
-								<i  onclick="cambiarIconoProximo()" id="proximo" class="material-icons">lock</i><?
-						}else{
-							?><div id=<?= $sprint['id_sprint']?> class="sprint sprint-anterior">
-								<i id="cerrado" class="material-icons">lock</i><?
-						}?>
-								<?echo "<h6  onclick='showSprint(this)'>Sprint ".$numSprint."</h6>";
-								?><ul class="plegado" name="primero"><?
-										$fechaInicio = date("d-m-Y", strtotime($sprint['Fecha_Inicio']));
-										$fechaFin = date("d-m-Y", strtotime($sprint['Fecha_Fin']));
+					if($hoy > $sprint['Fecha_Inicio'] && $hoy < $sprint['Fecha_Fin']){
 
-										$id_sprint = $sprint['id_sprint'];
-										?>
-										<li><p class="title">Información</p>
-											<button onclick="deleteSprint('<?= $numSprint ?> ' , '<?= $id_sprint ?>')"><i class="material-icons deleteicon">delete</i></button>
-											<ul>
-												<li>
-													<table>
-														<tr>
-															<th>Horas totales</th>
-															<th>Fecha de inicio</th>
-															<th>Fecha de fin</th>
-														</tr>
-														<tr class="sprintData">
-															<td><?=$sprint['horasTotales']?></td>
-															<td name="fechaInicio"><?=$fechaInicio?></td>
-															<td name="fechaFin"><?=$fechaFin?></td>
-														</tr>
-													</table>
-												</li>
-											</ul>
-										</li>
-										<li><p class="title">Especificaciones</p>
-											<ul>
-												<li class="board" sprint="<?=$numSprint?>">
-													<table >
-														<tr>
-															<th>Tarea</th>
-															<th>Horas Asignadas</th>
-															<th>Estado</th>
-														</tr>
-														<?$specsSprint = getSpecsSprint($conn,$sprint['id_sprint']);
-														foreach($specsSprint as $spec){
-															?>
-															<tr name="specs<?=$numSprint?>">
-																<td><?=$spec['nombre_spec']?></td>
-																<td><?=$spec['horas']?></td>
-																<td><?=$spec['estado']?></td>
-															</tr>									
-															<?
-														}?>
-													</table>
-												</li>
-											</ul>
-										</li>
-									<?$numSprint++;?>
-								</ul>
-							</div>
-						<?
-					}
+						?><div  class="sprint sprint-actual">
+							
+							<i onclick="cambiarIcono()"  id="abierto"  class="material-icons">lock</i><?
+
+					}else if($hoy < $sprint['Fecha_Inicio']){
+						?><div class="sprint sprint-proximo">
+							<i  onclick="cambiarIconoProximo(this)" id="proximo" class="material-icons">lock</i><?
+
+					}else{
+						?><div id=<?= $sprint['id_sprint']?> class="sprint sprint-anterior">
+
+							<i id="cerrado" class="material-icons">lock</i><?
+					}?>
+							<?echo "<h6  onclick='showSprint(this)'>Sprint ".$numSprint."</h6>";
+							?><ul class="plegado" name="primero"><?
+									$fechaInicio = date("d-m-Y", strtotime($sprint['Fecha_Inicio']));
+									$fechaFin = date("d-m-Y", strtotime($sprint['Fecha_Fin']));
+
+									$id_sprint = $sprint['id_sprint'];
+									?>
+									<li><p class="title">Información</p>
+										<button onclick="deleteSprint('<?= $numSprint ?> ' , '<?= $id_sprint ?>')"><i class="material-icons deleteicon">delete</i></button>
+										<ul>
+											<li>
+												<table>
+													<tr>
+														<th>Horas totales</th>
+														<th>Fecha de inicio</th>
+														<th>Fecha de fin</th>
+													</tr>
+
+													<tr class="sprintData">
+														<td><input class='modificarEsp' type='text' value="<?=$sprint['horasTotales']?>" disabled></td>
+														<td name="fechaInicio"><input class='modificarEsp' type='text' value="<?=$fechaInicio?>" disabled></td>
+														<td name="fechaFin"><input class='modificarEsp' type='text' value="<?=$fechaFin?>" disabled></td>
+												</table>
+											</li>
+										</ul>
+									</li>
+									<li><p class="title">Especificaciones</p>
+										<ul>
+											<li>
+												<table>
+													<tr>
+														<th>Tarea</th>
+														<th>Horas Asignadas</th>
+														<th>Estado</th>
+													</tr>
+													<?$specsSprint = getSpecsSprint($conn,$sprint['id_sprint']);
+													foreach($specsSprint as $spec){
+														?>
+														<tr name="specs<?=$numSprint?>">
+															<td><?=$spec['nombre_spec']?></td>
+															<td><?=$spec['horas']?></td>
+															<td><?=$spec['estado']?></td>
+														</tr>									
+														<?
+													}?>
+												</table>
+											</li>
+										</ul>
+									</li>
+								<?$numSprint++;?>
+								<button class="btn waves-effect waves-light" id="enviarEsp" type="submit">Modificar<i  class="material-icons right">send</i></button>
+							</ul>
+						</div>
+					<?
+				}
 
 				if($tipo_usuario === "scrumMaster"){?>
 					<div class="newSprint">

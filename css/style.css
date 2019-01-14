@@ -355,6 +355,18 @@ li label{
 }
 
 
+#proximo:hover{
+	-webkit-transform: scale(1.3);
+	-ms-transform: scale(1.3);
+	transform: scale(1.3);
+}
+
+#enviarEsp{
+	float: right;
+}
+
+
+
 .newSprint{
 
 	padding: 20px;
@@ -573,9 +585,4 @@ li label{
 	width: auto !important;
 	height: 10% !important;
 
-}
-
-.inputs{
-	display: flex;
-	justify-content: center;
 }
