@@ -79,14 +79,16 @@
 				$numSprint = 1;
 				foreach($sprints as $sprint){
 					if($hoy > $sprint['Fecha_Inicio'] && $hoy < $sprint['Fecha_Fin']){
-						?><div onclick="sprintTancat()" class="sprint sprint-actual">
+						?><div  class="sprint sprint-actual">
 							
 							<i onclick="cambiarIcono()"  id="abierto"  class="material-icons">lock</i><?
+
 					}else if($hoy < $sprint['Fecha_Inicio']){
 						?><div class="sprint sprint-proximo">
-							<i  onclick="cambiarIconoProximo()" id="proximo" class="material-icons">lock</i><?
+							<i  onclick="cambiarIconoProximo(this)" id="proximo" class="material-icons">lock</i><?
+
 					}else{
-						?><div onclick="sprintTancat()" class="sprint sprint-anterior">
+						?><div  class="sprint sprint-anterior">
 							<i id="cerrado" class="material-icons">lock</i><?
 					}?>
 							<?echo "<h6  onclick='showSprint(this)'>Sprint ".$numSprint."</h6>";
@@ -105,9 +107,10 @@
 														<th>Fecha de fin</th>
 													</tr>
 													<tr>
-														<td><?=$sprint['horasTotales']?></td>
-														<td><?=$fechaInicio?></td>
-														<td><?=$fechaFin?></td>
+														<td><?echo "<input class='modificarEsp' type='text' value='".$sprint['horasTotales']."' disabled>";?></td>
+														<td><?echo "<input class='modificarEsp' type='text' value='".$fechaInicio."' disabled>";?></td>
+														<td><?echo "<input class='modificarEsp' type='text' value='".$fechaFin."' disabled>";?></td>
+
 													</tr>
 												</table>
 											</li>
@@ -137,6 +140,7 @@
 										</ul>
 									</li>
 								<?$numSprint++;?>
+								<button class="btn waves-effect waves-light" id="enviarEsp" type="submit">Enviar<i  class="material-icons right">send</i></button>
 							</ul>
 						</div>
 					<?
