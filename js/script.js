@@ -252,6 +252,7 @@ function vistaProyecto(proyecto) {
 	var proyecto_seleccionado = proyecto.name;
 	Enviar_Nombre_Proyecto();
 	document.querySelector("input[name=selectedProyect]").value=proyecto_seleccionado;
+	document.querySelector("input[name=tipoUsuario]").value=global_tipoUsuario;
 	document.getElementById("sendProyect").submit();
 	}
 
@@ -259,6 +260,7 @@ function Enviar_Nombre_Proyecto() {
 	var parent = document.querySelector(".new-proyect-view-box");
 	var form = addElement(parent,"form",undefined,["action=vistaproyecto.php","method=post","id=sendProyect"]);
 	addElement(form,"input",undefined,["type=hidden","name=selectedProyect"]);
+	addElement(form,"input",undefined,["type=hidden","name=tipoUsuario"]);
 	
 }
 
@@ -382,18 +384,85 @@ function compararPassword(){
 	}
 }
 
-function deleteSprint() {
-	reasignar_specs();
-
+function deleteSprint(element, idsprint) {
+	reasignar_specs(element);
+	var parent = document.querySelector(".sprint-id-box");
+	var form = addElement(parent,"form",undefined,["action=deleteSprint.php","method=post","id=sendIdSprint"]);
+	addElement(form,"input",undefined,["type=hidden","name=id_sprint","value="+idsprint]);
+	form.submit();
 }
 
 //funcion para pasar las especificaciones a backlog
 function reasignar_specs(element) {
-	console.log(this);
+	//alert(element);
 	//alert(element.parentNode);
-	var specs = document.querySelectorAll("[name='specs']");
-	for (var i=0;i<specs.length;i++){
-		alert(specs[i].firstElementChild.innerText);
-	}
+	var specs = document.querySelectorAll("[name='specs"+element+"']");
+	var parent = document.querySelector(".remove-specs-box");
+	var form = addElement(parent,"form",undefined,["action=removeSpecs.php","method=post","id=sendSpecs"]);
+	var num_specs = specs.length;
+	addElement(form,"input",undefined,["type=hidden","name=num_specs","value="+specs.length]);
 
+	for (var i=0;i<specs.length;i++){
+		var especificacion = specs[i].firstElementChild.innerText;
+		addElement(form,"input",undefined,["type=hidden","name=spec[]", "value="+especificacion]);
+	}
+	form.submit();
+
+
+}
+
+//Función que comprueba las fechas de los sprints
+//En primera instancia comprueba si la fecha de inicio introducida es menor que la de fin
+//Y luego comprueba que la fecha de inicio es superior a la fecha de fin del último sprint
+function checkSprints(form){
+	form = form.parentNode;
+	console.log(form);
+	var sprints = document.querySelectorAll(".sprintData");
+	var startDate = getStartDate();
+	var endDate = getEndDate();
+	var sprint = sprints[sprints.length-1];
+
+	if(startDate < endDate){
+		var fecha_inicio_sprint = getSprintStartDate(sprint);
+		var fecha_fin_sprint = getSprintEndDate(sprint)
+		if(startDate > fecha_inicio_sprint){
+			form.submit();
+		}else{
+			console.log("Mal");
+		}
+	}else{
+		console.log("WRONG");
+	}
+	
+
+}
+
+//Función que devuelve la fecha de inicio introducida en el formulario que añade un nuevo sprint
+function getStartDate(){
+	var startDate = document.querySelector("[name='inicio']").value;
+	startDate = new Date(startDate).getTime();
+	return startDate;
+}
+
+//Función que devuelve la fecha de fin introducida en el formulario que añade un nuevo sprint
+function getEndDate(){
+	var endDate = document.querySelector("[name='fin']").value;
+	endDate = new Date(endDate).getTime();
+	return endDate;
+}
+
+//Función que devuelve la fecha de inicio del sprint que se le pasa por parámetro
+function getSprintStartDate(sprint){
+	var fecha_inicio_sprint = sprint.querySelector("[name='fechaInicio']").innerHTML;
+	fecha_inicio_sprint = fecha_inicio_sprint.split("-").reverse().join("-");
+	fecha_inicio_sprint = new Date(fecha_inicio_sprint).getTime();
+	return fecha_inicio_sprint;
+}
+
+//Función que devuelve la fecha de fin del sprint que se le pasa por parámetro
+function getSprintEndDate(sprint){
+	var fecha_fin_sprint = sprint.querySelector("[name='fechaInicio']").innerHTML;
+	fecha_fin_sprint = fecha_fin_sprint.split("-").reverse().join("-");
+	fecha_fin_sprint = new Date(fecha_fin_sprint).getTime();
+	return fecha_fin_sprint;
 }

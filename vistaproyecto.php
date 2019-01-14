@@ -24,12 +24,27 @@
 		}
 
 		include 'connection.php';
-		$nombre_proyecto = $_POST["selectedProyect"];
-		$tipo_usuario = "scrumMaster";
+		
+
+
+		if (isset($_SESSION['selectedProyect']) || $_SESSION['selectedProyect']!=null) {
+			$nombre_proyecto = $_SESSION['selectedProyect'];
+			$tipo_usuario = $_SESSION['tipo_usuario'];
+		}
+		else {
+			$nombre_proyecto = $_POST["selectedProyect"];
+			$_SESSION['selectedProyect'] = $nombre_proyecto;
+			$tipo_usuario = $_POST['tipoUsuario'];
+			$_SESSION['tipo_usuario'] = $tipo_usuario;
+		}
+
+		echo "<script>var global_tipoUsuario = '".$tipo_usuario."'</script>";
+		
 		$sprints = getSprints($conn,$nombre_proyecto);
 		$specs = getSpecs($conn);
 		$proyecto = findProyects($conn,$nombre_proyecto);
 		$hoy = date('Y-m-d');
+		$dema = mktime(0,0,0, date("m"), date("d")+1, date("Y"))
 	?>
 
 	<div class="contenedor">
@@ -63,9 +78,9 @@
 							}
 							echo "</td>";
 							}
-						else {
+						/*else {
 							echo "<td>Todavía no se han añadido datos de este proyecto</td>";
-						}
+						}*/
 						?>
 					</tr>
 				</table>
@@ -78,7 +93,9 @@
 				echo "<h4>Listado de Sprints</h4>";
 				$numSprint = 1;
 				foreach($sprints as $sprint){
+
 					if($hoy > $sprint['Fecha_Inicio'] && $hoy < $sprint['Fecha_Fin']){
+
 						?><div  class="sprint sprint-actual">
 							
 							<i onclick="cambiarIcono()"  id="abierto"  class="material-icons">lock</i><?
@@ -88,16 +105,19 @@
 							<i  onclick="cambiarIconoProximo(this)" id="proximo" class="material-icons">lock</i><?
 
 					}else{
-						?><div  class="sprint sprint-anterior">
+						?><div id=<?= $sprint['id_sprint']?> class="sprint sprint-anterior">
+
 							<i id="cerrado" class="material-icons">lock</i><?
 					}?>
 							<?echo "<h6  onclick='showSprint(this)'>Sprint ".$numSprint."</h6>";
 							?><ul class="plegado" name="primero"><?
 									$fechaInicio = date("d-m-Y", strtotime($sprint['Fecha_Inicio']));
 									$fechaFin = date("d-m-Y", strtotime($sprint['Fecha_Fin']));
+
+									$id_sprint = $sprint['id_sprint'];
 									?>
 									<li><p class="title">Información</p>
-										<i onclick="deleteSprint(this)" class="material-icons deleteicon">delete</i>
+										<button onclick="deleteSprint('<?= $numSprint ?> ' , '<?= $id_sprint ?>')"><i class="material-icons deleteicon">delete</i></button>
 										<ul>
 											<li>
 												<table>
@@ -106,12 +126,11 @@
 														<th>Fecha de inicio</th>
 														<th>Fecha de fin</th>
 													</tr>
+
 													<tr>
 														<td><?echo "<input class='modificarEsp' type='text' value='".$sprint['horasTotales']."' disabled>";?></td>
 														<td><?echo "<input class='modificarEsp' type='text' value='".$fechaInicio."' disabled>";?></td>
 														<td><?echo "<input class='modificarEsp' type='text' value='".$fechaFin."' disabled>";?></td>
-
-													</tr>
 												</table>
 											</li>
 										</ul>
@@ -128,7 +147,7 @@
 													<?$specsSprint = getSpecsSprint($conn,$sprint['id_sprint']);
 													foreach($specsSprint as $spec){
 														?>
-														<tr name="specs">
+														<tr name="specs<?=$numSprint?>">
 															<td><?=$spec['nombre_spec']?></td>
 															<td><?=$spec['horas']?></td>
 															<td><?=$spec['estado']?></td>
@@ -140,12 +159,39 @@
 										</ul>
 									</li>
 								<?$numSprint++;?>
-								<button class="btn waves-effect waves-light" id="enviarEsp" type="submit">Enviar<i  class="material-icons right">send</i></button>
+								<button class="btn waves-effect waves-light" id="enviarEsp" type="submit">Modificar<i  class="material-icons right">send</i></button>
 							</ul>
 						</div>
 					<?
 				}
-			?>
+
+			if($tipo_usuario === "scrumMaster"){?>
+				<div class="newSprint">
+					<a href="#modify" class="btn waves-effect waves-light openmodal">Añadir nuevo Sprint</a>
+				</div>
+			<?}?>
+
+			<div class="cuadro" id="modify">
+	            <div class="centro">
+	            	<form action="pass.php" method="POST">
+	            		<label for="numSprint">Número de Sprint</label>
+	            		<input type="number" name="numSprint" disabled value="<?=$numSprint?>">
+	            		<label for="inicio">Fecha de inicio</label>
+	            		<input type="date" name="inicio" min="<?=$hoy?>" required>
+	            		<label for="fin">Fecha de fin</label>
+	            		<input type="date" name="fin" required>
+	            		<label for="horastotales">Horas totales</label>
+	            		<input type="number" name="horastotales" min="1" required>
+	            		<br><br>
+	            		<button class="btn waves-effect waves-light" type="button" name="action" onclick="checkSprints(this)">Crea
+	    					<i class="material-icons right">send</i>
+	  					</button>
+	  					<a href="#close" title="Close" ></a>
+            		</form>
+	                
+	                
+	            </div>
+        	</div>
 		</div>
 		<div id="TablaEspecificaciones" class="col s6 m6 l6 offset-m1 offset-l1 tabla-vistaproyectos">
 			<?echo "<h4>Listado de Especificaciones</h4>";
@@ -166,7 +212,7 @@
 							<td name="numSpec"><?=$numSpec?></td>
 							<td><?=$spec['nombre_spec']?></td>
 							<td><?=$spec['estado']?></td>
-							<?if($tipo_usuario == "scrumMaster"){
+							<?if($tipo_usuario == "productOwner"){
 								?><td><img class="upside" src="images/up.png"><img class="downside" src="images/down.png"><img class="del" src="images/del.png"></td><?
 							}?>
 						</tr>
@@ -177,7 +223,7 @@
 				?>
 				</table>
 				<br>
-				<?if($tipo_usuario === "scrumMaster"){?>
+				<?if($tipo_usuario === "productOwner"){?>
 					<div class="row">
 	            		<div class="col s12">
 	                		<div class="row">
@@ -198,6 +244,8 @@
 		</div>
 	</div>
 
+	<div class="sprint-id-box"></div>
+	<div class="remove-specs-box"></div>
 	<div class="window-message">
 		<div class="error"></div>
 	</div>
@@ -244,6 +292,7 @@
 		}
 		return $specs;
 	}
+
 
 	?>
 

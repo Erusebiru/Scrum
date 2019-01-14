@@ -22,6 +22,8 @@
 			header('Location: '."login.php");
 		}
 
+		$_SESSION['selectedProyect']=null;
+
 		include 'connection.php';
 		userData($conn,$user);
 		findUsers($conn);
@@ -61,7 +63,6 @@
 					}
 				?>
 				</ul>
-
 			</div>
 			
 			
