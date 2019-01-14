@@ -407,8 +407,6 @@ function checkSprints(form){
 	}else{
 		console.log("WRONG");
 	}
-	
-
 }
 
 //Función que devuelve la fecha de inicio introducida en el formulario que añade un nuevo sprint

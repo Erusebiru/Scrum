@@ -232,6 +232,11 @@ button[name="addProyect"]:hover {
     transition: max-height 1.6s ease-in;
 }
 
+/*#TablaEspecificaciones{
+	position: fixed !important;
+	right: 2%;
+	bottom: 1%;
+}*/
 
 #TablaSprints h4, #TablaProyectos h4, #TablaEspecificaciones h4{
 	text-align: center;
@@ -556,4 +561,19 @@ li label{
 
 .centro input[type=text]:enabled{
 	color: black !important;
+}
+
+.drag:after{
+	background-color: red !important;
+}
+
+.btn-small{
+	width: auto !important;
+	height: auto !important;
+
+}
+
+.inputs{
+	display: flex;
+	justify-content: center;
 }

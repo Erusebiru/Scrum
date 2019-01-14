@@ -13,6 +13,7 @@
 	<link rel="shortcut icon" href="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png"> 
 	<script type="text/javascript" src="js/script.js" defer></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script type="text/javascript" src="js/js.js" defer></script>
 </head>
 <body>
 	<?
@@ -130,8 +131,8 @@
 									</li>
 									<li><p class="title">Especificaciones</p>
 										<ul>
-											<li>
-												<table>
+											<li class="board" sprint="<?=$numSprint?>">
+												<table >
 													<tr>
 														<th>Tarea</th>
 														<th>Horas Asignadas</th>
@@ -190,7 +191,7 @@
 			$numSpec = 1;
 			?>
 			<div class="especificacion">
-				<table>
+				<table class="board">
 						<tr>
 							<th>Número de especificación</th>
 							<th>Tarea</th>
@@ -200,15 +201,18 @@
 				<?
 				foreach($specs as $spec){
 					?>
-						<tr class="spec">
-							<td name="numSpec"><?=$numSpec?></td>
-							<td><?=$spec['nombre_spec']?></td>
-							<td><?=$spec['estado']?></td>
-							<?if($tipo_usuario == "productOwner"){
-								?><td><img class="upside" src="images/up.png"><img class="downside" src="images/down.png"><img class="del" src="images/del.png"></td><?
-							}?>
-						</tr>
-
+						
+							<tr class="spec tarea" draggable="true">
+								<div class="drag">
+								<td name="numSpec"><?=$numSpec?></td>
+								<td><?=$spec['nombre_spec']?></td>
+								<td><?=$spec['estado']?></td>
+								<?if($tipo_usuario == "productOwner"){
+									?><td><img class="upside" src="images/up.png"><img class="downside" src="images/down.png"><img class="del" src="images/del.png"></td><?
+								}?>
+								</div>
+							</tr>
+						
 					<?
 					$numSpec++;
 				}
