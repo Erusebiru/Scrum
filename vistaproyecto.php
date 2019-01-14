@@ -96,22 +96,24 @@
 				foreach($sprints as $sprint){
 
 					if($hoy > $sprint['Fecha_Inicio'] && $hoy < $sprint['Fecha_Fin']){
-						?><div class="sprint sprint-actual">
+						?><div id=<?= $sprint['id_sprint']?> class="sprint sprint-actual">
 							<i onclick="cambiarIcono()" id="abierto"  class="material-icons">lock</i><?
 					}else if($hoy < $sprint['Fecha_Inicio']){
-						?><div class="sprint sprint-proximo">
+						?><div id=<?= $sprint['id_sprint']?> class="sprint sprint-proximo">
 							<i  onclick="cambiarIconoProximo()" id="proximo" class="material-icons">lock</i><?
 					}else{
-						?><div class="sprint sprint-anterior">
+						?><div id=<?= $sprint['id_sprint']?> class="sprint sprint-anterior">
 							<i id="cerrado" class="material-icons">lock</i><?
 					}?>
 							<?echo "<h6  onclick='showSprint(this)'>Sprint ".$numSprint."</h6>";
 							?><ul class="plegado" name="primero"><?
 									$fechaInicio = date("d-m-Y", strtotime($sprint['Fecha_Inicio']));
 									$fechaFin = date("d-m-Y", strtotime($sprint['Fecha_Fin']));
+
+									$id_sprint = $sprint['id_sprint'];
 									?>
 									<li><p class="title">Información</p>
-										<button onclick="deleteSprint('<?= $numSprint ?>')"><i class="material-icons deleteicon">delete</i></button>
+										<button onclick="deleteSprint('<?= $numSprint ?> ' , '<?= $id_sprint ?>')"><i class="material-icons deleteicon">delete</i></button>
 										<ul>
 											<li>
 												<table>
@@ -240,6 +242,7 @@
 		</div>
 	</div>
 
+	<div class="sprint-id-box"></div>
 	<div class="remove-specs-box"></div>
 	<div class="window-message">
 		<div class="error"></div>
@@ -287,6 +290,7 @@
 		}
 		return $specs;
 	}
+
 
 	?>
 

@@ -361,9 +361,12 @@ function compararPassword(){
 	}
 }
 
-function deleteSprint(element) {
+function deleteSprint(element, idsprint) {
 	reasignar_specs(element);
-
+	var parent = document.querySelector(".sprint-id-box");
+	var form = addElement(parent,"form",undefined,["action=deleteSprint.php","method=post","id=sendIdSprint"]);
+	addElement(form,"input",undefined,["type=hidden","name=id_sprint","value="+idsprint]);
+	form.submit();
 }
 
 //funcion para pasar las especificaciones a backlog
