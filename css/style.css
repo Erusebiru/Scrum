@@ -123,6 +123,7 @@ a:link, a:visited {
 	top: 2%;	
 	width: 100%;
 	display: none;
+	z-index: 99999;
 }
 
 .error{
@@ -133,6 +134,7 @@ a:link, a:visited {
 	border-radius: 10px;
 	border: 1px solid red;
 	animation: blinking 4s linear infinite;
+
 }
 
 .image-error{
@@ -569,7 +571,7 @@ li label{
 
 .btn-small{
 	width: auto !important;
-	height: auto !important;
+	height: 10% !important;
 
 }
 

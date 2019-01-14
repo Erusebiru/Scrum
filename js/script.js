@@ -402,13 +402,19 @@ function checkSprints(form){
 	if(startDate < endDate){
 		var fecha_inicio_sprint = getSprintStartDate(sprint);
 		var fecha_fin_sprint = getSprintEndDate(sprint)
-		if(startDate > fecha_inicio_sprint){
+		console.log(fecha_fin_sprint);
+		console.log(startDate);
+		if(startDate > fecha_fin_sprint){
 			form.submit();
 		}else{
-			console.log("Mal");
+			var errDate = document.querySelector("[name='inicio']");
+			errDate.style.borderColor = "red";
+			createErrorWindow("Ya existe un Sprint en estas fechas");
 		}
 	}else{
-		console.log("WRONG");
+		var errDate = document.querySelector("[name='inicio']");
+		errDate.style.borderColor = "red";
+		createErrorWindow("Fecha inicio superior o igual a la de fin");
 	}
 }
 
@@ -438,6 +444,7 @@ function getSprintStartDate(sprint){
 function getSprintEndDate(sprint){
 	var fecha_fin_sprint = sprint.querySelector("[name='fechaInicio']").innerHTML;
 	fecha_fin_sprint = fecha_fin_sprint.split("-").reverse().join("-");
+	console.log(fecha_fin_sprint);
 	fecha_fin_sprint = new Date(fecha_fin_sprint).getTime();
 	return fecha_fin_sprint;
 }
