@@ -128,7 +128,7 @@
 													</tr>
 
 													<tr>
-														<td><?echo "<input class='modificarEsp' type='text' value='".$sprint['horasTotales']."' disabled>";?></td>
+														<td><?echo "<input id='horas' class='modificarEsp' type='text' value='".$sprint['horasTotales']."' disabled>";?></td>
 														<td><?echo "<input class='modificarEsp' type='text' value='".$fechaInicio."' disabled>";?></td>
 														<td><?echo "<input class='modificarEsp' type='text' value='".$fechaFin."' disabled>";?></td>
 												</table>
@@ -159,7 +159,7 @@
 										</ul>
 									</li>
 								<?$numSprint++;?>
-								<button class="btn waves-effect waves-light" id="enviarEsp" type="submit">Modificar<i  class="material-icons right">send</i></button>
+								<button onclick="btnModificar()" class="btn waves-effect waves-light" id="enviarEsp" type="submit">Modificar<i  class="material-icons right">send</i></button>
 							</ul>
 						</div>
 					<?
