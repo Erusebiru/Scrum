@@ -425,16 +425,22 @@ function checkSprints(form){
 	if(startDate < endDate){
 		var fecha_inicio_sprint = getSprintStartDate(sprint);
 		var fecha_fin_sprint = getSprintEndDate(sprint)
-		if(startDate > fecha_inicio_sprint){
+		console.log(fecha_fin_sprint);
+		console.log(startDate);
+		if(startDate > fecha_fin_sprint){
 			form.submit();
 		}else{
-			console.log("Mal");
+			var errStartDate = document.querySelector("[name='inicio']");
+			var errEndDate = document.querySelector("[name='fin']");
+			errStartDate.style.borderColor = "red";
+			errEndDate.style.borderColor = "red";
+			createErrorWindow("Ya existe un Sprint en estas fechas");
 		}
 	}else{
-		console.log("WRONG");
+		var errDate = document.querySelector("[name='inicio']");
+		errDate.style.borderColor = "red";
+		createErrorWindow("Fecha inicio superior o igual a la de fin");
 	}
-	
-
 }
 
 //Función que devuelve la fecha de inicio introducida en el formulario que añade un nuevo sprint
@@ -453,7 +459,7 @@ function getEndDate(){
 
 //Función que devuelve la fecha de inicio del sprint que se le pasa por parámetro
 function getSprintStartDate(sprint){
-	var fecha_inicio_sprint = sprint.querySelector("[name='fechaInicio']").innerHTML;
+	var fecha_inicio_sprint = sprint.querySelector("[name='fechaInicio'] > input").value;
 	fecha_inicio_sprint = fecha_inicio_sprint.split("-").reverse().join("-");
 	fecha_inicio_sprint = new Date(fecha_inicio_sprint).getTime();
 	return fecha_inicio_sprint;
@@ -461,8 +467,9 @@ function getSprintStartDate(sprint){
 
 //Función que devuelve la fecha de fin del sprint que se le pasa por parámetro
 function getSprintEndDate(sprint){
-	var fecha_fin_sprint = sprint.querySelector("[name='fechaInicio']").innerHTML;
+	var fecha_fin_sprint = sprint.querySelector("[name='fechaFin'] > input").value;
 	fecha_fin_sprint = fecha_fin_sprint.split("-").reverse().join("-");
+	console.log("Fecha fin sprint: "+fecha_fin_sprint);
 	fecha_fin_sprint = new Date(fecha_fin_sprint).getTime();
 	return fecha_fin_sprint;
 }

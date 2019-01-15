@@ -13,6 +13,7 @@
 	<link rel="shortcut icon" href="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png"> 
 	<script type="text/javascript" src="js/script.js" defer></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script type="text/javascript" src="js/js.js" defer></script>
 </head>
 <body>
 	<?
@@ -24,8 +25,6 @@
 		}
 
 		include 'connection.php';
-		
-
 
 		if (isset($_SESSION['selectedProyect']) || $_SESSION['selectedProyect']!=null) {
 			$nombre_proyecto = $_SESSION['selectedProyect'];
@@ -88,19 +87,20 @@
 	    </div>
 	    <div class="container">
 		<div class="row">
-		<div id="TablaSprints" class="col s5 m5 l5 tabla-vistaproyectos">
+
+			<div id="TablaSprints" class="col s5 m5 l5 tabla-vistaproyectos">
 			<?
 				echo "<h4>Listado de Sprints</h4>";
 				$numSprint = 1;
 				foreach($sprints as $sprint){
 
-					if($hoy > $sprint['Fecha_Inicio'] && $hoy < $sprint['Fecha_Fin']){
+					if(comprobarFecha($hoy,$sprint) == "actual"){
 
 						?><div  class="sprint sprint-actual">
 							
 							<i onclick="cambiarIcono()"  id="abierto"  class="material-icons">lock</i><?
 
-					}else if($hoy < $sprint['Fecha_Inicio']){
+					}else if(comprobarFecha($hoy,$sprint) == "proximo"){
 						?><div class="sprint sprint-proximo">
 							<i  onclick="cambiarIconoProximo(this)" id="proximo" class="material-icons">lock</i><?
 
@@ -125,25 +125,31 @@
 														<th>Horas totales</th>
 														<th>Fecha de inicio</th>
 														<th>Fecha de fin</th>
-													</tr>
+													</tr>								
 
-													<tr>
-														<td><?echo "<input id='horas' class='modificarEsp' type='text' value='".$sprint['horasTotales']."' disabled>";?></td>
-														<td><?echo "<input class='modificarEsp' type='text' value='".$fechaInicio."' disabled>";?></td>
-														<td><?echo "<input class='modificarEsp' type='text' value='".$fechaFin."' disabled>";?></td>
+													<tr class="sprintData">
+														<td><input class='modificarEsp' type='text' value="<?=$sprint['horasTotales']?>" disabled></td>
+														<td name="fechaInicio"><input class='modificarEsp' type='text' value="<?=$fechaInicio?>" disabled></td>
+														<td name="fechaFin"><input class='modificarEsp' type='text' value="<?=$fechaFin?>" disabled></td>
+
 												</table>
 											</li>
 										</ul>
 									</li>
 									<li><p class="title">Especificaciones</p>
 										<ul>
-											<li>
+											<?if(comprobarFecha($hoy,$sprint) == "proximo"){
+												?><li class="board" sprint="<?=$numSprint?>"><?
+											}else{
+												?><li><?
+											}?>
 												<table>
 													<tr>
 														<th>Tarea</th>
 														<th>Horas Asignadas</th>
 														<th>Estado</th>
 													</tr>
+													<tr><i  class="material-icons right">add_circle_outline</i></tr>
 													<?$specsSprint = getSpecsSprint($conn,$sprint['id_sprint']);
 													foreach($specsSprint as $spec){
 														?>
@@ -165,91 +171,106 @@
 					<?
 				}
 
-			if($tipo_usuario === "scrumMaster"){?>
-				<div class="newSprint">
-					<a href="#modify" class="btn waves-effect waves-light openmodal">Añadir nuevo Sprint</a>
-				</div>
-			<?}?>
+				if($tipo_usuario == "scrumMaster"){?>
+					<div class="newSprint">
+						<a href="#modify" class="btn waves-effect waves-light openmodal">Añadir nuevo Sprint</a>
+					</div>
+				<?}?>
 
-			<div class="cuadro" id="modify">
-	            <div class="centro">
-	            	<form action="pass.php" method="POST">
-	            		<label for="numSprint">Número de Sprint</label>
-	            		<input type="number" name="numSprint" disabled value="<?=$numSprint?>">
-	            		<label for="inicio">Fecha de inicio</label>
-	            		<input type="date" name="inicio" min="<?=$hoy?>" required>
-	            		<label for="fin">Fecha de fin</label>
-	            		<input type="date" name="fin" required>
-	            		<label for="horastotales">Horas totales</label>
-	            		<input type="number" name="horastotales" min="1" required>
-	            		<br><br>
-	            		<button class="btn waves-effect waves-light" type="button" name="action" onclick="checkSprints(this)">Crea
-	    					<i class="material-icons right">send</i>
-	  					</button>
-	  					<a href="#close" title="Close" ></a>
-            		</form>
-	                
-	                
-	            </div>
-        	</div>
-		</div>
-		<div id="TablaEspecificaciones" class="col s6 m6 l6 offset-m1 offset-l1 tabla-vistaproyectos">
-			<?echo "<h4>Listado de Especificaciones</h4>";
-			$numSpec = 1;
-			?>
-			<div class="especificacion">
-				<table>
-						<tr>
-							<th>Número de especificación</th>
-							<th>Tarea</th>
-							<th>Estado</th>
-							<th></th>
-						</tr>
-				<?
-				foreach($specs as $spec){
-					?>
-						<tr class="spec">
-							<td name="numSpec"><?=$numSpec?></td>
-							<td><?=$spec['nombre_spec']?></td>
-							<td><?=$spec['estado']?></td>
-							<?if($tipo_usuario == "productOwner"){
-								?><td><img class="upside" src="images/up.png"><img class="downside" src="images/down.png"><img class="del" src="images/del.png"></td><?
-							}?>
-						</tr>
-
-					<?
-					$numSpec++;
-				}
-				?>
-				</table>
-				<br>
-				<?if($tipo_usuario === "productOwner"){?>
-					<div class="row">
-	            		<div class="col s12">
-	                		<div class="row">
-	                    		<div class="input-field col s6">
-	                        		<input id="newSpec" type="text" class="validate">
-	                        		<label for="newSpec">Añadir especificación</label>
-	                    		</div>
-			                    <div class="input-field col s6">
-			                        <button class="btn waves-effect waves-light" type="submit" onclick="addNewSpec()">Añadir</button>
-			                    </div>
-	                		</div>
-	           			</div>
-	        		</div>
+				<div class="cuadro" id="modify">
+		            <div class="centro">
+		            	<form action="pass.php" method="POST">
+		            		<label for="numSprint">Número de Sprint</label>
+		            		<input type="number" name="numSprint" disabled value="<?=$numSprint?>">
+		            		<label for="inicio">Fecha de inicio</label>
+		            		<input type="date" name="inicio" min="<?=$hoy?>" required>
+		            		<label for="fin">Fecha de fin</label>
+		            		<input type="date" name="fin" required>
+		            		<label for="horastotales">Horas totales</label>
+		            		<input type="number" name="horastotales" min="1" required>
+		            		<br><br>
+		            		<button class="btn waves-effect waves-light" type="button" name="action" onclick="checkSprints(this)">Crea
+		    					<i class="material-icons right">send</i>
+		  					</button>
+		  					<a href="#close" title="Close" ></a>
+	            		</form>
+		                
+		                
+		            </div>
 	        	</div>
 			</div>
-        		<?}?>
+			<div id="TablaEspecificaciones" class="col s6 m6 l6 offset-m1 offset-l1 tabla-vistaproyectos">
+				<?echo "<h4>Listado de Especificaciones</h4>";
+				$numSpec = 1;
+				?>
+				<div class="especificacion">
+					<table class="board">
+							<tr>
+								<th>Número de especificación</th>
+								<th>Tarea</th>
+								<th>Estado</th>
+								<th></th>
+							</tr>
+					<?
+					foreach($specs as $spec){
+						?>
+							
+							<tr class="spec tarea" draggable="true">
+								<div class="drag">
+								<td name="numSpec"><?=$numSpec?></td>
+								<td><?=$spec['nombre_spec']?></td>
+								<td><?=$spec['estado']?></td>
+								<?if($tipo_usuario == "productOwner"){
+									?><td><img class="upside" src="images/up.png"><img class="downside" src="images/down.png"><img class="del" src="images/del.png"></td><?
+								}?>
+								</div>
+							</tr>
+						<?
+						$numSpec++;
+					}
+					?>
+					</table>
+					<br>
+					<?if($tipo_usuario === "productOwner"){?>
+						<div class="row">
+		            		<div class="col s12">
+		                		<div class="row">
+		                    		<div class="input-field col s6">
+		                        		<input id="newSpec" type="text" class="validate">
+		                        		<label for="newSpec">Añadir especificación</label>
+		                    		</div>
+				                    <div class="input-field col s6">
+				                        <button class="btn waves-effect waves-light" type="submit" onclick="addNewSpec()">Añadir</button>
+				                    </div>
+		                		</div>
+		           			</div>
+		        		</div>
+		        	</div>
+				</div>
+	        		<?}?>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="sprint-id-box"></div>
-	<div class="remove-specs-box"></div>
+		<div class="sprint-id-box"></div>
+		<div class="remove-specs-box"></div>
+		
+	</div>
 	<div class="window-message">
 		<div class="error"></div>
 	</div>
+	
 	<?
+
+	function comprobarFecha($hoy,$sprint){
+		if($hoy >= $sprint['Fecha_Inicio'] && $hoy <= $sprint['Fecha_Fin']){
+			return "actual";
+		}else if($hoy < $sprint['Fecha_Inicio']){
+			return "proximo";
+		}else{
+			return "pasado";
+		}
+	}
 
 	function findProyects($conn,$proyectName){
 		$consulta_proyecto = "SELECT proyectos.descripcion_proyecto,grupos.nombre_grupo ,u1.nombre_usuario AS 'ScrumMaster', u2.nombre_usuario AS 'ProductOwner' FROM proyectos, gruposproyectos, grupos,usuarios u1, usuarios u2 WHERE proyectos.id_proyecto = gruposproyectos.id_proyecto AND grupos.id_grupo = gruposproyectos.id_grupo AND proyectos.nombre_proyecto='".$proyectName."' AND proyectos.ScrumMaster = u1.id_usuario AND proyectos.ProductOwner = u2.id_usuario;";

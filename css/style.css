@@ -123,6 +123,7 @@ a:link, a:visited {
 	top: 2%;	
 	width: 100%;
 	display: none;
+	z-index: 99999;
 }
 
 .error{
@@ -133,6 +134,7 @@ a:link, a:visited {
 	border-radius: 10px;
 	border: 1px solid red;
 	animation: blinking 4s linear infinite;
+
 }
 
 .image-error{
@@ -228,10 +230,15 @@ button[name="addProyect"]:hover {
 
 .desplegado {
 	max-width: 500px !important;
-    max-height: 500px !important;
+    max-height: 1000px !important;
     transition: max-height 1.6s ease-in;
 }
 
+/*#TablaEspecificaciones{
+	position: fixed !important;
+	right: 2%;
+	bottom: 1%;
+}*/
 
 #TablaSprints h4, #TablaProyectos h4, #TablaEspecificaciones h4{
 	text-align: center;
@@ -570,3 +577,21 @@ li label{
 	color: black !important;
 }
 
+.drag:after{
+	background-color: red !important;
+}
+
+.btn-small{
+	width: auto !important;
+	height: 10% !important;
+
+}
+
+.tarea:hover{
+	cursor: move;
+	background-color: #d4d4d4;
+}
+
+.horasSpec{
+	text-align: center;
+}
