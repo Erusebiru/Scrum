@@ -230,7 +230,7 @@ button[name="addProyect"]:hover {
 
 .desplegado {
 	max-width: 500px !important;
-    max-height: 500px !important;
+    max-height: 1000px !important;
     transition: max-height 1.6s ease-in;
 }
 
@@ -585,4 +585,13 @@ li label{
 	width: auto !important;
 	height: 10% !important;
 
+}
+
+.tarea:hover{
+	cursor: move;
+	background-color: #d4d4d4;
+}
+
+.horasSpec{
+	text-align: center;
 }

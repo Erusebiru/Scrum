@@ -42,12 +42,7 @@ function modifyDragged(dragged,target){
 	tds[0].innerText = tds[1].innerText;
 	tds[1].innerText = "";
 	tds[2].innerText = "sprint"+target.getAttribute("sprint");
-	var div = addElement(tds[1],"div",undefined,["class=row"]);
-	var divcol = addElement(div,"div",undefined,["class=col s12"]);
-	var divrow = addElement(divcol,"div",undefined,["class=row inputs"]);
-	addElement(divrow,"input",undefined,["type=text","name=inputhoras","class=input-field col s6"]);
-	addElement(divrow,"button","Set",["type=submit","class=col s6 btn-small waves-effect waves-light"]);
-	console.log(target);
+	addElement(tds[1],"input",undefined,["type=text","name=inputhoras","class=input-field horasSpec"]);
 	return dragged;
 }
 

@@ -430,8 +430,10 @@ function checkSprints(form){
 		if(startDate > fecha_fin_sprint){
 			form.submit();
 		}else{
-			var errDate = document.querySelector("[name='inicio']");
-			errDate.style.borderColor = "red";
+			var errStartDate = document.querySelector("[name='inicio']");
+			var errEndDate = document.querySelector("[name='fin']");
+			errStartDate.style.borderColor = "red";
+			errEndDate.style.borderColor = "red";
 			createErrorWindow("Ya existe un Sprint en estas fechas");
 		}
 	}else{

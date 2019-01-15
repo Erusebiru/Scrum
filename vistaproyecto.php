@@ -25,8 +25,6 @@
 		}
 
 		include 'connection.php';
-		
-
 
 		if (isset($_SESSION['selectedProyect']) || $_SESSION['selectedProyect']!=null) {
 			$nombre_proyecto = $_SESSION['selectedProyect'];
@@ -89,20 +87,20 @@
 	    </div>
 	    <div class="container">
 		<div class="row">
-			
-		<div id="TablaSprints" class="col s5 m5 l5 tabla-vistaproyectos">
+
+			<div id="TablaSprints" class="col s5 m5 l5 tabla-vistaproyectos">
 			<?
 				echo "<h4>Listado de Sprints</h4>";
 				$numSprint = 1;
 				foreach($sprints as $sprint){
 
-					if($hoy > $sprint['Fecha_Inicio'] && $hoy < $sprint['Fecha_Fin']){
+					if(comprobarFecha($hoy,$sprint) == "actual"){
 
 						?><div  class="sprint sprint-actual">
 							
 							<i onclick="cambiarIcono()"  id="abierto"  class="material-icons">lock</i><?
 
-					}else if($hoy < $sprint['Fecha_Inicio']){
+					}else if(comprobarFecha($hoy,$sprint) == "proximo"){
 						?><div class="sprint sprint-proximo">
 							<i  onclick="cambiarIconoProximo(this)" id="proximo" class="material-icons">lock</i><?
 
@@ -139,13 +137,18 @@
 									</li>
 									<li><p class="title">Especificaciones</p>
 										<ul>
-											<li>
+											<?if(comprobarFecha($hoy,$sprint) == "proximo"){
+												?><li class="board" sprint="<?=$numSprint?>"><?
+											}else{
+												?><li><?
+											}?>
 												<table>
 													<tr>
 														<th>Tarea</th>
 														<th>Horas Asignadas</th>
 														<th>Estado</th>
 													</tr>
+													<tr><i  class="material-icons right">add_circle_outline</i></tr>
 													<?$specsSprint = getSpecsSprint($conn,$sprint['id_sprint']);
 													foreach($specsSprint as $spec){
 														?>
@@ -167,7 +170,7 @@
 					<?
 				}
 
-				if($tipo_usuario === "scrumMaster"){?>
+				if($tipo_usuario == "scrumMaster"){?>
 					<div class="newSprint">
 						<a href="#modify" class="btn waves-effect waves-light openmodal">Añadir nuevo Sprint</a>
 					</div>
@@ -257,6 +260,16 @@
 	</div>
 	
 	<?
+
+	function comprobarFecha($hoy,$sprint){
+		if($hoy >= $sprint['Fecha_Inicio'] && $hoy <= $sprint['Fecha_Fin']){
+			return "actual";
+		}else if($hoy < $sprint['Fecha_Inicio']){
+			return "proximo";
+		}else{
+			return "pasado";
+		}
+	}
 
 	function findProyects($conn,$proyectName){
 		$consulta_proyecto = "SELECT proyectos.descripcion_proyecto,grupos.nombre_grupo ,u1.nombre_usuario AS 'ScrumMaster', u2.nombre_usuario AS 'ProductOwner' FROM proyectos, gruposproyectos, grupos,usuarios u1, usuarios u2 WHERE proyectos.id_proyecto = gruposproyectos.id_proyecto AND grupos.id_grupo = gruposproyectos.id_grupo AND proyectos.nombre_proyecto='".$proyectName."' AND proyectos.ScrumMaster = u1.id_usuario AND proyectos.ProductOwner = u2.id_usuario;";
