@@ -62,7 +62,7 @@
 
 	    <div id="TablaProyectos" class="tabla-vistaproyectos">
 	    	<h4><?= $nombre_proyecto ?></h4>
-	    	<div class='proyecto'>
+	    	<div class='proyecto' id="<?=$proyecto[0]['id_proyecto']?>">
 				<table>
 					<tr> 
 						<?
@@ -178,7 +178,7 @@
 
 				<div class="cuadro" id="modify">
 		            <div class="centro">
-		            	<form action="pass.php" method="POST">
+		            	<form action="insertsprint.php" method="POST">
 		            		<label for="numSprint">Número de Sprint</label>
 		            		<input type="number" name="numSprint" disabled value="<?=$numSprint?>">
 		            		<label for="inicio">Fecha de inicio</label>
@@ -187,7 +187,8 @@
 		            		<input type="date" name="fin" required>
 		            		<label for="horastotales">Horas totales</label>
 		            		<input type="number" name="horastotales" min="1" required>
-		            		<br><br>
+							<br><br>
+							<input type="hidden" name="idproyecto" value>
 		            		<button class="btn waves-effect waves-light" type="button" name="action" onclick="checkSprints(this)">Crea
 		    					<i class="material-icons right">send</i>
 		  					</button>
@@ -215,14 +216,12 @@
 						?>
 							
 							<tr class="spec tarea" draggable="true">
-								<div class="drag">
 								<td name="numSpec"><?=$numSpec?></td>
 								<td><?=$spec['nombre_spec']?></td>
 								<td><?=$spec['estado']?></td>
 								<?if($tipo_usuario == "productOwner"){
 									?><td><img class="upside" src="images/up.png"><img class="downside" src="images/down.png"><img class="del" src="images/del.png"></td><?
 								}?>
-								</div>
 							</tr>
 						<?
 						$numSpec++;
@@ -272,7 +271,7 @@
 	}
 
 	function findProyects($conn,$proyectName){
-		$consulta_proyecto = "SELECT proyectos.descripcion_proyecto,grupos.nombre_grupo ,u1.nombre_usuario AS 'ScrumMaster', u2.nombre_usuario AS 'ProductOwner' FROM proyectos, gruposproyectos, grupos,usuarios u1, usuarios u2 WHERE proyectos.id_proyecto = gruposproyectos.id_proyecto AND grupos.id_grupo = gruposproyectos.id_grupo AND proyectos.nombre_proyecto='".$proyectName."' AND proyectos.ScrumMaster = u1.id_usuario AND proyectos.ProductOwner = u2.id_usuario;";
+		$consulta_proyecto = "SELECT proyectos.id_proyecto,proyectos.descripcion_proyecto,grupos.nombre_grupo ,u1.nombre_usuario AS 'ScrumMaster', u2.nombre_usuario AS 'ProductOwner' FROM proyectos, gruposproyectos, grupos,usuarios u1, usuarios u2 WHERE proyectos.id_proyecto = gruposproyectos.id_proyecto AND grupos.id_grupo = gruposproyectos.id_grupo AND proyectos.nombre_proyecto='".$proyectName."' AND proyectos.ScrumMaster = u1.id_usuario AND proyectos.ProductOwner = u2.id_usuario;";
 
 		$query=mysqli_query($conn,$consulta_proyecto);
 			$proyectos = [];

@@ -233,6 +233,7 @@ function showSprint(element){
 		removeClass();
 		elementoDesplegado.classList.toggle("desplegado");
 		element.parentNode.classList.toggle("sprint-desplegado");
+		document.getElementById("TablaEspecificaciones").position = "fixed";
 	}else{
 		removeClass();
 	}
@@ -416,12 +417,12 @@ function reasignar_specs(element) {
 //Y luego comprueba que la fecha de inicio es superior a la fecha de fin del último sprint
 function checkSprints(form){
 	form = form.parentNode;
-	console.log(form);
 	var sprints = document.querySelectorAll(".sprintData");
 	var startDate = getStartDate();
 	var endDate = getEndDate();
 	var sprint = sprints[sprints.length-1];
-
+	document.querySelector("[name='idproyecto']").value = document.querySelector(".proyecto").id;
+	
 	if(startDate < endDate){
 		var horasTotales = document.querySelector("[name='horastotales']");
 		if(horasTotales.value > 0){
