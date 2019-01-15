@@ -423,19 +423,26 @@ function checkSprints(form){
 	var sprint = sprints[sprints.length-1];
 
 	if(startDate < endDate){
-		var fecha_inicio_sprint = getSprintStartDate(sprint);
-		var fecha_fin_sprint = getSprintEndDate(sprint)
-		console.log(fecha_fin_sprint);
-		console.log(startDate);
-		if(startDate > fecha_fin_sprint){
-			form.submit();
+		var horasTotales = document.querySelector("[name='horastotales']");
+		if(horasTotales.value > 0){
+			var fecha_inicio_sprint = getSprintStartDate(sprint);
+			var fecha_fin_sprint = getSprintEndDate(sprint)
+			console.log(fecha_fin_sprint);
+			console.log(startDate);
+			if(startDate > fecha_fin_sprint){
+				form.submit();
+			}else{
+				var errStartDate = document.querySelector("[name='inicio']");
+				var errEndDate = document.querySelector("[name='fin']");
+				errStartDate.style.borderColor = "red";
+				errEndDate.style.borderColor = "red";
+				createErrorWindow("Ya existe un Sprint en estas fechas");
+			}
 		}else{
-			var errStartDate = document.querySelector("[name='inicio']");
-			var errEndDate = document.querySelector("[name='fin']");
-			errStartDate.style.borderColor = "red";
-			errEndDate.style.borderColor = "red";
-			createErrorWindow("Ya existe un Sprint en estas fechas");
+			horasTotales.style.borderColor = "red";
+			createErrorWindow("No has introducido un número correcto");
 		}
+		
 	}else{
 		var errDate = document.querySelector("[name='inicio']");
 		errDate.style.borderColor = "red";
