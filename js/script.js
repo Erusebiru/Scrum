@@ -503,13 +503,25 @@ function getSprintEndDate(sprint){
 function modificarSprint(element){
 	var parent = element.parentNode;
 	var sprint = parent.querySelector(".sprintData");
-	var horasTotales=document.getElementsByClassName("modificarEsp");
-	if (isNaN(horasTotales)==false) {
-		createErrorWindow("Tiene que ser numero");
-	}
+	var startDate = parent.querySelector("[name='fechaInicioEsp'] > input");
+	var endDate = parent.querySelector("[name='fechaFinEsp'] > input");
+	var startTime = getStartTime(startDate);
+	var endTime = getEndTime(endDate);
+	var horasTotales = parent.querySelector("[name='horasTotalesEsp']");
+	
+
+	console.log(startDate.value);
+	console.log(endDate.value);
+	console.log(horasTotales.value);
+
+
+	
 }
 
-
+// var horasTotales=document.getElementsByClassName("modificarEsp");
+// 	if (isNaN(horasTotales)==false) {
+// 		createErrorWindow("Tiene que ser numerico");
+// 	}
 
 ///DRAG AND DROP
 
