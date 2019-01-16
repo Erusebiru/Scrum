@@ -10,7 +10,8 @@
 			print_r($_POST);
 			$num_specs = $_POST['num_specs'];
 			$spec[] = $_POST['spec'];
-			//echo ($spec[0][1]);
+			$id_sprint = $_POST['id_sprint'];
+
 			
 			include 'connection.php';
 
@@ -22,8 +23,21 @@
 				mysqli_query($conn, $query);
 			}
 
-			//header('Location: '."vistaproyecto.php");
+
+
+			//Eliminar sprint de la bbdd
+			$query = "DELETE FROM `sprints` WHERE id_sprint = '$id_sprint'";
+
+
+			if (mysqli_query($conn, $query)) {
+				echo "Sprint eliminado correctamente";
+			} else {
+				echo "Error: " . $query . "<br>" . mysqli_error($conn);
+			}
+
+			header('Location: '."vistaproyecto.php");
 		}
+
 	?>
 
 </body>
