@@ -383,23 +383,12 @@ function compararPassword(){
 }
 
 function deleteSprint(element, idsprint) {
-	reasignar_specs(element);
-	var parent = document.querySelector(".sprint-id-box");
-	var form = addElement(parent,"form",undefined,["action=deleteSprint.php","method=post","id=sendIdSprint"]);
-	addElement(form,"input",undefined,["type=hidden","name=id_sprint","value="+idsprint]);
-	form.submit();
-}
-
-//funcion para pasar las especificaciones a backlog
-function reasignar_specs(element) {
-	//alert(element);
-	//alert(element.parentNode);
-	console.log(document.querySelectorAll("[name='specs"+element.replace(/\s/g,'')+"']"));
 	var specs = document.querySelectorAll("[name='specs"+element.replace(/\s/g,'')+"']");
 	var parent = document.querySelector(".remove-specs-box");
 	var form = addElement(parent,"form",undefined,["action=removeSpecs.php","method=post","id=sendSpecs"]);
 	var num_specs = specs.length;
 	addElement(form,"input",undefined,["type=hidden","name=num_specs","value="+specs.length]);
+	addElement(form,"input",undefined,["type=hidden","name=id_sprint","value="+idsprint]);
 
 	for (var i=0;i<specs.length;i++){
 		var especificacion = specs[i].firstElementChild.innerText;
@@ -407,6 +396,8 @@ function reasignar_specs(element) {
 	}
 	form.submit();
 }
+
+
 
 //Función que comprueba las fechas del formulario que añade un nuevo sprint
 //En primera instancia comprueba si la fecha de inicio introducida es menor que la de fin
