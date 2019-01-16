@@ -180,34 +180,25 @@ function checkNulls(){
 
 //funcion que cambia el icono del sprintProximo(candado)
 function cambiarIconoProximo(element){
-	console.log(element.parentNode);
 	var candadoAbierto=document.getElementById("proximo");
-	
 	if (candadoAbierto.innerText=="lock") {
+		element.parentNode.querySelector("[name='dropBoard'").classList.add("board");
+		initBoards();
 		candadoAbierto.innerText="lock_open";
 		modificar(element);
 	}else{
+		element.parentNode.querySelector("[name='dropBoard'").classList.remove("board");
 		candadoAbierto.innerText="lock";
 		modificarDeshabilitado();
 	}
-
-	
-	
 }
 
-function btnModificar(){
-	var horasTotales=document.getElementByName("horasTotalesEsp");
-	if (isNaN(horasTotales)==false) {
-		createErrorWindow("Tiene que ser numero");
-	}
-	else if ()
-}
 
-//Funcion que permite habilita la modificación de las especificaciones
+
+//Funcion que permite habilitar la modificación de las especificaciones
 function modificar(element){
 	
 	var especificaciones=element.parentNode.getElementsByClassName("modificarEsp");
-	console.log(especificaciones);
 	for (var i=0; i <especificaciones.length; i++) {
 		especificaciones[0].type="number";
 		especificaciones[1].type="date";
@@ -218,7 +209,6 @@ function modificar(element){
 //Funcion que deshabilita los input de  las especificaciones
 function modificarDeshabilitado(){
 	var especificaciones=document.getElementsByClassName("modificarEsp");
-
 	for (var i=0; i <especificaciones.length; i++) {
 		especificaciones[0].type="number";
 		especificaciones[i].type="text";
@@ -246,6 +236,7 @@ function showSprint(element){
 		removeClass();
 		elementoDesplegado.classList.toggle("desplegado");
 		element.parentNode.classList.toggle("sprint-desplegado");
+		document.getElementById("TablaEspecificaciones").position = "fixed";
 	}else{
 		removeClass();
 	}
@@ -409,7 +400,8 @@ function deleteSprint(element, idsprint) {
 function reasignar_specs(element) {
 	//alert(element);
 	//alert(element.parentNode);
-	var specs = document.querySelectorAll("[name='specs"+element+"']");
+	console.log(document.querySelectorAll("[name='specs"+element.replace(/\s/g,'')+"']"));
+	var specs = document.querySelectorAll("[name='specs"+element.replace(/\s/g,'')+"']");
 	var parent = document.querySelector(".remove-specs-box");
 	var form = addElement(parent,"form",undefined,["action=removeSpecs.php","method=post","id=sendSpecs"]);
 	var num_specs = specs.length;
@@ -420,54 +412,74 @@ function reasignar_specs(element) {
 		addElement(form,"input",undefined,["type=hidden","name=spec[]", "value="+especificacion]);
 	}
 	form.submit();
-
-
 }
 
-//Función que comprueba las fechas de los sprints
+//Función que comprueba las fechas del formulario que añade un nuevo sprint
 //En primera instancia comprueba si la fecha de inicio introducida es menor que la de fin
 //Y luego comprueba que la fecha de inicio es superior a la fecha de fin del último sprint
 function checkSprints(form){
+	console.log(document.querySelector("[name='inicio']").value);
 	form = form.parentNode;
-	console.log(form);
 	var sprints = document.querySelectorAll(".sprintData");
-	var startDate = getStartDate();
-	var endDate = getEndDate();
 	var sprint = sprints[sprints.length-1];
-
-	if(startDate < endDate){
-		var fecha_inicio_sprint = getSprintStartDate(sprint);
-		var fecha_fin_sprint = getSprintEndDate(sprint)
-		console.log(fecha_fin_sprint);
-		console.log(startDate);
-		if(startDate > fecha_fin_sprint){
-			form.submit();
+	var startDate = document.querySelector("[name='inicio']");
+	var endDate = document.querySelector("[name='fin']");
+	var startTime = getStartTime(startDate);
+	var endTime = getEndTime(endDate);
+	var horasTotales = document.querySelector("[name='horastotales']");
+	document.querySelector("[name='idproyecto']").value = document.querySelector(".proyecto").id;
+	
+	if(newSprintNulls(startDate,endDate,horasTotales)){
+		if(startTime < endTime){
+		
+			if(horasTotales.value > 0){
+				var fecha_inicio_sprint = getSprintStartDate(sprint);
+				var fecha_fin_sprint = getSprintEndDate(sprint)
+				if(startTime > fecha_fin_sprint){
+					form.submit();
+				}else{
+					startDate.style.borderColor = "red";
+					endDate.style.borderColor = "red";
+					createErrorWindow("Ya existe un Sprint en estas fechas");
+				}
+			}else{
+				horasTotales.style.borderColor = "red";
+				createErrorWindow("No has introducido un número correcto");
+			}
+			
 		}else{
-			var errStartDate = document.querySelector("[name='inicio']");
-			var errEndDate = document.querySelector("[name='fin']");
-			errStartDate.style.borderColor = "red";
-			errEndDate.style.borderColor = "red";
-			createErrorWindow("Ya existe un Sprint en estas fechas");
+			startDate.style.borderColor = "red";
+			createErrorWindow("Fecha inicio superior o igual a la de fin");
 		}
-	}else{
-		var errDate = document.querySelector("[name='inicio']");
-		errDate.style.borderColor = "red";
-		createErrorWindow("Fecha inicio superior o igual a la de fin");
 	}
 }
 
+//Función que comprueba que los campos no estén en blanco
+function newSprintNulls(startDate,endDate,horasTotales){
+	if(startDate.value == ""){
+		createErrorWindow("Debes introducir una fecha de inicio");
+		return false;
+	}else if(endDate.value == ""){
+		createErrorWindow("Debes introducir una fecha de fin");
+		return false;
+	}else if(horasTotales.value == ""){
+		createErrorWindow("Debes introducir el número de horas");
+		return false;
+	}
+
+	return true;
+}
+
 //Función que devuelve la fecha de inicio introducida en el formulario que añade un nuevo sprint
-function getStartDate(){
-	var startDate = document.querySelector("[name='inicio']").value;
-	startDate = new Date(startDate).getTime();
-	return startDate;
+function getStartTime(startDate){
+	startTime = new Date(startDate.value).getTime();
+	return startTime;
 }
 
 //Función que devuelve la fecha de fin introducida en el formulario que añade un nuevo sprint
-function getEndDate(){
-	var endDate = document.querySelector("[name='fin']").value;
-	endDate = new Date(endDate).getTime();
-	return endDate;
+function getEndTime(endDate){
+	endTime = new Date(endDate.value).getTime();
+	return endTime;
 }
 
 //Función que devuelve la fecha de inicio del sprint que se le pasa por parámetro
@@ -485,4 +497,101 @@ function getSprintEndDate(sprint){
 	console.log("Fecha fin sprint: "+fecha_fin_sprint);
 	fecha_fin_sprint = new Date(fecha_fin_sprint).getTime();
 	return fecha_fin_sprint;
+}
+
+
+function modificarSprint(element){
+	var parent = element.parentNode;
+	var sprint = parent.querySelector(".sprintData");
+	var horasTotales=document.getElementsByClassName("modificarEsp");
+	if (isNaN(horasTotales)==false) {
+		createErrorWindow("Tiene que ser numero");
+	}
+}
+
+
+
+///DRAG AND DROP
+
+
+initBoards();
+initChilds();
+
+//Inicialización de los espacios donde SÍ SE PUEDE colocar elementos
+function initBoards(){
+	var boxes = document.querySelectorAll(".board");
+	for(const box of boxes){
+		box.addEventListener("dragover", function( event ) {
+			event.preventDefault();
+		}, false);
+
+		box.addEventListener("dragenter", function( event ) {
+			if ( event.target.className == "board" ) {
+				event.target.style.background = "red";
+			}
+
+		}, false);
+
+	    box.addEventListener("dragleave", function( event ) {
+			if ( event.target.className == "board" ) {
+				event.target.style.background = "";
+			}
+		}, false);
+
+		box.addEventListener("drop", function( event ) {
+			event.preventDefault();
+			if (event.target.className.includes("board")) {
+				event.target.style.background = "";
+				dragged.parentNode.removeChild(dragged);
+				dragged = modifyDragged(dragged,event.target);
+				event.target.querySelector("tbody").appendChild( dragged );
+				dragged = null;
+			}
+		}, false);
+	}
+}
+
+function modifyDragged(dragged,target){
+	var tds = dragged.querySelectorAll("td");
+
+	tds[0].innerText = tds[1].innerText;
+	tds[1].innerText = "";
+	tds[2].innerText = "sprint"+target.getAttribute("sprint");
+	addElement(tds[1],"input",undefined,["type=text","name=horasTotales","class=input-field horasSpec modificarEsp","enabled"]);
+	return dragged;
+}
+
+function initChilds(){
+	//Inicialización de los elementos que SÍ SE PUEDEN mover
+	var fills = document.querySelectorAll(".tarea");
+	for(const fill of fills){
+	    fill.addEventListener("drag", function( event ) {
+		}, false);
+	    fill.addEventListener("dragstart", function( event ) {
+			dragged = event.target;
+			event.dataTransfer.setData('Text', this.id); //Evento para poder mover elementos en Firefox
+			event.target.style.opacity = 0.5;
+		}, false);
+		fill.addEventListener("dragend", function( event ) {
+			event.target.style.opacity = "";
+		}, false);
+	}
+}
+
+function addElement(parent, child, text,attributes){
+	var childElement = document.createElement(child);
+	if(text != undefined){
+		var contenido = document.createTextNode(text);
+		childElement.appendChild(contenido);
+	}
+
+	if(attributes != undefined && attributes instanceof Array){
+		for(var i=0;i<attributes.length;i++){
+			var attrName = attributes[i].split("=")[0];
+			var attrValue = attributes[i].split("=")[1];
+			childElement.setAttribute(attrName,attrValue);
+		}
+	}
+	parent.appendChild(childElement);
+	return childElement;
 }
