@@ -472,7 +472,7 @@ function getEndTime(endDate){
 
 //Función que devuelve la fecha de inicio del sprint que se le pasa por parámetro
 function getSprintStartDate(sprint){
-	var fecha_inicio_sprint = sprint.querySelector("[name='fechaInicio'] > input").value;
+	var fecha_inicio_sprint = sprint.querySelector("[name='fechaInicioEsp'] > input").value;
 	fecha_inicio_sprint = fecha_inicio_sprint.split("-").reverse().join("-");
 	fecha_inicio_sprint = new Date(fecha_inicio_sprint).getTime();
 	return fecha_inicio_sprint;
@@ -480,7 +480,7 @@ function getSprintStartDate(sprint){
 
 //Función que devuelve la fecha de fin del sprint que se le pasa por parámetro
 function getSprintEndDate(sprint){
-	var fecha_fin_sprint = sprint.querySelector("[name='fechaFin'] > input").value;
+	var fecha_fin_sprint = sprint.querySelector("[name='fechaFinEsp'] > input").value;
 	fecha_fin_sprint = fecha_fin_sprint.split("-").reverse().join("-");
 	console.log("Fecha fin sprint: "+fecha_fin_sprint);
 	fecha_fin_sprint = new Date(fecha_fin_sprint).getTime();
