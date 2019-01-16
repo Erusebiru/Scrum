@@ -383,17 +383,6 @@ function compararPassword(){
 }
 
 function deleteSprint(element, idsprint) {
-	reasignar_specs(element);
-	var parent = document.querySelector(".sprint-id-box");
-	var form = addElement(parent,"form",undefined,["action=deleteSprint.php","method=post","id=sendIdSprint"]);
-	addElement(form,"input",undefined,["type=hidden","name=id_sprint","value="+idsprint]);
-	form.submit();
-}
-
-//funcion para pasar las especificaciones a backlog
-function reasignar_specs(element) {
-	//alert(element);
-	//alert(element.parentNode);
 	var specs = document.querySelectorAll("[name='specs"+element.replace(/\s/g,'')+"']");
 	var parent = document.querySelector(".remove-specs-box");
 	var form = addElement(parent,"form",undefined,["action=removeSpecs.php","method=post","id=sendSpecs"]);
