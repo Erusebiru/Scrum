@@ -210,8 +210,6 @@ function modificarDeshabilitado(){
 	}
 }
 
-
-
 //funcion que bloquea el sprint pasado
 // function sprintTancat(element){
 // 	var elements = document.querySelectorAll("ul");
@@ -225,16 +223,16 @@ function modificarDeshabilitado(){
 
 //Función que despliega las características del Sprint
 function showSprint(element){
+	
 	var elementoDesplegado = element.parentNode.querySelector("ul");
 	if(!elementoDesplegado.classList.contains("desplegado")){
 		removeClass();
 		elementoDesplegado.classList.toggle("desplegado");
 		element.parentNode.classList.toggle("sprint-desplegado");
-		document.getElementById("TablaEspecificaciones").position = "fixed";
+		document.querySelector("#TablaEspecificaciones").classList.add("TablaEspecificaciones");
 	}else{
 		removeClass();
 	}
-	
 }
 
 //Función que pliega el Sprint
@@ -243,7 +241,9 @@ function removeClass(){
 	elements.forEach(function(element){
 		element.classList.remove("desplegado");
 		element.parentNode.classList.remove("sprint-desplegado");
+		document.querySelector("#TablaEspecificaciones").classList.remove("TablaEspecificaciones");
 	});
+	
 }
 
 function vistaProyecto(proyecto) {
@@ -394,13 +394,12 @@ function deleteSprint(element, idsprint) {
 function reasignar_specs(element) {
 	//alert(element);
 	//alert(element.parentNode);
-	console.log(document.querySelectorAll("[name='specs"+element.replace(/\s/g,'')+"']"));
 	var specs = document.querySelectorAll("[name='specs"+element.replace(/\s/g,'')+"']");
 	var parent = document.querySelector(".remove-specs-box");
 	var form = addElement(parent,"form",undefined,["action=removeSpecs.php","method=post","id=sendSpecs"]);
 	var num_specs = specs.length;
 	addElement(form,"input",undefined,["type=hidden","name=num_specs","value="+specs.length]);
-
+	addElement(form,"input",undefined,["type=hidden","name=id_sprint","value="+idsprint]);
 	for (var i=0;i<specs.length;i++){
 		var especificacion = specs[i].firstElementChild.innerText;
 		addElement(form,"input",undefined,["type=hidden","name=spec[]", "value="+especificacion]);
@@ -501,7 +500,6 @@ function modificarSprint(element){
 
 ///DRAG AND DROP
 
-
 initBoards();
 initChilds();
 
@@ -514,14 +512,14 @@ function initBoards(){
 		}, false);
 
 		box.addEventListener("dragenter", function( event ) {
-			if ( event.target.className == "board" ) {
+			if ( event.target.className.includes("board")) {
 				event.target.style.background = "red";
 			}
 
 		}, false);
 
 	    box.addEventListener("dragleave", function( event ) {
-			if ( event.target.className == "board" ) {
+			if ( event.target.className.includes("board")) {
 				event.target.style.background = "";
 			}
 		}, false);
@@ -530,27 +528,42 @@ function initBoards(){
 			event.preventDefault();
 			if (event.target.className.includes("board")) {
 				event.target.style.background = "";
-				dragged.parentNode.removeChild(dragged);
-				dragged = modifyDragged(dragged,event.target);
-				event.target.querySelector("tbody").appendChild( dragged );
+				if(event.target.getAttribute("name") === "dropBoard"){
+					dragged.parentNode.removeChild(dragged);
+					dragged = modifyDragged(dragged,"addSpec");
+					event.target.querySelector("tbody").appendChild( dragged );
+				}else if(event.target.getAttribute("name") === "drop"){
+					dragged.parentNode.removeChild(dragged);
+					dragged = modifyDragged(dragged,"removeSpec");
+					event.target.querySelector("tbody").appendChild( dragged );
+				}
 				dragged = null;
 			}
 		}, false);
 	}
 }
 
-function modifyDragged(dragged,target){
+//Función que modifica el elemento que se está moviendo de una tabla a otra
+function modifyDragged(dragged,condicion){
 	var tds = dragged.querySelectorAll("td");
-
-	tds[0].innerText = tds[1].innerText;
-	tds[1].innerText = "";
-	tds[2].innerText = "sprint"+target.getAttribute("sprint");
-	addElement(tds[1],"input",undefined,["type=text","name=horasTotales","class=input-field horasSpec modificarEsp","enabled"]);
+	if(condicion == "addSpec"){
+		tds[0].innerText = tds[1].innerText;
+		tds[1].innerText = "";
+		tds[2].innerText = "En curso";
+		addElement(tds[1],"input",undefined,["type=text","name=horasTotales","class=input-field horasSpec modificarEsp","enabled"]);
+	}else if(condicion == "removeSpec"){
+		tds[1].removeChild(tds[1].firstChild);
+		tds[1].innerText = tds[0].innerText;
+		tds[0].innerText = "2";
+		tds[2].innerText = "Backlog";
+	}
+	reNumber();
 	return dragged;
 }
 
+//Inicialización de los elementos que SÍ SE PUEDEN mover
 function initChilds(){
-	//Inicialización de los elementos que SÍ SE PUEDEN mover
+	
 	var fills = document.querySelectorAll(".tarea");
 	for(const fill of fills){
 	    fill.addEventListener("drag", function( event ) {
@@ -564,22 +577,4 @@ function initChilds(){
 			event.target.style.opacity = "";
 		}, false);
 	}
-}
-
-function addElement(parent, child, text,attributes){
-	var childElement = document.createElement(child);
-	if(text != undefined){
-		var contenido = document.createTextNode(text);
-		childElement.appendChild(contenido);
-	}
-
-	if(attributes != undefined && attributes instanceof Array){
-		for(var i=0;i<attributes.length;i++){
-			var attrName = attributes[i].split("=")[0];
-			var attrValue = attributes[i].split("=")[1];
-			childElement.setAttribute(attrName,attrValue);
-		}
-	}
-	parent.appendChild(childElement);
-	return childElement;
 }

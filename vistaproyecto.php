@@ -193,8 +193,6 @@
 		  					</button>
 		  					<a href="#close" title="Close" ></a>
 	            		</form>
-		                
-		                
 		            </div>
 	        	</div>
 			</div>
@@ -202,27 +200,25 @@
 				<?echo "<h4>Listado de Especificaciones</h4>";
 				$numSpec = 1;
 				?>
-				<div class="especificacion">
-					<table class="board">
-							<tr>
-								<th>Número de especificación</th>
-								<th>Tarea</th>
-								<th>Estado</th>
-								<th></th>
-							</tr>
+				<div class="especificacion board" name="drop">
+					<table>
+						<tr>
+							<th>Número de especificación</th>
+							<th>Tarea</th>
+							<th>Estado</th>
+							<th></th>
+						</tr>
+						<tr><i  class="material-icons right">add_circle_outline</i></tr>
 					<?
 					foreach($specs as $spec){
-						?>
-							
-							<tr class="spec tarea" draggable="true">
-								<td name="numSpec"><?=$numSpec?></td>
-								<td><?=$spec['nombre_spec']?></td>
-								<td><?=$spec['estado']?></td>
-								<?if($tipo_usuario == "productOwner"){
-									?><td><img class="upside" src="images/up.png"><img class="downside" src="images/down.png"><img class="del" src="images/del.png"></td><?
-								}?>
-							</tr>
-						<?
+						?><tr class="spec tarea" draggable="true">
+							<td name="numSpec"><?=$numSpec?></td>
+							<td><?=$spec['nombre_spec']?></td>
+							<td><?=$spec['estado']?></td>
+							<?if($tipo_usuario == "productOwner"){
+								?><td><img class="upside" src="images/up.png"><img class="downside" src="images/down.png"><img class="del" src="images/del.png"></td><?
+							}?>
+						</tr><?
 						$numSpec++;
 					}
 					?>

@@ -234,11 +234,11 @@ button[name="addProyect"]:hover {
     transition: max-height 1.6s ease-in;
 }
 
-/*#TablaEspecificaciones{
+.TablaEspecificaciones{
 	position: fixed !important;
-	right: 2%;
-	bottom: 0;
-}*/
+	right: 2% !important;
+	bottom: 0 !important;
+}
 
 #TablaSprints h4, #TablaProyectos h4, #TablaEspecificaciones h4{
 	text-align: center;
