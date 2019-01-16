@@ -128,7 +128,7 @@
 													</tr>								
 
 													<tr class="sprintData">
-														<td><input class='modificarEsp' type='text' value="<?=$sprint['horasTotales']?>" disabled></td>
+														<td><input name="horasTotalesEsp" class='modificarEsp' type='text' value="<?=$sprint['horasTotales']?>" disabled></td>
 														<td name="fechaInicio"><input class='modificarEsp' type='text' value="<?=$fechaInicio?>" disabled></td>
 														<td name="fechaFin"><input class='modificarEsp' type='text' value="<?=$fechaFin?>" disabled></td>
 
@@ -261,6 +261,11 @@
 	</div>
 	
 	<?
+	// function validarDatos(){
+	// 	if (is_int($sprint["horasTotales"])==True and ) {
+			
+	// 	}
+	// }
 
 	function comprobarFecha($hoy,$sprint){
 		if($hoy >= $sprint['Fecha_Inicio'] && $hoy <= $sprint['Fecha_Fin']){

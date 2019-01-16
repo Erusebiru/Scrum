@@ -195,12 +195,23 @@ function cambiarIconoProximo(element){
 	
 }
 
+function btnModificar(){
+	var horasTotales=document.getElementByName("horasTotalesEsp");
+	if (isNaN(horasTotales)==false) {
+		createErrorWindow("Tiene que ser numero");
+	}
+	else if ()
+}
+
 //Funcion que permite habilita la modificación de las especificaciones
 function modificar(element){
 	
 	var especificaciones=element.parentNode.getElementsByClassName("modificarEsp");
 	console.log(especificaciones);
 	for (var i=0; i <especificaciones.length; i++) {
+		especificaciones[0].type="number";
+		especificaciones[1].type="date";
+		especificaciones[2].type="date";
 		especificaciones[i].disabled=false;
 	}
 }
@@ -209,6 +220,8 @@ function modificarDeshabilitado(){
 	var especificaciones=document.getElementsByClassName("modificarEsp");
 
 	for (var i=0; i <especificaciones.length; i++) {
+		especificaciones[0].type="number";
+		especificaciones[i].type="text";
 		especificaciones[i].disabled=true;
 	}
 }
