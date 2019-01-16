@@ -13,7 +13,6 @@
 	<link rel="shortcut icon" href="https://www.logolynx.com/images/logolynx/15/1588b3eef9f1607d259c3f334b85ffd1.png"> 
 	<script type="text/javascript" src="js/script.js" defer></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<script type="text/javascript" src="js/js.js" defer></script>
 </head>
 <body>
 	<?
@@ -117,7 +116,7 @@
 									$id_sprint = $sprint['id_sprint'];
 									?>
 									<li><p class="title">Información</p>
-										<button onclick="deleteSprint('<?= $numSprint ?> ' , '<?= $id_sprint ?>')"><i class="material-icons deleteicon">delete</i></button>
+										<button onclick="deleteSprint('<?=$numSprint?> ','<?=$id_sprint?>')"><i class="material-icons deleteicon">delete</i></button>
 										<ul>
 											<li>
 												<table>
@@ -138,7 +137,7 @@
 									<li><p class="title">Especificaciones</p>
 										<ul>
 											<?if(comprobarFecha($hoy,$sprint) == "proximo"){
-												?><li class="board" sprint="<?=$numSprint?>"><?
+												?><li name="dropBoard" sprint="<?=$numSprint?>"><?
 											}else{
 												?><li><?
 											}?>
@@ -164,7 +163,7 @@
 										</ul>
 									</li>
 								<?$numSprint++;?>
-								<button class="btn waves-effect waves-light" id="enviarEsp" type="submit">Modificar<i  class="material-icons right">send</i></button>
+								<button onclick="modificarSprint(this)" class="btn waves-effect waves-light" id="enviarEsp" type="submit">Modificar<i  class="material-icons right">send</i></button>
 							</ul>
 						</div>
 					<?

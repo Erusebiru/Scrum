@@ -275,7 +275,6 @@ button[name="addProyect"]:hover {
 }
 
 .sprint{
-	cursor: pointer;
 	max-width: 200px;
 }
 
@@ -285,6 +284,7 @@ button[name="addProyect"]:hover {
 }
 .sprint h6:hover{
 	text-decoration: underline;
+	cursor: pointer;
 }
 
 .sprint ul{
@@ -295,7 +295,7 @@ button[name="addProyect"]:hover {
 
 .sprint ul li{
 	color: black;
-	padding: 0 15px 15px 15px;
+	padding: 0 5px 10px 5px;
 }
 
 .sprint li ul li{
@@ -347,7 +347,7 @@ li label{
 }
 
 .sprint-proximo{
-	background-color: #797976;
+	background-color: #7b7b7b;
 }
 
 .sprint-proximo h6{
@@ -594,4 +594,16 @@ li label{
 
 .horasSpec{
 	text-align: center;
+}
+
+.modificarEsp{
+	text-align: center !important;
+}
+
+.modificarEsp:enabled{
+	color: #fff3f3
+}
+
+.material-icons:hover{
+	cursor: pointer !important;
 }
