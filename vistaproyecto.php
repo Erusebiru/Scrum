@@ -121,7 +121,7 @@
 						}?>
 								<?echo "<h6  onclick='showSprint(this)'>Sprint ".$numSprint."</h6>";
 								$id_sprint = $sprint['id_sprint'];
-								?><ul id='<? $id_sprint ?>' class="plegado" name="primero"><?
+								?><ul id='<?= $id_sprint ?>' class="plegado" name="primero"><?
 									$fechaInicio = date("d-m-Y", strtotime($sprint['Fecha_Inicio']));
 									$fechaFin = date("d-m-Y", strtotime($sprint['Fecha_Fin']));
 

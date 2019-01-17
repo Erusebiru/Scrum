@@ -6,7 +6,7 @@
 <body>
 	<?
 		if($_SERVER["REQUEST_METHOD"] == "POST") {
-
+			//print_r($_POST);
 			$id_sprint = $_POST['id_sprint'];
 			$startDate = $_POST['startDate'];
 			$endDate = $_POST['endDate'];
@@ -18,7 +18,7 @@
 
 			//Eliminar sprint de la bbdd
 			$query = "UPDATE sprints SET Fecha_Inicio='$startDate' , Fecha_Fin='$endDate' , horasTotales='$horas' WHERE id_sprint='$id_sprint'";
-
+			echo $query;
 			if (mysqli_query($conn, $query)) {
 				echo "Sprint modificado correctamente";
 			} else {

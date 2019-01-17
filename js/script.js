@@ -505,7 +505,7 @@ function guardarDatos(element){
 	var num_specs = specs.length;
 	addElement(form,"input",undefined,["type=hidden","name=startDate","value="+startDate]);
 	addElement(form,"input",undefined,["type=hidden","name=endDate","value="+endDate]);
-	addElement(form,"input",undefined,["type=hidden","name=horas","value="+horasTotales]);
+	addElement(form,"input",undefined,["type=hidden","name=horas","value="+horasTotales.value]);
 
 	addElement(form,"input",undefined,["type=hidden","name=num_specs","value="+specs.length]);
 	addElement(form,"input",undefined,["type=hidden","name=id_sprint","value="+id_sprint]);
