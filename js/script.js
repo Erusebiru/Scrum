@@ -336,7 +336,11 @@ function addNewSpec(){
 		var texto = "La especificación no puede estar vacía";
 		createErrorWindow(texto);
 	}else{
-		var parent = document.querySelector(".especificacion > table").firstElementChild;
+		var cuadro = document.querySelector(".form-modificar");
+		var form = addElement(cuadro,"form",undefined,["action=addSpec.php","method=post"]);
+		addElement(form,"input",undefined,["type=hidden","name=spec","value="+newSpec.value]);
+		form.submit();
+		/*var parent = document.querySelector(".especificacion > table").firstElementChild;
 
 		var tr = addElement(parent,"tr",undefined,["class=spec"]);
 		addElement(tr,"td","0",["name=numSpec"]);
@@ -346,7 +350,7 @@ function addNewSpec(){
 		addElement(td,"img",undefined,["src=images/up.png","class=upside"]);
 		addElement(td,"img",undefined,["src=images/down.png","class=downside"]);
 		addElement(td,"img",undefined,["src=images/del.png","class=del"]);
-		addEvents();
+		addEvents();*/
 	}
 	newSpec.value = "";
 }
@@ -462,7 +466,6 @@ function modificarSprint(element){
 	var startDate = getSprintStartDate(parent);
 	var endDate = getSprintEndDate(parent);
 	var horasTotales = parent.querySelector("[name='horasTotalesEsp']");
-	guardarDatos(element);
 	
 	var count = 1;
 	var control = true;
@@ -485,7 +488,9 @@ function modificarSprint(element){
 	})
 
 	if(control){
-		console.log("todo bien");
+		guardarDatos(element);
+	}else{
+		createErrorWindow("Las fechas son incorrectas");
 	}
 }
 

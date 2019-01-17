@@ -228,7 +228,7 @@
 				</div>
 
 				<div id="TablaEspecificaciones" class="col s6 m6 l6 offset-m1 offset-l1 tabla-vistaproyectos">
-					<?echo "<h4>Listado de Especificaciones</h4>";
+					<?echo "<h4>Product Backlog</h4>";
 					$numSpec = 1;
 					?>
 					<div class="especificacion board" name="drop">
@@ -270,7 +270,6 @@
 			                		</div>
 			           			</div>
 			        		</div>
-			        	
 
 			        </div>
 				</div>
@@ -280,16 +279,8 @@
 			<div class="sprint-id-box"></div>
 			<div class="remove-specs-box"></div>
 			<div class="form-modificar"></div>
-			
 		</div>
-		<div class="window-message">
-			<div class="error"></div>
-		</div>
-		</div>
-		
-
-
-		
+	
 	
 	<?
 
@@ -350,6 +341,9 @@
 
 		?>
 
-
+<div class="window-message">
+		<div class="error"></div>
+	</div>
+</div>
 </body>
 </html>
