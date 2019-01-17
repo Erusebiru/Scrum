@@ -142,14 +142,6 @@
 														<th>Fecha de inicio</th>
 														<th>Fecha de fin</th>
 													</tr>								
-<<<<<<< HEAD
-													<tr class="sprintData" name="sprint<?=$numSprint?>">
-														<td><input name="horasTotalesEsp" class='modificarEsp' type='text' value="<?=$sprint['horasTotales']?>" disabled></td>
-														<td name="fechaInicioEsp"><input class='modificarEsp' type='text' value="<?=$fechaInicio?>" disabled></td>
-														<td name="fechaFinEsp"><input class='modificarEsp' type='text' value="<?=$fechaFin?>" disabled></td>
-
-												
-=======
 
 													<tr class="sprintData">
 														<?
@@ -167,7 +159,6 @@
 															<td name="fechaFinEsp"><input class='modificarEsp' type='text' value="<?=$fechaFin?>" disabled></td>
 															<?}?>
 													
->>>>>>> ef2395aa42b691f00ab3f8a8fb50e839191fa23d
 													</tr>
 
 												</table>
