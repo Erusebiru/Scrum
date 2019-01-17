@@ -16,7 +16,7 @@
 			
 			include 'connection.php';
 
-			// //Modificación de estado en la base de datos por cada especificacion
+			
 
 			$query = "UPDATE sprints SET horasTotales='".$horasTotales."',Fecha_Inicio='".$fechaInicio."',Fecha_Fin='".$fechaFin."' where id_sprint='".$id_sprint."'";
 
