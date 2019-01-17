@@ -539,21 +539,20 @@ function modifyDragged(dragged,condicion){
 	if(condicion == "addSpec"){
 		tds[0].innerText = tds[1].innerText;
 		tds[1].innerText = "";
-		tds[2].innerText = "En curso";
 		addElement(tds[1],"input",undefined,["type=text","name=horasTotales","class=input-field horasSpec modificarEsp","enabled"]);
+		tds[2].innerText = "En curso";
 	}else if(condicion == "removeSpec"){
 		tds[1].removeChild(tds[1].firstChild);
 		tds[1].innerText = tds[0].innerText;
 		tds[0].innerText = "2";
 		tds[2].innerText = "Backlog";
 	}
-	reNumber();
+	
 	return dragged;
 }
 
 //Inicialización de los elementos que SÍ SE PUEDEN mover
 function initChilds(){
-	
 	var fills = document.querySelectorAll(".tarea");
 	for(const fill of fills){
 	    fill.addEventListener("drag", function( event ) {
