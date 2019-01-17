@@ -8,8 +8,9 @@
 		if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 			print_r($_POST);
-			$num_specs = $_POST['num_specs'];
-			$spec[] = $_POST['spec'];
+			$horasTotales = $_POST['horasTotalesEsp'];
+			$fechaInicio=$_POST['fechaInicioEsp'];
+			$fechaFin=$_POST['fechaFin'];
 			$id_sprint = $_POST['id_sprint'];
 
 			
