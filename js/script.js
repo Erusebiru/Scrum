@@ -462,6 +462,7 @@ function modificarSprint(element){
 	var startDate = getSprintStartDate(parent);
 	var endDate = getSprintEndDate(parent);
 	var horasTotales = parent.querySelector("[name='horasTotalesEsp']");
+	guardarDatos(element);
 	
 	var count = 1;
 	var sprints = document.querySelectorAll(".sprintData");
@@ -484,6 +485,15 @@ function modificarSprint(element){
 		}
 		count++;
 	})
+}
+
+function guardarDatos(element){
+	var parent = element.parentNode;
+	var startDate = getSprintStartDate(parent);
+	var endDate = getSprintEndDate(parent);
+	var horasTotales = parent.querySelector("[name='horasTotalesEsp']");
+	var id_sprint = parent.id ;
+
 }
 
 ///DRAG AND DROP
