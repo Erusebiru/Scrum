@@ -176,7 +176,7 @@
 													<?$specsSprint = getSpecsSprint($conn,$sprint['id_sprint']);
 													foreach($specsSprint as $spec){
 														?>
-														<tr name="specs<?=$numSprint?>">
+														<tr name="specs<?=$numSprint?>" tipo="specs">
 															<td><?=$spec['nombre_spec']?></td>
 															<td><?=$spec['horas']?></td>
 															<td><?=$spec['estado']?></td>
@@ -279,6 +279,7 @@
 				
 			<div class="sprint-id-box"></div>
 			<div class="remove-specs-box"></div>
+			<div class="form-modificar"></div>
 			
 		</div>
 		<div class="window-message">

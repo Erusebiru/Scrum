@@ -7,7 +7,7 @@
 	<?
 		if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-			print_r($_POST);
+			//print_r($_POST);
 			$num_specs = $_POST['num_specs'];
 			$spec[] = $_POST['spec'];
 			$id_sprint = $_POST['id_sprint'];

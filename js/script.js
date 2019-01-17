@@ -491,10 +491,30 @@ function modificarSprint(element){
 
 function guardarDatos(element){
 	var parent = element.parentNode;
-	var startDate = getSprintStartDate(parent);
-	var endDate = getSprintEndDate(parent);
+	var inicio_startDate = getSprintStartDate(parent);
+	var fin_endDate = getSprintEndDate(parent);
+	var startDate = parent.querySelector("[name='fechaInicioEsp'] > input").value;
+	var endDate = parent.querySelector("[name='fechaFinEsp'] > input").value;;
 	var horasTotales = parent.querySelector("[name='horasTotalesEsp']");
 	var id_sprint = parent.id ;
+	var specs = parent.querySelectorAll("[tipo='specs']");
+	console.log(specs[0]);
+
+	var cuadro = document.querySelector(".form-modificar");
+	var form = addElement(cuadro,"form",undefined,["action=modificarSprint.php","method=post","id=modificado"]);
+	var num_specs = specs.length;
+	addElement(form,"input",undefined,["type=hidden","name=startDate","value="+startDate]);
+	addElement(form,"input",undefined,["type=hidden","name=endDate","value="+endDate]);
+	addElement(form,"input",undefined,["type=hidden","name=horas","value="+horasTotales]);
+
+	addElement(form,"input",undefined,["type=hidden","name=num_specs","value="+specs.length]);
+	addElement(form,"input",undefined,["type=hidden","name=id_sprint","value="+id_sprint]);
+	for (var i=0;i<specs.length;i++){
+		var especificacion = specs[i].firstElementChild.innerText;
+		addElement(form,"input",undefined,["type=hidden","name=spec[]", "value="+especificacion]);
+	}
+	form.submit();
+
 
 }
 
