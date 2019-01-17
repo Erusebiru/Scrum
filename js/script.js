@@ -176,8 +176,6 @@ function checkNulls(){
 	}
 }
 
-
-
 //funcion que cambia el icono del sprintProximo(candado)
 function cambiarIconoProximo(element){
 	var candadoAbierto=document.getElementById("proximo");
@@ -193,41 +191,20 @@ function cambiarIconoProximo(element){
 	}
 }
 
-
-
-//Funcion que permite habilitar la modificación de las especificaciones
+//Funcion que permite habilitar la modificación de los sprints
 function modificar(element){
-	
 	var especificaciones=element.parentNode.getElementsByClassName("modificarEsp");
 	for (var i=0; i <especificaciones.length; i++) {
-		especificaciones[0].type="number";
-		especificaciones[1].value = especificaciones[1].value.split("-").reverse().join("-");
-		especificaciones[1].type="date";
-		especificaciones[2].value = especificaciones[2].value.split("-").reverse().join("-");
-		especificaciones[2].type="date";
 		especificaciones[i].disabled=false;
 	}
 }
-//Funcion que deshabilita los input de  las especificaciones
+//Funcion que deshabilita los input de los sprints
 function modificarDeshabilitado(){
 	var especificaciones=document.getElementsByClassName("modificarEsp");
 	for (var i=0; i <especificaciones.length; i++) {
-		especificaciones[0].type="number";
-		especificaciones[i].type="text";
 		especificaciones[i].disabled=true;
 	}
 }
-
-//funcion que bloquea el sprint pasado
-// function sprintTancat(element){
-// 	var elements = document.querySelectorAll("ul");
-// 	elements.forEach(function(element){
-// 		element.classList.remove("desplegado");
-// 		element.parentNode.classList.remove("sprint-desplegado");
-// 	});
-	
-// }
-
 
 //Función que despliega las características del Sprint
 function showSprint(element){
@@ -269,7 +246,6 @@ function Enviar_Nombre_Proyecto() {
 	addElement(form,"input",undefined,["type=hidden","name=tipoUsuario"]);
 	
 }
-
 
 //Funciones para añadir eventos al clickar en los botones de subir, bajar y eliminar
 
@@ -469,7 +445,7 @@ function getTime(date){
 //Función que devuelve la fecha de inicio del sprint que se le pasa por parámetro
 function getSprintStartDate(sprint){
 	var fecha_inicio_sprint = sprint.querySelector("[name='fechaInicioEsp'] > input").value;
-	fecha_inicio_sprint = fecha_inicio_sprint.split("-").reverse().join("-");
+	
 	fecha_inicio_sprint = new Date(fecha_inicio_sprint).getTime();
 	return fecha_inicio_sprint;
 }
@@ -477,7 +453,6 @@ function getSprintStartDate(sprint){
 //Función que devuelve la fecha de fin del sprint que se le pasa por parámetro
 function getSprintEndDate(sprint){
 	var fecha_fin_sprint = sprint.querySelector("[name='fechaFinEsp'] > input").value;
-	fecha_fin_sprint = fecha_fin_sprint.split("-").reverse().join("-");
 	fecha_fin_sprint = new Date(fecha_fin_sprint).getTime();
 	return fecha_fin_sprint;
 }
@@ -492,10 +467,22 @@ function modificarSprint(element){
 	var sprints = document.querySelectorAll(".sprintData");
 	sprints.forEach(function(sprint){
 		if(sprint.getAttribute("name") != "sprint"+count){
-			if(startDate >= getSprintStartDate(sprint) && endDate <= getSprintEndDate(sprint)){
-				console.log("MAL");
+			console.log(endDate);
+			console.log(getSprintEndDate(sprint));
+			if(endDate <= getSprintEndDate(sprint)){
+				console.log(startDate + "  " + getSprintStartDate(sprint));
+				console.log(endDate + "  " + getSprintEndDate(sprint));
+				if(startDate >= getSprintStartDate(sprint) && endDate <= getSprintEndDate(sprint)){
+				
+					console.log("MAL");
+				}else{
+					console.log("BIEN");
+				}
+			}else{
+				console.log("PRIMER MAL");
 			}
 		}
+		count++;
 	})
 }
 

@@ -42,7 +42,6 @@
 		$specs = getSpecs($conn);
 		$proyecto = findProyects($conn,$nombre_proyecto);
 		$hoy = date('Y-m-d');
-		$dema = mktime(0,0,0, date("m"), date("d")+1, date("Y"))
 	?>
 
 	<div class="contenedor">
@@ -143,24 +142,18 @@
 														<th>Fecha de fin</th>
 													</tr>								
 
-													<tr class="sprintData">
+													<tr class="sprintData" name="sprint<?=$numSprint?>">
 														<?
 														if($tipo_usuario!="scrumMaster"){?>
 															<td><?=$sprint['horasTotales']?></td>
 															<td><?=$fechaInicio?></td>
 															<td><?=$fechaFin?></td>
-															<?}?>
-														
-														<?
-
-														if($tipo_usuario=="scrumMaster"){?>
-															<td><input name="horasTotalesEsp" class='modificarEsp' type='text' value="<?=$sprint['horasTotales']?>" disabled></td>
-															<td name="fechaInicioEsp"><input class='modificarEsp' type='text' value="<?=$fechaInicio?>" disabled></td>
-															<td name="fechaFinEsp"><input class='modificarEsp' type='text' value="<?=$fechaFin?>" disabled></td>
-															<?}?>
-													
+														<?}else{?>
+															<td><input name="horasTotalesEsp" class='modificarEsp' type='number' value="<?=$sprint['horasTotales']?>" disabled></td>
+															<td name="fechaInicioEsp"><input class='modificarEsp' type='date' value="<?=$sprint['Fecha_Inicio']?>" disabled></td>
+															<td name="fechaFinEsp"><input class='modificarEsp' type='date' value="<?=$sprint['Fecha_Fin']?>" disabled></td>
+														<?}?>
 													</tr>
-
 												</table>
 											</li>
 										</ul>

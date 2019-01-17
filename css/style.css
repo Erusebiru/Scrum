@@ -237,7 +237,7 @@ button[name="addProyect"]:hover {
 .TablaEspecificaciones{
 	position: fixed !important;
 	right: 2% !important;
-	bottom: 2% !important;
+	bottom: 5% !important;
 }
 
 #TablaSprints h4, #TablaProyectos h4, #TablaEspecificaciones h4{
