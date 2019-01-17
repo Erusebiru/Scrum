@@ -96,7 +96,7 @@
 
 								<?
 								if($tipo_usuario=="scrumMaster"){?>
-									<i onclick="cambiarIcono()"  id="abierto"  class="material-icons">lock</i><?
+									<i id="abierto"  class="material-icons">lock</i><?
 								}?>
 								
 						<?		
@@ -120,11 +120,11 @@
 								
 						}?>
 								<?echo "<h6  onclick='showSprint(this)'>Sprint ".$numSprint."</h6>";
-								?><ul class="plegado" name="primero"><?
+								$id_sprint = $sprint['id_sprint'];
+								?><ul id='<?= $id_sprint ?>' class="plegado" name="primero"><?
 									$fechaInicio = date("d-m-Y", strtotime($sprint['Fecha_Inicio']));
 									$fechaFin = date("d-m-Y", strtotime($sprint['Fecha_Fin']));
 
-									$id_sprint = $sprint['id_sprint'];
 									?>
 									<li>
 										<p class="title">Información</p>
@@ -176,7 +176,7 @@
 													<?$specsSprint = getSpecsSprint($conn,$sprint['id_sprint']);
 													foreach($specsSprint as $spec){
 														?>
-														<tr name="specs<?=$numSprint?>">
+														<tr name="specs<?=$numSprint?>" tipo="specs">
 															<td><?=$spec['nombre_spec']?></td>
 															<td><?=$spec['horas']?></td>
 															<td><?=$spec['estado']?></td>
@@ -279,6 +279,7 @@
 				
 			<div class="sprint-id-box"></div>
 			<div class="remove-specs-box"></div>
+			<div class="form-modificar"></div>
 			
 		</div>
 		<div class="window-message">

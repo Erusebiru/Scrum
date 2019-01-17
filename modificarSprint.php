@@ -6,39 +6,30 @@
 <body>
 	<?
 		if($_SERVER["REQUEST_METHOD"] == "POST") {
-
 			//print_r($_POST);
+			$id_sprint = $_POST['id_sprint'];
+			$startDate = $_POST['startDate'];
+			$endDate = $_POST['endDate'];
 			$num_specs = $_POST['num_specs'];
 			$spec[] = $_POST['spec'];
-			$id_sprint = $_POST['id_sprint'];
+			$horas = $_POST['horas'];
 
-			
 			include 'connection.php';
 
-			//Modificación de estado en la base de datos por cada especificacion
-			for ($i=0;$i<$num_specs;$i++){
-
-				$query = "UPDATE especificaciones SET estado='backlog',id_sprint=null where nombre_spec='".$spec[0][$i]."'";
-
-				mysqli_query($conn, $query);
-			}
-
-
-
 			//Eliminar sprint de la bbdd
-			$query = "DELETE FROM `sprints` WHERE id_sprint = '$id_sprint'";
-
-
+			$query = "UPDATE sprints SET Fecha_Inicio='$startDate' , Fecha_Fin='$endDate' , horasTotales='$horas' WHERE id_sprint='$id_sprint'";
+			echo $query;
 			if (mysqli_query($conn, $query)) {
-				echo "Sprint eliminado correctamente";
+				echo "Sprint modificado correctamente";
 			} else {
 				echo "Error: " . $query . "<br>" . mysqli_error($conn);
 			}
 
+
+			//$query2 = "UPDATE especificaciones SET "
+
 			header('Location: '."vistaproyecto.php");
 		}
-
 	?>
-
 </body>
 </html>
