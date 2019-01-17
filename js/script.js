@@ -201,7 +201,9 @@ function modificar(element){
 	var especificaciones=element.parentNode.getElementsByClassName("modificarEsp");
 	for (var i=0; i <especificaciones.length; i++) {
 		especificaciones[0].type="number";
+		especificaciones[1].value = especificaciones[1].value.split("-").reverse().join("-");
 		especificaciones[1].type="date";
+		especificaciones[2].value = especificaciones[2].value.split("-").reverse().join("-");
 		especificaciones[2].type="date";
 		especificaciones[i].disabled=false;
 	}
@@ -412,8 +414,8 @@ function checkSprints(form){
 	var sprint = sprints[sprints.length-1];
 	var startDate = document.querySelector("[name='inicio']");
 	var endDate = document.querySelector("[name='fin']");
-	var startTime = getStartTime(startDate);
-	var endTime = getEndTime(endDate);
+	var startTime = getTime(startDate);
+	var endTime = getTime(endDate);
 	var horasTotales = document.querySelector("[name='horastotales']");
 	document.querySelector("[name='idproyecto']").value = document.querySelector(".proyecto").id;
 	
@@ -459,15 +461,9 @@ function newSprintNulls(startDate,endDate,horasTotales){
 }
 
 //Función que devuelve la fecha de inicio introducida en el formulario que añade un nuevo sprint
-function getStartTime(startDate){
-	startTime = new Date(startDate.value).getTime();
-	return startTime;
-}
-
-//Función que devuelve la fecha de fin introducida en el formulario que añade un nuevo sprint
-function getEndTime(endDate){
-	endTime = new Date(endDate.value).getTime();
-	return endTime;
+function getTime(date){
+	date = new Date(date.value).getTime();
+	return date;
 }
 
 //Función que devuelve la fecha de inicio del sprint que se le pasa por parámetro
@@ -482,34 +478,26 @@ function getSprintStartDate(sprint){
 function getSprintEndDate(sprint){
 	var fecha_fin_sprint = sprint.querySelector("[name='fechaFinEsp'] > input").value;
 	fecha_fin_sprint = fecha_fin_sprint.split("-").reverse().join("-");
-	console.log("Fecha fin sprint: "+fecha_fin_sprint);
 	fecha_fin_sprint = new Date(fecha_fin_sprint).getTime();
 	return fecha_fin_sprint;
 }
 
-
 function modificarSprint(element){
 	var parent = element.parentNode;
-	var sprint = parent.querySelector(".sprintData");
-	var startDate = parent.querySelector("[name='fechaInicioEsp'] > input");
-	var endDate = parent.querySelector("[name='fechaFinEsp'] > input");
-	var startTime = getStartTime(startDate);
-	var endTime = getEndTime(endDate);
+	var startDate = getSprintStartDate(parent);
+	var endDate = getSprintEndDate(parent);
 	var horasTotales = parent.querySelector("[name='horasTotalesEsp']");
 	
-
-	console.log(startDate.value);
-	console.log(endDate.value);
-	console.log(horasTotales.value);
-
-
-	
+	var count = 1;
+	var sprints = document.querySelectorAll(".sprintData");
+	sprints.forEach(function(sprint){
+		if(sprint.getAttribute("name") != "sprint"+count){
+			if(startDate >= getSprintStartDate(sprint) && endDate <= getSprintEndDate(sprint)){
+				console.log("MAL");
+			}
+		}
+	})
 }
-
-// var horasTotales=document.getElementsByClassName("modificarEsp");
-// 	if (isNaN(horasTotales)==false) {
-// 		createErrorWindow("Tiene que ser numerico");
-// 	}
 
 ///DRAG AND DROP
 
