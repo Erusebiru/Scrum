@@ -458,33 +458,35 @@ function getSprintEndDate(sprint){
 }
 
 function modificarSprint(element){
-	var parent = element.parentNode;
+	var parent = element.parentNode.querySelector(".sprintData");
 	var startDate = getSprintStartDate(parent);
 	var endDate = getSprintEndDate(parent);
 	var horasTotales = parent.querySelector("[name='horasTotalesEsp']");
 	guardarDatos(element);
 	
 	var count = 1;
+	var control = true;
 	var sprints = document.querySelectorAll(".sprintData");
 	sprints.forEach(function(sprint){
-		if(sprint.getAttribute("name") != "sprint"+count){
-			console.log(endDate);
-			console.log(getSprintEndDate(sprint));
-			if(endDate <= getSprintEndDate(sprint)){
-				console.log(startDate + "  " + getSprintStartDate(sprint));
-				console.log(endDate + "  " + getSprintEndDate(sprint));
-				if(startDate >= getSprintStartDate(sprint) && endDate <= getSprintEndDate(sprint)){
-				
-					console.log("MAL");
+		if(sprint.getAttribute("name") != parent.getAttribute("name")){
+			if(startDate < endDate){
+				if(endDate >= getSprintEndDate(sprint)){
+					if(startDate >= getSprintStartDate(sprint) && endDate <= getSprintEndDate(sprint)){
+						control = false;
+					}
 				}else{
-					console.log("BIEN");
+					control = false;
 				}
 			}else{
-				console.log("PRIMER MAL");
+				control = false;
 			}
 		}
 		count++;
 	})
+
+	if(control){
+		console.log("todo bien");
+	}
 }
 
 function guardarDatos(element){
