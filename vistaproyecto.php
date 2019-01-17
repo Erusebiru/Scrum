@@ -94,17 +94,31 @@
 						if(comprobarFecha($hoy,$sprint) == "actual"){
 
 							?><div  class="sprint sprint-actual">
+
+								<?
+								if($tipo_usuario=="scrumMaster"){?>
+									<i onclick="cambiarIcono()"  id="abierto"  class="material-icons">lock</i><?
+								}?>
 								
-								<i onclick="cambiarIcono()"  id="abierto"  class="material-icons">lock</i><?
+						<?		
 
 						}else if(comprobarFecha($hoy,$sprint) == "proximo"){
 							?><div class="sprint sprint-proximo">
-								<i  onclick="cambiarIconoProximo(this)" id="proximo" class="material-icons">lock</i><?
-
+								<?
+								if($tipo_usuario=="scrumMaster"){?>
+									<i  onclick="cambiarIconoProximo(this)" id="proximo" class="material-icons">lock</i><?
+								}?>
+								
+						<?			
 						}else{
 							?><div id=<?= $sprint['id_sprint']?> class="sprint sprint-anterior">
-
-								<i id="cerrado" class="material-icons">lock</i><?
+								<?
+								if($tipo_usuario=="scrumMaster"){?>
+									<i id="cerrado" class="material-icons">lock</i><?
+								}?>
+								
+						<?	
+								
 						}?>
 								<?echo "<h6  onclick='showSprint(this)'>Sprint ".$numSprint."</h6>";
 								?><ul class="plegado" name="primero"><?
@@ -128,12 +142,32 @@
 														<th>Fecha de inicio</th>
 														<th>Fecha de fin</th>
 													</tr>								
+<<<<<<< HEAD
 													<tr class="sprintData" name="sprint<?=$numSprint?>">
 														<td><input name="horasTotalesEsp" class='modificarEsp' type='text' value="<?=$sprint['horasTotales']?>" disabled></td>
 														<td name="fechaInicioEsp"><input class='modificarEsp' type='text' value="<?=$fechaInicio?>" disabled></td>
 														<td name="fechaFinEsp"><input class='modificarEsp' type='text' value="<?=$fechaFin?>" disabled></td>
 
 												
+=======
+
+													<tr class="sprintData">
+														<?
+														if($tipo_usuario!="scrumMaster"){?>
+															<td><?=$sprint['horasTotales']?></td>
+															<td><?=$fechaInicio?></td>
+															<td><?=$fechaFin?></td>
+															<?}?>
+														
+														<?
+
+														if($tipo_usuario=="scrumMaster"){?>
+															<td><input name="horasTotalesEsp" class='modificarEsp' type='text' value="<?=$sprint['horasTotales']?>" disabled></td>
+															<td name="fechaInicioEsp"><input class='modificarEsp' type='text' value="<?=$fechaInicio?>" disabled></td>
+															<td name="fechaFinEsp"><input class='modificarEsp' type='text' value="<?=$fechaFin?>" disabled></td>
+															<?}?>
+													
+>>>>>>> ef2395aa42b691f00ab3f8a8fb50e839191fa23d
 													</tr>
 
 												</table>
