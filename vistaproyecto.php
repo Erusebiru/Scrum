@@ -190,8 +190,8 @@
 
 
 									<?$numSprint++;
-									if($tipo_usuario=='scrumMaster'){ ?>
-									<button onclick="modificarSprint(this)" class="btn waves-effect waves-light" id="enviarEsp" type="submit">Modificar<i  class="material-icons right">send</i></button> 
+									if(comprobarFecha($hoy,$sprint) == "proximo" && $tipo_usuario=='scrumMaster'){ ?>
+										<button onclick="modificarSprint(this)" class="btn waves-effect waves-light" id="enviarEsp" type="submit">Modificar<i  class="material-icons right">send</i></button> 
 									<? }?>
 								</ul>
 							</div>
